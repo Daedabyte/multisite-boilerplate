@@ -7,6 +7,140 @@
 // Base Element Styles
 // ===================================
 
+:root {
+  // ===================================
+  // Brand Colors
+  // ===================================
+  --color-primary: #{$color-primary};
+  --color-primary-dark: #{$color-primary-dark};
+  --color-secondary: #{$color-secondary};
+  
+  // ===================================
+  // Status Colors
+  // ===================================
+  --color-success: #{$color-success};
+  --color-danger: #{$color-danger};
+  --color-warning: #{$color-warning};
+  --color-info: #{$color-info};
+  
+  // ===================================
+  // Neutral Colors
+  // ===================================
+  --color-black: #{$color-black};
+  --color-white: #{$color-white};
+  --color-gray-100: #{$color-gray-100};
+  --color-gray-200: #{$color-gray-200};
+  --color-gray-300: #{$color-gray-300};
+  --color-gray-400: #{$color-gray-400};
+  --color-gray-500: #{$color-gray-500};
+  --color-gray-600: #{$color-gray-600};
+  --color-gray-700: #{$color-gray-700};
+  --color-gray-800: #{$color-gray-800};
+  --color-gray-900: #{$color-gray-900};
+  
+  // ===================================
+  // Typography Scale
+  // ===================================
+  --font-size-xs: #{map.get($font-sizes, 'xs')};
+  --font-size-sm: #{map.get($font-sizes, 'sm')};
+  --font-size-base: #{map.get($font-sizes, 'base')};
+  --font-size-lg: #{map.get($font-sizes, 'lg')};
+  --font-size-xl: #{map.get($font-sizes, 'xl')};
+  --font-size-2xl: #{map.get($font-sizes, '2xl')};
+  --font-size-3xl: #{map.get($font-sizes, '3xl')};
+  --font-size-4xl: #{map.get($font-sizes, '4xl')};
+  --font-size-5xl: #{map.get($font-sizes, '5xl')};
+  
+  // Typography base values
+  --font-size-root: #{$font-size-base};
+  --line-height-base: #{$line-height-base};
+  
+  // ===================================
+  // Font Weights
+  // ===================================
+  --font-weight-normal: #{map.get($font-weights, 'normal')};
+  --font-weight-medium: #{map.get($font-weights, 'medium')};
+  --font-weight-semibold: #{map.get($font-weights, 'semibold')};
+  --font-weight-bold: #{map.get($font-weights, 'bold')};
+  
+  // ===================================
+  // Spacing Scale (Key Values)
+  // ===================================
+  --space-0: #{map.get($spacers, 0)};
+  --space-1: #{map.get($spacers, 1)};
+  --space-2: #{map.get($spacers, 2)};
+  --space-3: #{map.get($spacers, 3)};
+  --space-4: #{map.get($spacers, 4)};
+  --space-5: #{map.get($spacers, 5)};
+  --space-6: #{map.get($spacers, 6)};
+  --space-8: #{map.get($spacers, 8)};
+  --space-10: #{map.get($spacers, 10)};
+  --space-12: #{map.get($spacers, 12)};
+  --space-16: #{map.get($spacers, 16)};
+  --space-20: #{map.get($spacers, 20)};
+  --space-24: #{map.get($spacers, 24)};
+  
+  // Base spacer for calculations
+  --spacer: #{$spacer};
+  
+  // ===================================
+  // Border Radius
+  // ===================================
+  --border-radius-sm: #{$border-radius-sm};
+  --border-radius-base: #{$border-radius-base};
+  --border-radius-lg: #{$border-radius-lg};
+  --border-radius-full: #{$border-radius-full};
+  
+  // ===================================
+  // Transitions
+  // ===================================
+  --transition-base: #{$transition-base};
+  --transition-fast: #{$transition-fast};
+  --transition-slow: #{$transition-slow};
+  
+  // ===================================
+  // Shadows
+  // ===================================
+  --shadow-sm: #{$shadow-sm};
+  --shadow-base: #{$shadow-base};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  --shadow-xl: #{$shadow-xl};
+  
+  // ===================================
+  // Layout Values
+  // ===================================
+  --grid-gutter: #{$grid-gutter};
+  --grid-columns: #{$grid-columns};
+  
+  // Container max-widths
+  --container-sm: #{map.get($container-max-widths, 'small')};
+  --container-md: #{map.get($container-max-widths, 'medium')};
+  --container-lg: #{map.get($container-max-widths, 'large')};
+  --container-xl: #{map.get($container-max-widths, 'xl')};
+}
+
+// ===================================
+// Dark Mode Override
+// ===================================
+[data-theme="dark"] {
+  --color-gray-500: #{$color-gray-400};
+  --color-gray-600: #{$color-gray-300};
+  --color-gray-700: #{$color-gray-200};
+  --color-gray-800: #{$color-gray-100};
+  --color-gray-900: #{$color-white};
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-gray-500: #{$color-gray-400};
+    --color-gray-600: #{$color-gray-300};
+    --color-gray-700: #{$color-gray-200};
+    --color-gray-800: #{$color-gray-100};
+    --color-gray-900: #{$color-white};
+  }
+}
+
 // Box sizing
 *,
 *::before,
