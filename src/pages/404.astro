@@ -1,0 +1,64 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Container from '../components/ui/Container.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<PageLayout 
+  title="404 - Page Not Found"
+  description="The page you're looking for doesn't exist."
+  noindex={true}
+>
+  <section class="error-page">
+    <Container size="small">
+      <div class="error-page__content">
+        <h1 class="error-page__code">404</h1>
+        <h2 class="error-page__title">Page Not Found</h2>
+        <p class="error-page__message">
+          Sorry, we couldn't find the page you're looking for. 
+          It might have been moved or deleted.
+        </p>
+        <div class="error-page__actions">
+          <Button href="/">Go Home</Button>
+          <Button href="/contact" variant="outline">Contact Support</Button>
+        </div>
+      </div>
+    </Container>
+  </section>
+</PageLayout>
+
+<style lang="scss">
+  @use 'sass:map';
+  @use '../styles/abstracts' as *;
+  
+  .error-page {
+    display: flex;
+    align-items: center;
+    min-height: 60vh;
+    text-align: center;
+    
+    &__code {
+      margin-bottom: map.get($spacers, 4);
+      @include text-size('5xl');
+      font-weight: 800;
+      color: $color-primary;
+    }
+    
+    &__title {
+      margin-bottom: map.get($spacers, 3);
+    }
+    
+    &__message {
+      margin-bottom: map.get($spacers, 8);
+      color: $color-gray-600;
+      @include text-size('lg');
+    }
+    
+    &__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: map.get($spacers, 3);
+      justify-content: center;
+    }
+  }
+</style>

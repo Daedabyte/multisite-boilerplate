@@ -1,0 +1,86 @@
+@use '../abstracts' as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  height: 100%;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100%;
+  line-height: $line-height-base;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  color: $color-gray-900;
+  background-color: $color-white;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+a {
+  color: $color-primary;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  
+  &:hover {
+    color: $color-primary-dark;
+  }
+  
+  &:focus-visible {
+    @include focus-visible;
+  }
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: $font-family-mono;
+}
+
+// Reduced motion
+//@include reduced-motion;
+
+// Dark mode defaults
+@include dark-mode {
+  body {
+    color: $color-gray-100;
+    background-color: $color-gray-900;
+  }
+}

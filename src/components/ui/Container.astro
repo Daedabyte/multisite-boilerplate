@@ -1,0 +1,15 @@
+---
+export interface Props {
+  size?: 'small' | 'medium' | 'large' | 'full';
+  as?: any;
+}
+
+const { 
+    size = 'medium', 
+    as: Tag = 'div' 
+} = Astro.props;
+---
+
+<Tag class={`container container--${size}`}>
+  <slot />
+</Tag>

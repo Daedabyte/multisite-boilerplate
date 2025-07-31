@@ -1,0 +1,187 @@
+---
+import Container from '../ui/Container.astro';
+import siteData from '../../data/site.json';
+
+const currentYear = new Date().getFullYear();
+
+const footerLinks = [
+  {
+    title: 'Company',
+    links: [
+      { href: '/about', label: 'About Us' },
+      { href: '/contact', label: 'Contact' }
+    ]
+  },
+  {
+    title: 'Resources',
+    links: [
+      { href: '/faq', label: 'FAQ' }
+    ]
+  },
+  {
+    title: 'Legal',
+    links: [
+      { href: '/privacy', label: 'Privacy Policy' },
+      { href: '/terms', label: 'Terms of Service' },
+      { href: '/cookies', label: 'Cookie Policy' },
+      { href: '/sitemap', label: 'Sitemap' }
+    ]
+  }
+];
+---
+
+<footer class="footer" role="contentinfo">
+  <Container>
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="/images/logo.svg" alt={siteData.name} width="120" height="40" class="footer__logo">
+        <p class="footer__description">{siteData.description}</p>
+      </div>
+      
+      <nav class="footer__nav" aria-label="Footer navigation">
+        {footerLinks.map(section => (
+          <div class="footer__section">
+            <h3 class="footer__title">{section.title}</h3>
+            <ul class="footer__list">
+              {section.links.map(link => (
+                <li>
+                  <a href={link.href} class="footer__link">{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </nav>
+    </div>
+    
+    <div class="footer__bottom">
+      <p class="footer__copyright">
+        &copy; {currentYear} {siteData.name}. All rights reserved.
+      </p>
+      <div class="footer__social">
+        <a href="#" class="footer__social-link" aria-label="Twitter">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social-link" aria-label="LinkedIn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </Container>
+</footer>
+
+<style lang="scss">
+  @use 'sass:map';
+  @use '../../styles/abstracts' as *;
+
+  .footer {
+    background-color: $color-gray-900;
+    color: $color-gray-300;
+    
+    &__top {
+      display: grid;
+      gap: map.get($spacers, 8);
+      padding-block: map-get($spacers, 12);
+      
+      @include media-up('lg') {
+        grid-template-columns: 1fr 2fr;
+        gap: map.get($spacers, 12);
+      }
+    }
+    
+    &__brand {
+      max-width: 20rem;
+    }
+    
+    &__logo {
+      margin-bottom: map-get($spacers, 4);
+      filter: brightness(0) invert(1);
+    }
+    
+    &__description {
+      color: $color-gray-400;
+    }
+    
+    &__nav {
+      display: grid;
+      gap: map.get($spacers, 8);
+      
+      @include media-up('md') {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+    }
+    
+    &__title {
+      margin-bottom: map.get($spacers, 3);
+      color: $color-white;
+      @include text-size('lg');
+      font-weight: 600;
+    }
+    
+    &__list {
+      @include reset-list;
+      display: flex;
+      flex-direction: column;
+      gap: map.get($spacers, 2);
+    }
+    
+    &__link {
+      color: $color-gray-400;
+      text-decoration: none;
+      transition: $transition-fast;
+      
+      &:hover {
+        color: $color-white;
+      }
+      
+      &:focus-visible {
+        @include focus-visible;
+      }
+    }
+    
+    &__bottom {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: map.get($spacers, 4);
+      padding-block: map.get($spacers, 6);
+      border-top: 1px solid $color-gray-800;
+    }
+    
+    &__copyright {
+      color: $color-gray-500;
+      @include text-size('sm');
+    }
+    
+    &__social {
+      display: flex;
+      gap: map-get($spacers, 3);
+      
+      &-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        color: $color-gray-400;
+        border-radius: $border-radius-full;
+        transition: $transition-fast;
+        
+        &:hover {
+          color: $color-white;
+          background-color: $color-gray-800;
+        }
+        
+        &:focus-visible {
+          @include focus-visible;
+        }
+      }
+    }
+  }
+</style>

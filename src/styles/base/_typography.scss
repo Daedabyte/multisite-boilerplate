@@ -1,0 +1,147 @@
+@use '../abstracts' as *;
+
+// Headings
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  line-height: 1.2;
+  color: $color-gray-900;
+  
+  @include dark-mode {
+    color: $color-white;
+  }
+}
+
+h1 {
+  @include text-size('4xl');
+  
+  @include media-up('md') {
+    @include text-size('5xl');
+  }
+}
+
+h2 {
+  @include text-size('3xl');
+  
+  @include media-up('md') {
+    @include text-size('4xl');
+  }
+}
+
+h3 {
+  @include text-size('2xl');
+  
+  @include media-up('md') {
+    @include text-size('3xl');
+  }
+}
+
+h4 {
+  @include text-size('xl');
+  
+  @include media-up('md') {
+    @include text-size('2xl');
+  }
+}
+
+h5 {
+  @include text-size('lg');
+  
+  @include media-up('md') {
+    @include text-size('xl');
+  }
+}
+
+h6 {
+  @include text-size('base');
+  
+  @include media-up('md') {
+    @include text-size('lg');
+  }
+}
+
+// Body text
+p {
+  margin-bottom: 1em;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Lists
+ul, ol {
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+  
+  li {
+    margin-bottom: 0.25em;
+  }
+}
+
+// Inline elements
+strong, b {
+  font-weight: 600;
+}
+
+em, i {
+  font-style: italic;
+}
+
+mark {
+  background-color: rgba($color-warning, 0.2);
+  padding: 0.125em 0.25em;
+  border-radius: $border-radius-sm;
+}
+
+// Blockquote
+blockquote {
+  margin: 2em 0;
+  padding-left: 1.5em;
+  border-left: 4px solid $color-primary;
+  font-style: italic;
+  color: $color-gray-600;
+  
+  @include dark-mode {
+    color: $color-gray-400;
+    border-left-color: $color-primary;
+  }
+}
+
+// Code
+code {
+  padding: 0.125em 0.375em;
+  background-color: $color-gray-100;
+  border-radius: $border-radius-sm;
+  @include text-size('sm');
+  
+  @include dark-mode {
+    background-color: $color-gray-800;
+  }
+}
+
+pre {
+  margin: 2em 0;
+  padding: 1.5em;
+  overflow-x: auto;
+  background-color: $color-gray-900;
+  color: $color-gray-100;
+  border-radius: $border-radius-lg;
+  
+  code {
+    padding: 0;
+    background-color: transparent;
+    color: inherit;
+  }
+}
+
+// Horizontal rule
+hr {
+  margin: 3em 0;
+  border: none;
+  border-top: 1px solid $color-gray-300;
+  
+  @include dark-mode {
+    border-top-color: $color-gray-700;
+  }
+}

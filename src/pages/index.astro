@@ -1,16 +1,18 @@
 ---
-
+import PageLayout from '../layouts/PageLayout.astro';
+import Container from '../components/ui/Container.astro';
+import Button from '../components/ui/Button.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<PageLayout 
+  title="Home - Your Site Name"
+  description="Welcome to our website. We provide excellent services and solutions."
+>
+  <section class="hero">
+    <Container>
+      <h1>Welcome to Your Site</h1>
+      <p>Build fast, modern websites with this comprehensive boilerplate.</p>
+      <Button href="/about">Learn More</Button>
+    </Container>
+  </section>
+</PageLayout>

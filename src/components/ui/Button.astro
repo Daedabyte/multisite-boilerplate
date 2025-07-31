@@ -1,0 +1,29 @@
+---
+export interface Props {
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'small' | 'medium' | 'large';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+}
+
+const { 
+  variant = 'primary', 
+  size = 'medium', 
+  href, 
+  type = 'button',
+  disabled = false,
+  ...attrs 
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+const props = href ? { href } : { type, disabled };
+---
+
+<Tag 
+  class={`btn btn--${variant} btn--${size}`} 
+  {...props}
+  {...attrs}
+>
+  <slot />
+</Tag>
