@@ -1,29 +1,99 @@
 ---
 export interface Props {
-  variant?: 'primary' | 'secondary' | 'outline';
-  size?: 'small' | 'medium' | 'large';
+  variant?: "primary" | "secondary" | "outline";
+  size?: "small" | "medium" | "large";
   href?: string;
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
   disabled?: boolean;
+  classList?: string;
 }
 
-const { 
-  variant = 'primary', 
-  size = 'medium', 
-  href, 
-  type = 'button',
+const {
+  variant = "primary",
+  size = "medium",
+  href,
+  type = "button",
   disabled = false,
-  ...attrs 
+  classList = "",
+  ...attrs
 } = Astro.props;
 
-const Tag = href ? 'a' : 'button';
+const Tag = href ? "a" : "button";
 const props = href ? { href } : { type, disabled };
 ---
 
-<Tag 
-  class={`btn btn--${variant} btn--${size}`} 
-  {...props}
-  {...attrs}
->
+<Tag class={`btn btn--${variant} btn--${size} ${classList}`} {...props} {...attrs}>
   <slot />
 </Tag>
+
+<style lang="scss">
+  @use "sass:map";
+  @use '../../styles/abstracts' as *;
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: map.get($spacers, 2);
+    padding: map.get($spacers, 2) map.get($spacers, 4);
+    border: 2px solid transparent;
+    border-radius: $border-radius-base;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    @include focus-visible;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    // Variants
+    &--primary {
+      color: var(--color-white);
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+
+      &:hover:not(:disabled) {
+        background-color: var(--color-primary-700);
+        border-color: var(--color-primary-700);
+      }
+    }
+
+    &--secondary {
+      color: var(--color-white);
+      background-color: var(--color-neutral-600);
+      border-color: var(--color-neutral-600);
+
+      &:hover:not(:disabled) {
+        background-color: var(--color-neutral-700);
+        border-color: var(--color-neutral-700);
+      }
+    }
+
+    &--outline {
+      color: var(--color-primary);
+      background-color: transparent;
+      border-color: currentColor;
+
+      &:hover:not(:disabled) {
+        color: var(--color-white);
+        background-color: var(--color-primary);
+      }
+    }
+
+    // Sizes
+    &--small {
+      padding: map.get($spacers, 1) map.get($spacers, 3);
+      @include text-size("sm");
+    }
+
+    &--large {
+      padding: map.get($spacers, 3) map.get($spacers, 6);
+      @include text-size("lg");
+    }
+  }
+</style>

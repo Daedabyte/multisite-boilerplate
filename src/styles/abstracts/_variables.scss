@@ -1,23 +1,88 @@
-// Colors
-$color-primary: #0066cc;
-$color-primary-dark: #0052a3;
-$color-secondary: #6c757d;
-$color-success: #28a745;
-$color-danger: #dc3545;
-$color-warning: #ffc107;
-$color-info: #17a2b8;
+@use 'sass:map';
+@use './functions' as pf;
 
-$color-black: #000000;
-$color-white: #ffffff;
-$color-gray-100: #f8f9fa;
-$color-gray-200: #e9ecef;
-$color-gray-300: #dee2e6;
-$color-gray-400: #ced4da;
-$color-gray-500: #adb5bd;
-$color-gray-600: #6c757d;
-$color-gray-700: #495057;
-$color-gray-800: #343a40;
-$color-gray-900: #212529;
+// Colors
+
+/* Brand Colors */
+$brand-primary: #E8871E;
+$brand-secondary: #008148;
+
+/* Brand Status Colors */
+$brand-success: #28a745;
+$brand-danger: #dc3545;
+$brand-warning: #ffc107;
+$brand-info: #17a2b8;
+
+$brand-black: #353535;
+$brand-white: #FFF8E8;
+$brand-neutral-50: #fefefe;
+$brand-neutral-100: #f8f9fa;
+$brand-neutral-200: #e9ecef;
+$brand-neutral-300: #dee2e6;
+$brand-neutral-400: #ced4da;
+$brand-neutral-500: #adb5bd;
+$brand-neutral-600: #6c757d;
+$brand-neutral-700: #495057;
+$brand-neutral-800: #343a40;
+$brand-neutral-900: #212529;
+
+$brand-colors: (
+  'primary': $brand-primary,
+  'secondary': $brand-secondary,
+  'success': $brand-success,
+  'danger': $brand-danger,
+  'warning': $brand-warning,
+  'info': $brand-info,
+);
+
+$colors: pf.generate-color-system($brand-colors, 'scale');
+$colors: map.merge($colors, (
+  'neutral': (
+    50: $brand-white,
+    100: $brand-neutral-50,
+    200: $brand-neutral-200,
+    300: $brand-neutral-300,
+    400: $brand-neutral-400,
+    500: $brand-neutral-500,
+    600: $brand-neutral-600,
+    700: $brand-neutral-700,
+    800: $brand-neutral-800,
+    900: $brand-neutral-900,
+  ),
+));
+
+// ===================================
+// Color Access Function
+// ===================================
+@function color($name, $weight: 500) {
+  @return pf.get-color($colors, $name, $weight);
+}
+
+@mixin generate-color-properties() {
+  @each $color-name, $palette in $colors {
+    @each $weight, $color-value in $palette {
+      --color-#{$color-name}-#{$weight}: #{$color-value};
+    }
+  }
+  
+  // Generate semantic aliases
+  --color-background: #{color('neutral', 50)};
+  --color-surface: #{color('neutral', 100)};
+  --color-border: #{color('neutral', 200)};
+  --color-text: #{color('neutral', 900)};
+  --color-text-muted: #{color('neutral', 600)};
+  --color-text-subtle: #{color('neutral', 500)};
+}
+
+// ===================================
+// Color Harmony Palettes (Optional)
+// ===================================
+
+// Generate complementary palette for primary color
+// $primary-complement: pf.generate-complementary($brand-primary);
+
+// Generate triadic palettes
+// $primary-triadic: pf.generate-triadic($brand-primary);
 
 // Typography
 $font-family-base: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -94,6 +159,7 @@ $border-radius-lg: 0.5rem;
 $border-radius-full: 9999px;
 
 // Z-index
+$z-index-navbar: 100;
 $z-index-dropdown: 1000;
 $z-index-sticky: 1020;
 $z-index-fixed: 1030;

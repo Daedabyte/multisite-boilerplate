@@ -1,0 +1,32 @@
+---
+import Container from "./Container.astro";
+import type { Props as ContainerProps } from "./Container.astro";
+
+export interface Props {
+    id: string;
+    container?: ContainerProps;
+    classList?: string;
+}
+
+const { id, container, classList = "", ...attrs } = Astro.props;
+---
+
+<section id={id} class={`section ${classList}`} {...attrs}>
+    <Container {...container}>
+        <slot />
+    </Container>
+</section>
+
+<style lang="scss">
+    @use "sass:map";
+    @use "../../styles/abstracts" as *;
+
+    .section {
+        padding: map.get($spacers, 20) 0 map.get($spacers, 20);
+        position: relative;
+
+        @include media-down("md") {
+            padding: map.get($spacers, 16) 0 map.get($spacers, 12);
+        }
+    }
+</style>

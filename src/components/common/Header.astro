@@ -1,13 +1,15 @@
 ---
-import Navigation from './Navigation.astro';
-import Container from '../ui/Container.astro';
+import Navigation from "./Navigation.astro";
+import Container from "../ui/Container.astro";
+import { Image } from "astro:assets";
+import logoIcon from "../../assets/images/logo_icon.png";
 ---
 
 <header class="header" role="banner">
   <Container>
     <div class="header__inner">
       <a href="/" class="header__logo" aria-label="Home">
-        <img src="/images/logo.svg" alt="" width="120" height="40">
+        <Image src={logoIcon} alt="site logo" width="120" height="40" loading={"eager"}/>
       </a>
       <Navigation />
     </div>
@@ -15,39 +17,39 @@ import Container from '../ui/Container.astro';
 </header>
 
 <style lang="scss">
-  @use '../../styles/abstracts' as *;
+  @use "../../styles/abstracts" as *;
 
-    .header {
+  .header {
     position: sticky;
     top: 0;
     z-index: $z-index-sticky;
-    background-color: $color-white;
+    background-color: var(--color-black);
     box-shadow: $shadow-sm;
-    
+
     &__inner {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        min-height: 4rem;
-        
-        @include media-up('lg') {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 4rem;
+
+      @include media-up("lg") {
         min-height: 5rem;
-        }
+      }
     }
-    
+
     &__logo {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        
-        &:focus-visible {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+
+      & > img {
+        height: 60px;
+        object-fit: contain;
+      }
+
+      &:focus-visible {
         @include focus-visible;
-        }
+      }
     }
-    
-    @include dark-mode {
-        background-color: $color-gray-900;
-        border-bottom: 1px solid $color-gray-800;
-    }
-    }
+  }
 </style>

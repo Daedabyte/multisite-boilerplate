@@ -24,7 +24,7 @@
     overflow: visible;
     clip: auto;
     white-space: normal;
-    background-color: $color-white;
+    background-color: var(--color-white);
     border-radius: $border-radius-base;
     box-shadow: $shadow-lg;
   }

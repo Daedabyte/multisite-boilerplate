@@ -1,6 +1,9 @@
 ---
 import Container from '../ui/Container.astro';
-import siteData from '../../data/site.json';
+import { config } from '../../data/site/config';
+import { navigation } from '../../data/site/navigation';
+import { Image } from 'astro:assets';
+import logoIcon from '../../assets/images/logo_icon.png';
 
 const currentYear = new Date().getFullYear();
 
@@ -34,8 +37,16 @@ const footerLinks = [
   <Container>
     <div class="footer__top">
       <div class="footer__brand">
-        <img src="/images/logo.svg" alt={siteData.name} width="120" height="40" class="footer__logo">
-        <p class="footer__description">{siteData.description}</p>
+        <Image src={logoIcon} alt={config.siteName} width="120" height="40" class="footer__logo" loading={"eager"}/>
+        <p class="footer__description">{config.siteDescription}</p>
+        <div class="footer__contact">
+          <a href={`tel:${config.company.phone}`} class="footer__link"><i class="fas fa-phone"></i>{config.company.phoneFormatted}</a>
+          <a href={`mailto:${config.company.email}`} class="footer__link"><i class="fas fa-envelope"></i>{config.company.email}</a>
+          <a href="" class="footer__link" target="_blank">
+            <i class="fas fa-map-marker-alt"></i>
+            {config.company.address} {config.company.city}, {config.company.state} {config.company.zip}
+          </a>
+        </div>
       </div>
       
       <nav class="footer__nav" aria-label="Footer navigation">
@@ -55,21 +66,26 @@ const footerLinks = [
     </div>
     
     <div class="footer__bottom">
-      <p class="footer__copyright">
-        &copy; {currentYear} {siteData.name}. All rights reserved.
-      </p>
-      <div class="footer__social">
-        <a href="#" class="footer__social-link" aria-label="Twitter">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
-          </svg>
-        </a>
-        <a href="#" class="footer__social-link" aria-label="LinkedIn">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
-            <circle cx="4" cy="4" r="2"/>
-          </svg>
-        </a>
+      <div class="footer__bottom-content">
+        <p class="footer__copyright">
+          &copy; {currentYear} {config.siteName}. All rights reserved.
+        </p>
+        <div class="footer__social">
+          <a href="#" class="footer__social-link" aria-label="Twitter">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+            </svg>
+          </a>
+          <a href="#" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer__message">
+        Site made with <i class="fas fa-heart"></i> by <a href={navigation['daedabyte'].url} target="_blank" class="footer__link">{navigation['daedabyte'].label}</a>
       </div>
     </div>
   </Container>
@@ -80,13 +96,13 @@ const footerLinks = [
   @use '../../styles/abstracts' as *;
 
   .footer {
-    background-color: $color-gray-900;
-    color: $color-gray-300;
+    background-color: var(--color-black);
+    color: var(--color-neutral-300);
     
     &__top {
       display: grid;
       gap: map.get($spacers, 8);
-      padding-block: map-get($spacers, 12);
+      padding-block: map.get($spacers, 12);
       
       @include media-up('lg') {
         grid-template-columns: 1fr 2fr;
@@ -97,14 +113,20 @@ const footerLinks = [
     &__brand {
       max-width: 20rem;
     }
+
+    &__contact {
+      display: flex;
+      flex-direction: column;
+      row-gap: map.get($spacers, 2);
+      margin-top: map.get($spacers, 4);
+    }
     
     &__logo {
-      margin-bottom: map-get($spacers, 4);
-      filter: brightness(0) invert(1);
+      margin-bottom: map.get($spacers, 4);
     }
     
     &__description {
-      color: $color-gray-400;
+      color: var(--color-neutral-400);
     }
     
     &__nav {
@@ -118,7 +140,7 @@ const footerLinks = [
     
     &__title {
       margin-bottom: map.get($spacers, 3);
-      color: $color-white;
+      color: var(--color-white);
       @include text-size('lg');
       font-weight: 600;
     }
@@ -131,37 +153,50 @@ const footerLinks = [
     }
     
     &__link {
-      color: $color-gray-400;
+      color: var(--color-neutral-400);
       text-decoration: none;
       transition: $transition-fast;
       
       &:hover {
-        color: $color-white;
+        color: var(--color-white);
       }
       
       &:focus-visible {
         @include focus-visible;
       }
+
+      i {
+        margin-right: 0.5rem;
+      }
     }
     
     &__bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-top: 1px solid var(--color-neutral-800);
+    }
+
+    &__bottom-content {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: map.get($spacers, 4);
       padding-block: map.get($spacers, 6);
-      border-top: 1px solid $color-gray-800;
+      width: 100%;
     }
     
     &__copyright {
-      color: $color-gray-500;
+      color: var(--color-neutral-500);
+      margin: 0;
       @include text-size('sm');
     }
     
     &__social {
       display: flex;
-      gap: map-get($spacers, 3);
+      gap: map.get($spacers, 3);
       
       &-link {
         display: flex;
@@ -169,18 +204,30 @@ const footerLinks = [
         justify-content: center;
         width: 2.5rem;
         height: 2.5rem;
-        color: $color-gray-400;
+        color: var(--color-neutral-400);
         border-radius: $border-radius-full;
         transition: $transition-fast;
         
         &:hover {
-          color: $color-white;
-          background-color: $color-gray-800;
+          color: var(--color-white);
+          background-color: var(--color-neutral-800);
         }
         
         &:focus-visible {
           @include focus-visible;
         }
+      }
+    }
+
+    &__message {
+      text-align: center;
+      padding-bottom: map.get($spacers, 6);
+      color: var(--color-neutral-500);
+      font-size: map.get($font-sizes, 'sm');
+
+      i {
+        color: var(--color-primary);
+        margin: 0 0.25rem;
       }
     }
   }

@@ -22,8 +22,8 @@ body {
   line-height: $line-height-base;
   font-family: $font-family-base;
   font-size: $font-size-base;
-  color: $color-gray-900;
-  background-color: $color-white;
+  color: var(--color-neutral-900);
+  background-color: var(--color-white);
 }
 
 img,
@@ -54,12 +54,12 @@ h6 {
 }
 
 a {
-  color: $color-primary;
+  color: var(--color-primary);
   text-decoration: underline;
   text-underline-offset: 0.2em;
   
   &:hover {
-    color: $color-primary-dark;
+    color: var(--color-primary-700);
   }
   
   &:focus-visible {
@@ -78,9 +78,9 @@ pre {
 //@include reduced-motion;
 
 // Dark mode defaults
-@include dark-mode {
+/*@include dark-mode {
   body {
-    color: $color-gray-100;
-    background-color: $color-gray-900;
+    color: var(--color-neutral-100);
+    background-color: var(--color-neutral-900);
   }
-}
+}*/

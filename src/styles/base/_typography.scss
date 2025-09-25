@@ -5,11 +5,11 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.5em;
   font-weight: 600;
   line-height: 1.2;
-  color: $color-gray-900;
+  color: var(--color-neutral-900);
   
-  @include dark-mode {
-    color: $color-white;
-  }
+  /*@include dark-mode {
+    color: var(--color-neutral-50);
+  }*/
 }
 
 h1 {
@@ -89,7 +89,7 @@ em, i {
 }
 
 mark {
-  background-color: rgba($color-warning, 0.2);
+  background-color: rgba(var(--color-warning), 0.2);
   padding: 0.125em 0.25em;
   border-radius: $border-radius-sm;
 }
@@ -98,25 +98,25 @@ mark {
 blockquote {
   margin: 2em 0;
   padding-left: 1.5em;
-  border-left: 4px solid $color-primary;
+  border-left: 4px solid var(--color-primary);
   font-style: italic;
-  color: $color-gray-600;
+  color: var(--color-neutral-600);
   
   @include dark-mode {
-    color: $color-gray-400;
-    border-left-color: $color-primary;
+    color: var(--color-neutral-400);
+    border-left-color: var(--color-primary);
   }
 }
 
 // Code
 code {
   padding: 0.125em 0.375em;
-  background-color: $color-gray-100;
+  background-color: var(--color-neutral-100);
   border-radius: $border-radius-sm;
   @include text-size('sm');
   
   @include dark-mode {
-    background-color: $color-gray-800;
+    background-color: var(--color-neutral-800);
   }
 }
 
@@ -124,8 +124,8 @@ pre {
   margin: 2em 0;
   padding: 1.5em;
   overflow-x: auto;
-  background-color: $color-gray-900;
-  color: $color-gray-100;
+  background-color: var(--color-neutral-900);
+  color: var(--color-neutral-100);
   border-radius: $border-radius-lg;
   
   code {
@@ -139,9 +139,9 @@ pre {
 hr {
   margin: 3em 0;
   border: none;
-  border-top: 1px solid $color-gray-300;
+  border-top: 1px solid var(--color-neutral-300);
   
   @include dark-mode {
-    border-top-color: $color-gray-700;
+    border-top-color: var(--color-neutral-700);
   }
 }

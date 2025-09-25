@@ -2,14 +2,30 @@
 export interface Props {
   size?: 'small' | 'medium' | 'large' | 'full';
   as?: any;
+  classList?: string;
 }
 
 const { 
-    size = 'medium', 
-    as: Tag = 'div' 
+    size = 'large', 
+    as: Tag = 'div', 
+    classList = "" 
 } = Astro.props;
 ---
 
-<Tag class={`container container--${size}`}>
+<Tag class={`container container--${size} ${classList}`}>
   <slot />
 </Tag>
+
+<style lang="scss">
+  @use '../../styles/abstracts' as *;
+
+  .container {
+    @include container('large');
+    
+    &--small { @include container('small'); }
+    &--medium { @include container('medium'); }
+    &--large { @include container('large'); }
+    &--xl { @include container('xl'); }
+    &--full { @include container('full'); }
+  }
+</style>
