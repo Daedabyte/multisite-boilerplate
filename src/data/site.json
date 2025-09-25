@@ -1,9 +1,0 @@
-{
-  "name": "Your Site Name",
-  "description": "Your site description for SEO",
-  "url": "https://example.com",
-  "defaultImage": "/images/og-image.jpg",
-  "social": {
-    "twitter": "@yourhandle"
-  }
-}
