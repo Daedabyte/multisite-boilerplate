@@ -17,16 +17,16 @@ const { id, container, classList = "", ...attrs } = Astro.props;
     </Container>
 </section>
 
-<style lang="scss">
+<style lang="scss" is:global>
     @use "sass:map";
     @use "../../styles/abstracts" as *;
 
     .section {
-        padding: map.get($spacers, 20) 0 map.get($spacers, 20);
+        padding: var(--space-20) 0 var(--space-20);
         position: relative;
 
         @include media-down("md") {
-            padding: map.get($spacers, 16) 0 map.get($spacers, 12);
+            padding: var(--space-16) 0 var(--space-12);
         }
     }
 </style>

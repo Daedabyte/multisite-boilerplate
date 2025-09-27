@@ -20,8 +20,8 @@ html {
 body {
   min-height: 100%;
   line-height: $line-height-base;
-  font-family: $font-family-base;
-  font-size: $font-size-base;
+  font-family: font-family('body');
+  font-size: font-size('base');
   color: var(--color-neutral-900);
   background-color: var(--color-white);
 }
@@ -71,7 +71,7 @@ code,
 kbd,
 samp,
 pre {
-  font-family: $font-family-mono;
+  font-family: font-family('monospace');
 }
 
 // Reduced motion

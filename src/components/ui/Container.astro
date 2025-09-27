@@ -1,31 +1,39 @@
 ---
 export interface Props {
-  size?: 'small' | 'medium' | 'large' | 'full';
+  size?: "small" | "medium" | "large" | "xl" | "full";
   as?: any;
   classList?: string;
 }
 
-const { 
-    size = 'large', 
-    as: Tag = 'div', 
-    classList = "" 
-} = Astro.props;
+const { size = "large", as: Tag = "div", classList = "" } = Astro.props;
 ---
 
 <Tag class={`container container--${size} ${classList}`}>
   <slot />
 </Tag>
 
-<style lang="scss">
-  @use '../../styles/abstracts' as *;
+<style lang="scss" is:global>
+  @use "../../styles/abstracts" as *;
+
+  // Containers
+  @mixin container($size: "large") {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: var(--space-4);
+    max-width: var(--container-max-width-#{$size});
+
+    @include media-up("md") {
+      padding-inline: var(--space-6);
+    }
+  }
 
   .container {
-    @include container('large');
-    
-    &--small { @include container('small'); }
-    &--medium { @include container('medium'); }
-    &--large { @include container('large'); }
-    &--xl { @include container('xl'); }
-    &--full { @include container('full'); }
+    @include container();
+  }
+
+  @each $size, $width in $container-max-widths {
+    .container--#{$size} {
+      @include container($size);
+    }
   }
 </style>

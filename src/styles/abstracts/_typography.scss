@@ -1,0 +1,155 @@
+@use 'sass:map';
+
+// ===================================
+// Font Retrieval Functions with Error Handling
+// ===================================
+
+/// Get a font family from the generated palette with error handling
+/// @param {Map} $font-families - Complete font family map
+/// @param {String} $name - Font family name (e.g., 'heading')
+/// @return {String} - Font family value
+/// @error If the family does not exist in the map
+/// @example get-font-family($font-families, 'heading') // returns 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif'
+@function get-font-family($font-families, $name) {
+    @if not map.has-key($font-families, $name) {
+        @error "Font family '#{$name}' not found. Available families: #{map.keys($font-families)}";
+    }
+    @return map.get($font-families, $name);
+}
+
+/// Get a font size from the generated palette with error handling
+/// @param {Map} $font-sizes - Complete font size map
+/// @param {String} $name - Font size name (e.g., 'base')
+/// @return {String} - Font size value
+/// @error If the size does not exist in the map
+/// @example get-font-size($font-sizes, 'base') // returns 1rem
+@function get-font-size($font-sizes, $name) {
+    @if not map.has-key($font-sizes, $name) {
+        @error "Font size '#{$name}' not found. Available sizes: #{map.keys($font-sizes)}";
+    }
+    @return map.get($font-sizes, $name);
+}
+
+/// Get a font weight from the generated palette with error handling
+/// @param {Map} $font-weights - Complete font weight map
+/// @param {String} $name - Font weight name (e.g., 'normal')
+/// @return {String} - Font weight value
+/// @error If the weight does not exist in the map
+/// @example get-font-weight($font-weights, 'normal') // returns 400
+@function get-font-weight($font-weights, $name) {
+    @if not map.has-key($font-weights, $name) {
+        @error "Font weight '#{$name}' not found. Available weights: #{map.keys($font-weights)}";
+    }
+    @return map.get($font-weights, $name);
+}
+
+// ===================================
+// Font Access Functions - For SCSS Use
+// ===================================
+
+/// Get a font family
+/// @param {String} $name - Font family name (e.g., 'heading')
+/// @return {String} - Font family value
+/// @example font-family('heading') // returns 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif'
+@function font-family($name) {
+    @return get-font-family($brand-fonts, $name);
+}
+
+/// Get a font size
+/// @param {String} $name - Font size name (e.g., 'base')
+/// @return {String} - Font size value
+/// @example font-size('base') // returns 1rem
+@function font-size($name) {
+    @return get-font-size($font-sizes, $name);
+}
+
+/// Get a font weight
+/// @param {String} $name - Font weight name (e.g., 'normal')
+/// @return {String} - Font weight value
+/// @example font-weight('normal') // returns 400
+@function font-weight($name) {
+    @return get-font-weight($font-weights, $name);
+}
+
+// ===================================
+// Generate CSS Root Variables for Fonts
+// ===================================
+@mixin generate-font-properties() {
+    @each $name, $font in $brand-fonts {
+        --font-family-#{$name}: #{$font};
+    }
+
+    @each $name, $size in $font-sizes {
+        --font-size-#{$name}: #{ $size };
+    }
+
+    @each $name, $weight in $font-weights {
+        --font-weight-#{$name}: #{ $weight };
+    }
+
+    --font-size-root: #{$font-size-base};
+    --line-height-base: #{$line-height-base};
+}
+
+// ===================================
+// Brand Font Families
+// ===================================
+$brand-fonts: (
+    "heading": (system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif),
+    "body": (system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif),
+    "monospace": ('Courier New', 'Courier', monospace)
+);
+
+// ===================================
+// Typography Scale and Weights
+// ===================================
+$font-size-base: 1rem;
+$line-height-base: 1.6;
+
+$font-sizes: (
+  'xs': 0.75rem,
+  'sm': 0.875rem,
+  'base': 1rem,
+  'lg': 1.125rem,
+  'xl': 1.25rem,
+  '2xl': 1.5rem,
+  '3xl': 1.875rem,
+  '4xl': 2.25rem,
+  '5xl': 3rem
+);
+
+$font-weights: (
+  'light': 300,
+  'normal': 400,
+  'medium': 500,
+  'semibold': 600,
+  'bold': 700
+);
+
+// ===================================
+// Usage Examples
+// ===================================
+
+/*
+$brand-fonts: (
+    "heading": 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif',
+    "body": 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif',
+    "monospace": 'Courier New, Courier, monospace'
+);
+
+// Access colors
+// Using CSS Variables
+.example {
+    font-family: var(--font-body);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+}
+
+// Or
+// Using SCSS Function
+.example {
+    font-family: font-family('body');
+    font-size: font-size('base');
+    font-weight: font-weight('normal');
+}
+*/

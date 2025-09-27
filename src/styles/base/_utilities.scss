@@ -11,68 +11,143 @@
 .skip-link {
   @include sr-only;
   @include focus-visible;
-  
+
   &:focus {
     position: fixed;
-    top: map.get($spacers, 4);
-    left: map.get($spacers, 4);
-    z-index: $z-index-tooltip;
+    top: var(--space-4);
+    left: var(--space-4);
+    z-index: var(--z-index-tooltip);
     width: auto;
     height: auto;
-    padding: map.get($spacers, 3) map.get($spacers, 4);
+    padding: var(--space-3) var(--space-4);
     margin: 0;
     overflow: visible;
     clip: auto;
     white-space: normal;
     background-color: var(--color-white);
-    border-radius: $border-radius-base;
-    box-shadow: $shadow-lg;
+    border-radius: var(--border-radius-base);
+    box-shadow: var(--shadow-lg);
   }
 }
 
 // Spacing utilities
 @each $key, $value in $spacers {
-  .mt-#{$key} { margin-top: $value; }
-  .mb-#{$key} { margin-bottom: $value; }
-  .ml-#{$key} { margin-left: $value; }
-  .mr-#{$key} { margin-right: $value; }
-  .mx-#{$key} { margin-inline: $value; }
-  .my-#{$key} { margin-block: $value; }
-  .m-#{$key} { margin: $value; }
-  
-  .pt-#{$key} { padding-top: $value; }
-  .pb-#{$key} { padding-bottom: $value; }
-  .pl-#{$key} { padding-left: $value; }
-  .pr-#{$key} { padding-right: $value; }
-  .px-#{$key} { padding-inline: $value; }
-  .py-#{$key} { padding-block: $value; }
-  .p-#{$key} { padding: $value; }
+  .mt-#{$key} {
+    margin-top: var(--space-#{$key});
+  }
+
+  .mb-#{$key} {
+    margin-bottom: var(--space-#{$key});
+  }
+
+  .ml-#{$key} {
+    margin-left: var(--space-#{$key});
+  }
+
+  .mr-#{$key} {
+    margin-right: var(--space-#{$key});
+  }
+
+  .mx-#{$key} {
+    margin-inline: var(--space-#{$key});
+  }
+
+  .my-#{$key} {
+    margin-block: var(--space-#{$key});
+  }
+
+  .m-#{$key} {
+    margin: var(--space-#{$key});
+  }
+
+  .pt-#{$key} {
+    padding-top: var(--space-#{$key});
+  }
+
+  .pb-#{$key} {
+    padding-bottom: var(--space-#{$key});
+  }
+
+  .pl-#{$key} {
+    padding-left: var(--space-#{$key});
+  }
+
+  .pr-#{$key} {
+    padding-right: var(--space-#{$key});
+  }
+
+  .px-#{$key} {
+    padding-inline: var(--space-#{$key});
+  }
+
+  .py-#{$key} {
+    padding-block: var(--space-#{$key});
+  }
+
+  .p-#{$key} {
+    padding: var(--space-#{$key});
+  }
 }
 
 // Text utilities
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
 
 @each $key, $value in $font-sizes {
-  .text-#{$key} { font-size: $value; }
+  .text-#{$key} {
+    font-size: var(--font-size-#{$key});
+  }
 }
 
 // Display utilities
-.hidden { display: none; }
-.block { display: block; }
-.inline-block { display: inline-block; }
-.flex { display: flex; }
-.grid { display: grid; }
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid;
+}
 
 // Responsive utilities
 @each $breakpoint, $value in $breakpoints {
-  @if $breakpoint != 'xs' {
+  @if $breakpoint !='xs' {
     @include media-up($breakpoint) {
-      .#{$breakpoint}\:hidden { display: none; }
-      .#{$breakpoint}\:block { display: block; }
-      .#{$breakpoint}\:flex { display: flex; }
-      .#{$breakpoint}\:grid { display: grid; }
+      .#{$breakpoint}\:hidden {
+        display: none;
+      }
+
+      .#{$breakpoint}\:block {
+        display: block;
+      }
+
+      .#{$breakpoint}\:flex {
+        display: flex;
+      }
+
+      .#{$breakpoint}\:grid {
+        display: grid;
+      }
     }
   }
 }

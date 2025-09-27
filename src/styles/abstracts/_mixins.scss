@@ -1,15 +1,12 @@
 @use 'sass:math';
 @use 'sass:map';
-@use 'variables' as *;
+@use 'utilities' as *;
+@use 'typography' as *;
 @use 'breakpoints' as *;
 
 // Typography
 @mixin text-size($size) {
-  @if map.has-key($font-sizes, $size) {
-    font-size: map.get($font-sizes, $size);
-  } @else {
-    @warn "Invalid font size: #{$size}";
-  }
+  font-sieze: font-size($size);
 }
 
 @mixin truncate($max-width: 100%) {
@@ -24,21 +21,6 @@
   -webkit-line-clamp: $lines;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}
-
-// Layout
-@mixin container($size: 'large') {
-  width: 100%;
-  margin-inline: auto;
-  padding-inline: map.get($spacers, 4);
-  
-  @if map.has-key($container-max-widths, $size) {
-    max-width: map.get($container-max-widths, $size);
-  }
-  
-  @include media-up('md') {
-    padding-inline: map.get($spacers, 6);
-  }
 }
 
 @mixin grid($columns: $grid-columns, $gap: $grid-gutter) {

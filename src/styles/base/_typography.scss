@@ -3,7 +3,8 @@
 // Headings
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.5em;
-  font-weight: 600;
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
   line-height: 1.2;
   color: var(--color-neutral-900);
   
@@ -91,7 +92,7 @@ em, i {
 mark {
   background-color: rgba(var(--color-warning), 0.2);
   padding: 0.125em 0.25em;
-  border-radius: $border-radius-sm;
+  border-radius: var(--border-radius-sm);
 }
 
 // Blockquote
@@ -112,7 +113,7 @@ blockquote {
 code {
   padding: 0.125em 0.375em;
   background-color: var(--color-neutral-100);
-  border-radius: $border-radius-sm;
+  border-radius: var(--border-radius-sm);
   @include text-size('sm');
   
   @include dark-mode {
@@ -126,7 +127,7 @@ pre {
   overflow-x: auto;
   background-color: var(--color-neutral-900);
   color: var(--color-neutral-100);
-  border-radius: $border-radius-lg;
+  border-radius: var(--border-radius-lg);
   
   code {
     padding: 0;

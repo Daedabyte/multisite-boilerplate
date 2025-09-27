@@ -1,0 +1,258 @@
+// ===================================
+// Utility Variables
+// ===================================
+
+// Get a spacer from the spacers map with error handling
+/// @param {Map} $spacers - Complete spacers map
+/// @param {Number} $key - Spacer key (e.g., 4)
+/// @return {String} - Spacer value
+/// @error If the key does not exist in the map
+/// @example get-spacer($spacers, 4) // returns 1rem
+@function get-spacer($spacers, $key) {
+    @if not map.has-key($spacers, $key) {
+        @error "Spacer key '#{$key}' not found. Available keys: #{map.keys($spacers)}";
+    }
+    @return map.get($spacers, $key);
+}
+
+// Get a container max-width from the container-max-widths map with error handling
+/// @param {Map} $container-max-widths - Complete container max-widths map
+/// @param {String} $size - Container size name (e.g., 'large')
+/// @return {String} - Container max-width value
+/// @error If the size does not exist in the map
+/// @example get-container-max-width($container-max-widths, 'large') // returns 1024px
+@function get-container-max-width($container-max-widths, $size) {
+    @if not map.has-key($container-max-widths, $size) {
+        @error "Container size '#{$size}' not found. Available sizes: #{map.keys($container-max-widths)}";
+    }
+    @return map.get($container-max-widths, $size);
+}
+
+// Get a transition from the transitions map with error handling
+/// @param {Map} $transitions - Complete transitions map
+/// @param {String} $name - Transition name (e.g., 'fast')
+/// @return {String} - Transition value
+/// @error If the name does not exist in the map
+/// @example get-transition($transitions, 'fast') // returns all 0.15s ease-in-out
+@function get-transition($transitions, $name) {
+    @if not map.has-key($transitions, $name) {
+        @error "Transition '#{$name}' not found. Available transitions: #{map.keys($transitions)}";
+    }
+    @return map.get($transitions, $name);
+}
+
+// Get a shadow from the shadows map with error handling
+/// @param {Map} $shadows - Complete shadows map
+/// @param {String} $name - Shadow name (e.g., 'md')
+/// @return {String} - Shadow value
+/// @error If the name does not exist in the map
+/// @example get-shadow($shadows, 'md') // returns 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)
+@function get-shadow($shadows, $name) {
+    @if not map.has-key($shadows, $name) {
+        @error "Shadow '#{$name}' not found. Available shadows: #{map.keys($shadows)}";
+    }
+    @return map.get($shadows, $name);
+}
+
+// Get a border radius from the border-radii map with error handling
+/// @param {Map} $border-radii - Complete border radii map
+/// @param {String} $name - Border radius name (e.g., 'base')
+/// @return {String} - Border radius value
+/// @error If the name does not exist in the map
+/// @example get-border-radius($border-radii, 'base') // returns 0.375rem
+@function get-border-radius($border-radii, $name) {
+    @if not map.has-key($border-radii, $name) {
+        @error "Border radius '#{$name}' not found. Available radii: #{map.keys($border-radii)}";
+    }
+    @return map.get($border-radii, $name);
+}
+
+// Get a z-index from the z-index map with error handling
+/// @param {Map} $z-index - Complete z-index map
+/// @param {String} $name - Z-index name (e.g., 'modal')
+/// @return {Number} - Z-index value
+/// @error If the name does not exist in the map
+/// @example get-z-index($z-index, 'modal') // returns 1050
+@function get-z-index($z-index, $name) {
+    @if not map.has-key($z-index, $name) {
+        @error "Z-index '#{$name}' not found. Available z-indices: #{map.keys($z-index)}";
+    }
+    @return map.get($z-index, $name);
+}
+
+// ===================================
+// Utility Access Functions - For SCSS Use
+// ===================================
+
+/// Get a transition
+/// @param {String} $name - Transition name (e.g., 'fast')
+/// @return {String} - Transition value
+/// @example transition('fast') // returns all 0.15s ease-in-out
+@function container-max-width($size) {
+    @return get-container-max-width($container-max-widths, $size);
+}
+
+/// Get a spacer
+/// @param {Number} $key - Spacer key (e.g., 4)
+/// @return {String} - Spacer value
+/// @example spacer(4) // returns 1rem
+@function spacer($key) {
+    @return get-spacer($spacers, $key);
+}
+
+/// Get a transition
+/// @param {String} $name - Transition name (e.g., 'fast')
+/// @return {String} - Transition value
+/// @example transition('fast') // returns all 0.15s ease-in-out
+@function transition($name) {
+    @return get-transition($transitions, $name);
+}
+
+/// Get a shadow
+/// @param {String} $name - Shadow name (e.g., 'md')
+/// @return {String} - Shadow value
+/// @example shadow('md') // returns 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)
+@function shadow($name) {
+    @return get-shadow($shadows, $name);
+}
+
+/// Get a border radius
+/// @param {String} $name - Border radius name (e.g., 'base')
+/// @return {String} - Border radius value
+/// @example border-radius('base') // returns 0.375rem
+@function border-radius($name) {
+    @return get-border-radius($border-radii, $name);
+}
+
+/// Get a z-index
+/// @param {String} $name - Z-index name (e.g., 'modal')
+/// @return {Number} - Z-index value
+/// @example z-index('modal') // returns 1050
+@function z-index($name) {
+    @return get-z-index($z-index, $name);
+}
+
+/// Get an arbitrary variable
+/// @param {String} $name - Arbitrary variable name (e.g., 'grid-columns')
+/// @return {Number|String} - Arbitrary variable value
+/// @error If the variable does not exist in the map
+/// @example get('grid-columns') // returns 12
+@function get($name) {
+    @if map.has-key($arbitrary, $name) {
+        @return map.get($arbitrary, $name);
+    } @else {
+        @error "Your arbitrary variable '#{$name}' not found. Available variables: #{map.keys($arbitrary)}";
+    }
+}
+
+
+
+// ===================================
+// Generate CSS Root Variables for Fonts
+// ===================================
+@mixin generate-utility-properties() {
+    @each $name, $value in $spacers {
+        --space-#{$name}: #{$value};
+    }
+
+    // Base spacer for calculations
+    --spacer: #{$spacer};
+
+    @each $name, $value in $container-max-widths {
+        --container-max-width-#{$name}: #{$value};
+    }
+
+    @each $name, $value in $transitions {
+        --transition-#{$name}: #{$value};
+    }
+
+    @each $name, $value in $shadows {
+        --shadow-#{$name}: #{$value};
+    }
+
+    @each $name, $value in $border-radii {
+        --border-radius-#{$name}: #{$value};
+    }
+
+    @each $name, $value in $z-index {
+        --z-index-#{$name}: #{$value};
+    }
+
+    @each $name, $value in $arbitrary {
+        --#{$name}: #{$value};
+    }
+}
+
+// Spacing
+$spacer: 1rem;
+$spacers: (
+    0: 0,
+    1: $spacer * 0.25,
+    2: $spacer * 0.5,
+    3: $spacer * 0.75,
+    4: $spacer,
+    5: $spacer * 1.25,
+    6: $spacer * 1.5,
+    8: $spacer * 2,
+    10: $spacer * 2.5,
+    12: $spacer * 3,
+    16: $spacer * 4,
+    20: $spacer * 5,
+    24: $spacer * 6
+);
+
+// Layout
+$container-max-widths: (
+    'small': 640px,
+    'medium': 768px,
+    'large': 1024px,
+    'xl': 1280px,
+    'full': 100%
+);
+
+// Transitions
+$transitions: (
+    'base': all 0.2s ease-in-out,
+    'fast': all 0.15s ease-in-out,
+    'slow': all 0.35s ease-in-out
+);
+
+// Shadows
+$shadows: (
+    'sm': 0 1px 2px 0 rgba(0, 0, 0, 0.05),
+    'base': (0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)),
+    'md': (0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)),
+    'lg': (0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)),
+    'xl': (0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)),
+);
+
+// Border radius
+$border-radii: (
+    'sm': 0.25rem,
+    'base': 0.375rem,
+    'lg': 0.5rem,
+    'full': 9999px
+);
+
+// Z-index
+$z-index: (
+    'navbar': 100,
+    'dropdown': 1000,
+    'sticky': 1020,
+    'fixed': 1030,
+    'modal-backdrop': 1040,
+    'modal': 1050,
+    'popover': 1060,
+    'tooltip': 1070
+);
+
+// ===================================
+// Set Arbitrary Variables for Global Use
+// ===================================
+
+$arbitrary: (
+    'grid-columns': 12,
+    'grid-gutter': 1.5rem,
+    'header-height': 4rem,
+    'header-scrolled': 3.5rem
+);

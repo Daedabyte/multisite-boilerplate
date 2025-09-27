@@ -41,15 +41,7 @@ const fullTitle = title === "Home" ? config.siteName : `${title} | ${config.site
   <meta property="og:url" content={canonicalURL}>
   <meta property="og:type" content="website">
   
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content={title}>
-  <meta name="twitter:description" content={description}>
-  <meta name="twitter:image" content={socialImageURL}>
-  
   {noindex && <meta name="robots" content="noindex, nofollow">}
-
-  <link rel="stylesheet" href="main.css">
   
   <script>
     document.documentElement.classList.remove('no-js');
