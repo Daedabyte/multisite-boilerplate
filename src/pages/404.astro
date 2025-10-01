@@ -4,7 +4,7 @@ import Container from '../components/ui/Container.astro';
 import Button from '../components/ui/Button.astro';
 ---
 
-<DefaultLayout>
+<DefaultLayout
   title="404 - Page Not Found"
   description="The page you're looking for doesn't exist."
   noindex={true}
@@ -20,7 +20,7 @@ import Button from '../components/ui/Button.astro';
         </p>
         <div class="error-page__actions">
           <Button href="/">Go Home</Button>
-          <Button href="/contact" variant="outline">Contact Support</Button>
+          <Button href="/contact" variant="secondary" outline={true}>Contact Support</Button>
         </div>
       </div>
     </Container>
@@ -28,7 +28,6 @@ import Button from '../components/ui/Button.astro';
 </DefaultLayout>
 
 <style lang="scss">
-  @use 'sass:map';
   @use '../styles/abstracts' as *;
   
   .error-page {
@@ -38,26 +37,26 @@ import Button from '../components/ui/Button.astro';
     text-align: center;
     
     &__code {
-      margin-bottom: map.get($spacers, 4);
-      @include text-size('5xl');
+      margin-bottom: var(--space-4);
+      font-size: var(--font-size-xxl);
       font-weight: 800;
       color: var(--color-primary);
     }
     
     &__title {
-      margin-bottom: map.get($spacers, 3);
+      margin-bottom: var(--space-3);
     }
     
     &__message {
-      margin-bottom: map.get($spacers, 8);
+      margin-bottom: var(--space-8);
       color: var(--color-neutral-600);
-      @include text-size('lg');
+      font-size: var(--font-size-lg);
     }
     
     &__actions {
       display: flex;
       flex-wrap: wrap;
-      gap: map.get($spacers, 3);
+      gap: var(--space-3);
       justify-content: center;
     }
   }

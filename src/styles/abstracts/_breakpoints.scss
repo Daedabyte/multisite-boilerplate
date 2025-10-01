@@ -1,5 +1,27 @@
 @use 'sass:map';
 
+/// Get breakpoint from breakpoint map with error handling
+/// @param {Map} $breakpoints - Complete breakpoint map
+/// @param {String} $name - Breakpoint name (e.g., 'lg')
+/// @return {String} - Breakpoint value
+/// @error If the size does not exist in the map
+/// @example get-font-size($font-sizes, 'base') // returns 1rem
+@function get-breakpoint($breakpoints, $name) {
+    @if not map.has-key($breakpoints, $name) {
+        @error "Breakpoint '#{$name}' not found. Available breakpoints: #{map.keys($breakpoints)}";
+    }
+    @return map.get($breakpoints, $name);
+}
+
+/// Shortcut function to get breakpoint value
+/// @param {String} $name - Breakpoint name (e.g., 'lg')
+/// @return {String} - Breakpoint value
+/// @example breakpoint('md') // returns 768px
+/// @see get-breakpoint()
+@function breakpoint($name) {
+  @return get-breakpoint($breakpoints, $name);
+}
+
 $breakpoints: (
   'xs': 0,
   'sm': 640px,

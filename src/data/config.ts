@@ -49,7 +49,7 @@ export const config: SiteConfig = {
     
     // Business Information
     company: {
-        name: "Your Company Name",
+        name: "The Little Cheese Collective",
         founded: "2020",
         address: "1234 Main St",
         city: "Your City",
@@ -57,7 +57,7 @@ export const config: SiteConfig = {
         zip: "12345",
         phone: "5551234567",
         phoneFormatted: "(555) 123-4567",
-        email: "hello@yourcompany.com",
+        email: "hello@littlecheese.com",
     },
 
     //Features

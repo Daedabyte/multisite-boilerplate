@@ -3,7 +3,8 @@
 // Headings
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.5em;
-  font-weight: 600;
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
   line-height: 1.2;
   color: var(--color-neutral-900);
   
@@ -13,50 +14,50 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  @include text-size('4xl');
+  font-size: var(--font-size-4xl);
   
   @include media-up('md') {
-    @include text-size('5xl');
+    font-size: var(--font-size-xxl);
   }
 }
 
 h2 {
-  @include text-size('3xl');
+  font-size: var(--font-size-3xl);
   
   @include media-up('md') {
-    @include text-size('4xl');
+    font-size: var(--font-size-4xl);
   }
 }
 
 h3 {
-  @include text-size('2xl');
+  font-size: var(--font-size-2xl);
   
   @include media-up('md') {
-    @include text-size('3xl');
+    font-size: var(--font-size-3xl);
   }
 }
 
 h4 {
-  @include text-size('xl');
+  font-size: var(--font-size-xl);
   
   @include media-up('md') {
-    @include text-size('2xl');
+    font-size: var(--font-size-2xl);
   }
 }
 
 h5 {
-  @include text-size('lg');
+  font-size: var(--font-size-lg);
   
   @include media-up('md') {
-    @include text-size('xl');
+    font-size: var(--font-size-xl);
   }
 }
 
 h6 {
-  @include text-size('base');
+  font-size: var(--font-size-base);
   
   @include media-up('md') {
-    @include text-size('lg');
+    font-size: var(--font-size-lg);
   }
 }
 
@@ -91,7 +92,7 @@ em, i {
 mark {
   background-color: rgba(var(--color-warning), 0.2);
   padding: 0.125em 0.25em;
-  border-radius: $border-radius-sm;
+  border-radius: var(--border-radius-sm);
 }
 
 // Blockquote
@@ -112,8 +113,8 @@ blockquote {
 code {
   padding: 0.125em 0.375em;
   background-color: var(--color-neutral-100);
-  border-radius: $border-radius-sm;
-  @include text-size('sm');
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
   
   @include dark-mode {
     background-color: var(--color-neutral-800);
@@ -126,7 +127,7 @@ pre {
   overflow-x: auto;
   background-color: var(--color-neutral-900);
   color: var(--color-neutral-100);
-  border-radius: $border-radius-lg;
+  border-radius: var(--border-radius-lg);
   
   code {
     padding: 0;

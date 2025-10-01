@@ -1,5 +1,6 @@
-@forward './abstracts/variables';
+@forward './abstracts/colors';
+@forward './abstracts/utilities';
+@forward './abstracts/typography';
 @forward './abstracts/breakpoints';
-@forward './abstracts/functions';
 @forward './abstracts/mixins';
 @forward './abstracts/animations';
