@@ -2,16 +2,18 @@
 import DefaultLayout from '../layouts/DefaultLayout.astro';
 import Section from '../components/ui/Section.astro';
 import Button from '../components/ui/Button.astro';
+import Hero from '../components/layout/Hero.astro';
+import background from '../assets/images/background.png'
 ---
 
 <DefaultLayout
   title="Home - Your Site Name"
   description="Welcome to our website. We provide excellent services and solutions."
 >
-  <Section id="hero" classList="hero">
+  <Hero backgroundImage={background.src} size="full" classList="hero--home">
       <h1>Welcome to Your Site</h1>
       <p>Build fast, modern websites with this comprehensive boilerplate.</p>
-      <Button href="/about">Learn More</Button>
-      <Button href="/about" variant="secondary" outline={true}>Learn More</Button>
-  </Section>
+      <Button href="/about" weight={800} outline={true}>Learn More</Button>
+      <Button href="/about" variant="tertiary" weight={700} outline={true}>Learn More</Button>
+  </Hero>
 </DefaultLayout>

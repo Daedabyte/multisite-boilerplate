@@ -247,12 +247,16 @@ $z-index: (
 );
 
 // ===================================
-// Set Arbitrary Variables for Global Use
+// Set Arbitrary Variables for Global Use SCSS and CSS
 // ===================================
+
+$mobile-breakpoint: "md";
 
 $arbitrary: (
     'grid-columns': 12,
     'grid-gutter': 1.5rem,
-    'header-height': 4rem,
-    'header-scrolled': 3.5rem
+    'header-height-base': 5rem,
+    'header-height-sm': 4rem,
+    'color-header-bg': var(--color-black),
+    'color-mobile-toggle': if(text-contrast(var(--color-header-bg)), var(--color-white), var(--color-black))
 );

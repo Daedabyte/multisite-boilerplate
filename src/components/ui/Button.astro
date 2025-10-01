@@ -1,7 +1,8 @@
 ---
 export interface Props {
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary" | "success" | "danger" | "warning" | "info" | "light" | "dark" | "black" | "white";
   outline?: boolean;
+  weight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
   size?: "small" | "medium" | "large";
   href?: string;
   type?: "button" | "submit" | "reset";
@@ -12,6 +13,7 @@ export interface Props {
 const {
   variant = "primary",
   outline = false,
+  weight,
   size = "medium",
   href,
   type = "button",
@@ -25,7 +27,7 @@ const props = href ? { href } : { type, disabled };
 ---
 
 <Tag
-  class={`btn btn--${variant} ${outline ? "btn--outline" : ""} btn--${size} ${classList}`}
+  class={`btn btn--${variant}${outline ? "-outline" : ""}${weight ? `-${weight}` : ""} btn--${size} ${classList}`}
   {...props}
   {...attrs}
 >
@@ -39,7 +41,9 @@ const props = href ? { href } : { type, disabled };
   // Button Variants
   @mixin button-variant($color, $weight: null, $outline: false) {
     $variant: if($weight != null, "#{$color}-#{$weight}", $color);
-    $text-color: if($weight != null and $weight < 500, "black", "white");
+    //$dark: text-color(color($color, if($weight != null, $weight, 500)));
+    $dark: text-contrast(color($color, if($weight != null, $weight, 500)));
+    $text-color: if($dark, "black", "white");
 
     @if $outline {
       color: var(--color-#{$variant});
@@ -52,14 +56,19 @@ const props = href ? { href } : { type, disabled };
         border-color: var(--color-#{$variant});
       }
     } @else {
+      $percent: if($dark, -10%, 10%);
+      $background-color: color.adjust(color($color, if($weight != null, $weight, 500)), $lightness: $percent);
+      //$hover-text-color: if(text-color($background-color), "black", "white");
+      $hover-text-color: if(text-contrast($background-color), "black", "white");
+    
       background-color: var(--color-#{$variant});
       border-color: var(--color-#{$variant});
       color: var(--color-#{$text-color});
 
       &:hover:not(:disabled) {
-        background-color: color.adjust(color($color, if($weight != null, $weight, 500)), $lightness: -10%);
-        border-color: color.adjust(color($color, if($weight != null, $weight, 500)), $lightness: -10%);
-        color: var(--color-#{$text-color});
+        background-color: $background-color;
+        border-color: $background-color;
+        color: var(--color-#{$hover-text-color});
       }
     }
   }
@@ -108,12 +117,12 @@ const props = href ? { href } : { type, disabled };
     // Sizes
     &--small {
       padding: var(--space-1) var(--space-3);
-      @include text-size("sm");
+      font-size: var(--font-size-sm);
     }
 
     &--large {
       padding: var(--space-3) var(--space-6);
-      @include text-size("lg");
+      font-size: var(--font-size-lg);
     }
   }
 </style>

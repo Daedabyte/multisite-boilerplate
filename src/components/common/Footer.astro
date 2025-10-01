@@ -1,7 +1,7 @@
 ---
 import Container from '../ui/Container.astro';
 import { config } from '../../data/config';
-import { navigation } from '../../data/site/navigation';
+import { navigation, asNavLink } from '../../data/site/navigation';
 import { Image } from 'astro:assets';
 import logoIcon from '../../assets/images/logo_icon.png';
 
@@ -40,11 +40,10 @@ const footerLinks = [
         <Image src={logoIcon} alt={config.siteName} width="120" height="40" class="footer__logo" loading={"eager"}/>
         <p class="footer__description">{config.siteDescription}</p>
         <div class="footer__contact">
-          <a href={`tel:${config.company.phone}`} class="footer__link"><i class="fas fa-phone"></i>{config.company.phoneFormatted}</a>
-          <a href={`mailto:${config.company.email}`} class="footer__link"><i class="fas fa-envelope"></i>{config.company.email}</a>
+          <a href={`tel:${config.company.phone}`} class="footer__link"><i class="fa-solid fa-phone"></i>{config.company.phoneFormatted}</a>
+          <a href={`mailto:${config.company.email}`} class="footer__link"><i class="fa-solid fa-envelope"></i>{config.company.email}</a>
           <a href="" class="footer__link" target="_blank">
-            <i class="fas fa-map-marker-alt"></i>
-            {config.company.address} {config.company.city}, {config.company.state} {config.company.zip}
+            <i class="fa-solid fa-map-pin"></i>{config.company.address}, {config.company.city}, {config.company.state} {config.company.zip}
           </a>
         </div>
       </div>
@@ -85,7 +84,7 @@ const footerLinks = [
         </div>
       </div>
       <div class="footer__message">
-        Site made with <i class="fas fa-heart"></i> by <a href={navigation['daedabyte'].url} target="_blank" class="footer__link">{navigation['daedabyte'].label}</a>
+        Site made with <i class="fas fa-heart"></i> by <a href={asNavLink(navigation['daedabyte'])?.url} target="_blank" class="footer__link">{asNavLink(navigation['daedabyte'])?.label}</a>
       </div>
     </div>
   </Container>
@@ -134,15 +133,15 @@ const footerLinks = [
       gap: var(--space-8);
       
       @include media-up('md') {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
       }
     }
     
     &__title {
       margin-bottom: var(--space-3);
       color: var(--color-white);
-      @include text-size('lg');
-      font-weight: 600;
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
     }
     
     &__list {
@@ -175,7 +174,7 @@ const footerLinks = [
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      border-top: 1px solid var(--color-neutral-800);
+      border-top: 1px solid var(--color-neutral-600);
     }
 
     &__bottom-content {
@@ -191,7 +190,7 @@ const footerLinks = [
     &__copyright {
       color: var(--color-neutral-500);
       margin: 0;
-      @include text-size('sm');
+      font-size: var(--font-size-sm);
     }
     
     &__social {
@@ -224,6 +223,7 @@ const footerLinks = [
       padding-bottom: var(--space-6);
       color: var(--color-neutral-500);
       font-size: var(--font-size-sm);
+      font-style: italic;
 
       i {
         color: var(--color-primary);

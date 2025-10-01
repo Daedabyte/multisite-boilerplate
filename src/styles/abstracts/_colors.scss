@@ -4,6 +4,48 @@
 @use 'sass:math';
 
 // ===================================
+// Contrast and Accessibility Functions
+// ===================================
+
+/// Calculate relative luminance of a color for contrast checks
+/// @param {Color} $color - Input color
+/// @return {Number} - Relative luminance (0-1)
+/// @example relative-luminance(#ffffff) // returns 1
+/// @example relative-luminance(#000000) // returns 0
+@function relative-luminance($color) {
+  $red: calc(color.channel($color, "red", $space: rgb) / 255);
+  $green: calc(color.channel($color, "green", $space: rgb) / 255);
+  $blue: calc(color.channel($color, "blue", $space: rgb) / 255);
+
+  $red: if($red <= 0.03928, calc($red / 12.92), pow(($red + 0.055) / 1.055, 2.4));
+  $green: if($green <= 0.03928, calc($green / 12.92), pow(($green + 0.055) / 1.055, 2.4));
+  $blue: if($blue <= 0.03928, calc($blue / 12.92), pow(($blue + 0.055) / 1.055, 2.4));
+
+  @return (0.2126 * $red) + (0.7152 * $green) + (0.0722 * $blue);
+}
+
+/// Determine if black or white text has better contrast on a given background color
+/// @param {Color} $background-color - Background color
+/// @return {Boolean} - True if black text is better, false if white text is better
+/// @example text-color(#ffffff) // returns true (black text is better)
+/// @example text-color(#000000) // returns false (white text is better)
+@function text-contrast($background-color) {
+  $luminance: relative-luminance($background-color);
+
+  // Luminance of black is 0, white is 1
+  $luminance-black: 0;
+  $luminance-white: 1;
+
+  // Calculate contrast for black text
+  $contrast-black: if($luminance > $luminance-black, calc(($luminance + 0.05) / ($luminance-black + 0.05)), calc(($luminance-black + 0.05) / ($luminance + 0.05)));
+
+  // Calculate contrast for white text
+  $contrast-white: if($luminance > $luminance-white, calc(($luminance + 0.05) / ($luminance-white + 0.05)), calc(($luminance-white + 0.05) / ($luminance + 0.05)));
+
+  @return $contrast-black > $contrast-white;
+}
+
+// ===================================
 // Modern SCSS Color Generation Functions
 // Using current Sass color module (not deprecated functions)
 // ===================================
@@ -178,7 +220,7 @@
     @return $result;
 }
 
-/// Get a color from the generated palette with error handling
+/// Get a color from the generated palette map with error handling
 /// @param {Map} $colors - Complete color system map
 /// @param {String} $name - Color name (e.g., 'primary')
 /// @param {Number} $weight - Color weight (50-900)
@@ -202,6 +244,13 @@
 // ===================================
 // Color Access Function - For SCSS Use
 // ===================================
+
+/// Shortcut function to get color value
+/// @param {String} $name - Color name (e.g., 'primary')
+/// @param {Number} $weight - Color weight (50-900), default is 500
+/// @return {Color} - Color value
+/// @example color('primary', 600) // returns the 600 weight of primary color
+/// @see get-color()
 @function color($name, $weight: 500) {
     @return get-color($colors, $name, $weight);
 }
@@ -272,6 +321,7 @@ $brand-white: #FFF8E8;
 $brand-colors: (
     'primary': #E8871E,
     'secondary': #008148,
+    'tertiary': #339966,
     'success': #28a745,
     'danger': #dc3545,
     'warning': #ffc107,

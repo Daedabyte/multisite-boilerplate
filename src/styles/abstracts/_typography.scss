@@ -4,7 +4,7 @@
 // Font Retrieval Functions with Error Handling
 // ===================================
 
-/// Get a font family from the generated palette with error handling
+/// Get a font family from the font family map with error handling
 /// @param {Map} $font-families - Complete font family map
 /// @param {String} $name - Font family name (e.g., 'heading')
 /// @return {String} - Font family value
@@ -17,7 +17,7 @@
     @return map.get($font-families, $name);
 }
 
-/// Get a font size from the generated palette with error handling
+/// Get a font size from the font size map with error handling
 /// @param {Map} $font-sizes - Complete font size map
 /// @param {String} $name - Font size name (e.g., 'base')
 /// @return {String} - Font size value
@@ -30,7 +30,7 @@
     @return map.get($font-sizes, $name);
 }
 
-/// Get a font weight from the generated palette with error handling
+/// Get a font weight from the font weight map with error handling
 /// @param {Map} $font-weights - Complete font weight map
 /// @param {String} $name - Font weight name (e.g., 'normal')
 /// @return {String} - Font weight value
@@ -47,26 +47,29 @@
 // Font Access Functions - For SCSS Use
 // ===================================
 
-/// Get a font family
+/// Shortcut function to get a font family
 /// @param {String} $name - Font family name (e.g., 'heading')
 /// @return {String} - Font family value
 /// @example font-family('heading') // returns 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif'
+/// @see get-font-family()
 @function font-family($name) {
     @return get-font-family($brand-fonts, $name);
 }
 
-/// Get a font size
+/// Shortcut function to get a font size
 /// @param {String} $name - Font size name (e.g., 'base')
 /// @return {String} - Font size value
 /// @example font-size('base') // returns 1rem
+/// @see get-font-size()
 @function font-size($name) {
     @return get-font-size($font-sizes, $name);
 }
 
-/// Get a font weight
+/// Shortcut function to get a font weight
 /// @param {String} $name - Font weight name (e.g., 'normal')
 /// @return {String} - Font weight value
 /// @example font-weight('normal') // returns 400
+/// @see get-font-weight()
 @function font-weight($name) {
     @return get-font-weight($font-weights, $name);
 }
@@ -95,8 +98,8 @@
 // Brand Font Families
 // ===================================
 $brand-fonts: (
-    "heading": (system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif),
-    "body": (system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif),
+    "heading": ("Google Sans Code", monospace),
+    "body": ("Zen Dots", sans-serif),
     "monospace": ('Courier New', 'Courier', monospace)
 );
 
@@ -115,7 +118,10 @@ $font-sizes: (
   '2xl': 1.5rem,
   '3xl': 1.875rem,
   '4xl': 2.25rem,
-  '5xl': 3rem
+  'xxl': 3rem,
+  '2xxl': 4rem,
+  '3xxl': 5rem,
+  '4xxl': 6rem
 );
 
 $font-weights: (

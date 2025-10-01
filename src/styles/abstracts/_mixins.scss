@@ -5,10 +5,6 @@
 @use 'breakpoints' as *;
 
 // Typography
-@mixin text-size($size) {
-  font-sieze: font-size($size);
-}
-
 @mixin truncate($max-width: 100%) {
   max-width: $max-width;
   overflow: hidden;

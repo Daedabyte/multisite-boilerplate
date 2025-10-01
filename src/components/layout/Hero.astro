@@ -1,0 +1,58 @@
+---
+import Container from '../ui/Container.astro';
+import type {Props as ContainerProps} from '../ui/Container.astro'
+export interface Props {
+    backgroundImage: string;
+    size?: "full" | "partial";
+    container?: ContainerProps;
+    classList?: string;
+}
+
+const {
+    backgroundImage = "",
+    size = "partial",
+    container = null,
+    classList = "",
+    ...attrs
+} = Astro.props;
+
+const heroImageSrc = `url(${backgroundImage})`;
+---
+
+<section id="hero" class={`hero hero--${size} ${classList}`} {...attrs}>
+    <Container {...container}>
+        <slot />
+    </Container>
+</section>
+
+<style lang="scss" define:vars={{ heroImageSrc }}>
+    @use "sass:map";
+    @use "../../styles/abstracts" as *;
+
+    .hero {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background:
+            linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+            var(--heroImageSrc) bottom/cover no-repeat;
+        background-repeat: no-repeat;
+        color: var(--color-white);
+        text-align: center;
+        padding-top: var(--header-height-base);
+
+        :global(h1) {
+            font-size: var(--font-size-xxl);
+            margin-bottom: var(--space-4);
+            color: var(--color-white);
+        }
+
+        &--full {
+            height: 100vh;
+        }
+
+        &--partial {
+            height: 50vh;
+        }
+    }
+</style>

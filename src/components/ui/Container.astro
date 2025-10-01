@@ -5,7 +5,11 @@ export interface Props {
   classList?: string;
 }
 
-const { size = "large", as: Tag = "div", classList = "" } = Astro.props;
+const { 
+  size = "full", 
+  as: Tag = "div", 
+  classList = "" 
+} = Astro.props;
 ---
 
 <Tag class={`container container--${size} ${classList}`}>
