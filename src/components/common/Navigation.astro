@@ -209,6 +209,7 @@ const currentPath = Astro.url.pathname;
   $sub-dropdown-link-border: $dropdown-link-border;
 
   $mobile-toggle-color: var(--color-white);
+  $mobile-menu-width: 70vw;
 
   .nav {
     &__menu {
@@ -354,7 +355,7 @@ const currentPath = Astro.url.pathname;
         position: absolute;
         top: var(--space-5);
         right: var(--space-5);
-        color: var(--color-white);
+        color: $link-color;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -368,7 +369,7 @@ const currentPath = Astro.url.pathname;
         position: absolute;
         top: var(--space-5);
         left: var(--space-5);
-        color: var(--color-white);
+        color: $link-color;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -451,13 +452,13 @@ const currentPath = Astro.url.pathname;
         position: absolute;
         top: 0;
         left: 100%;
-        width: 70vw;
+        width: $mobile-menu-width;
         height: 100vh;
         display: flex;
         flex-direction: column;
         gap: 0;
         padding: var(--space-20) 0;
-        background-color: var(--color-black);
+        background-color: var(--color-header-bg);
         box-shadow: var(--shadow-lg);
         z-index: var(--z-index-navbar);
         overscroll-behavior: contain;
@@ -465,7 +466,7 @@ const currentPath = Astro.url.pathname;
       }
 
       &__mobile-toggle[aria-expanded="true"] ~ &__mobile {
-        left: calc(100% - 70vw);
+        left: calc(100% - $mobile-menu-width);
       }
 
       &__item,
@@ -503,7 +504,7 @@ const currentPath = Astro.url.pathname;
       &__dropdown {
         position: absolute;
         top: 0;
-        width: 70vw;
+        width: $mobile-menu-width;
         height: 100vh;
         z-index: 1;
         background-color: var(--color-header-bg);

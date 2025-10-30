@@ -152,6 +152,26 @@
   }
 }
 
+@each $color-name, $palette in $colors {
+  .bg-#{$color-name} {
+    background-color: var(--color-#{$color-name});
+  }
+
+  .text-#{$color-name} {
+    color: var(--color-#{$color-name});
+  }
+
+  @each $weight, $color in $palette {
+    .bg-#{$color-name}-#{$weight} {
+      background-color: var(--color-#{$color-name}-#{$weight});
+    }
+
+    .text-#{$color-name}-#{$weight} {
+      color: var(--color-#{$color-name}-#{$weight});
+    }
+  }
+}
+
 .no-scroll {
   overflow: hidden;
 }
