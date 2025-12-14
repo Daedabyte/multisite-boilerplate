@@ -53,7 +53,7 @@ import Container from '@components/ui/Container.astro';
   />
 
   <!-- Stats Section: Custom with counter animation -->
-  <Section id="stats" classList="section--dark">
+  <Section id="stats" classList="section--dark" container={{ size: 'xl' }}>
     <div class="stats-grid">
       {homepage.stats?.items.map((stat) => (
         <div class="stat-item" data-reveal="fade-up">
@@ -73,7 +73,7 @@ import Container from '@components/ui/Container.astro';
   </Section>
 
   <!-- About Section: Custom layout -->
-  <Section id="about">
+  <Section id="about" container={{ size: 'medium' }}>
     <div class="about-content" data-reveal="fade-up">
       <h2>{homepage.about?.heading}</h2>
       <p>{homepage.about?.content}</p>
@@ -86,7 +86,7 @@ import Container from '@components/ui/Container.astro';
   </Section>
 
   <!-- Testimonials Section: Custom grid with stagger -->
-  <Section id="testimonials" classList="section--alt">
+  <Section id="testimonials" classList="section--alt" container={{ size: 'xl' }}>
     <h2>{homepage.testimonials?.heading}</h2>
     {homepage.testimonials?.subheading && <p class="section-subtitle">{homepage.testimonials.subheading}</p>}
 
@@ -112,7 +112,7 @@ import Container from '@components/ui/Container.astro';
   </Section>
 
   <!-- FAQ Section: Accordion behavior -->
-  <Section id="faq">
+  <Section id="faq" container={{ size: 'medium' }}>
     <h2>{homepage.faq?.heading}</h2>
     {homepage.faq?.subheading && <p class="section-subtitle">{homepage.faq.subheading}</p>}
 

@@ -24,7 +24,7 @@ import Button from '@components/ui/Button.astro';
   />
 
   <!-- Color System -->
-  <Section id="colors">
+  <Section id="colors" container={{ size: 'large' }}>
     <h2>Color System</h2>
     <p class="section-subtitle">
       All colors are defined in SCSS maps and exposed as CSS custom properties.
@@ -154,7 +154,7 @@ import Button from '@components/ui/Button.astro';
   </Section>
 
   <!-- Typography -->
-  <Section id="typography" classList="section--alt">
+  <Section id="typography" classList="section--alt" container={{ size: 'medium' }}>
     <h2>Typography</h2>
     <p class="section-subtitle">
       Font sizes, weights, and line heights as CSS custom properties.
@@ -215,7 +215,7 @@ import Button from '@components/ui/Button.astro';
   </Section>
 
   <!-- Spacing -->
-  <Section id="spacing">
+  <Section id="spacing" container={{ size: 'large' }}>
     <h2>Spacing System</h2>
     <p class="section-subtitle">
       Consistent spacing scale using CSS custom properties.
@@ -281,7 +281,7 @@ import Button from '@components/ui/Button.astro';
   </Section>
 
   <!-- Component Theming -->
-  <Section id="component-theming" classList="section--alt">
+  <Section id="component-theming" classList="section--alt" container={{ size: 'xl' }}>
     <h2>Component Theming</h2>
     <p class="section-subtitle">
       Override component styles using CSS custom properties.
@@ -377,7 +377,7 @@ import Button from '@components/ui/Button.astro';
   </Section>
 
   <!-- SCSS Architecture -->
-  <Section id="architecture">
+  <Section id="architecture" container={{ size: 'large' }}>
     <h2>SCSS Architecture</h2>
     <p class="section-subtitle">
       How the stylesheet structure is organized.
@@ -458,7 +458,7 @@ import Button from '@components/ui/Button.astro';
   </Section>
 
   <!-- Breakpoints -->
-  <Section id="breakpoints" classList="section--alt">
+  <Section id="breakpoints" classList="section--alt" container={{ size: 'medium' }}>
     <h2>Breakpoints</h2>
     <p class="section-subtitle">
       Mobile-first responsive design with intuitive media query mixins.

@@ -3,7 +3,8 @@
     "allow": [
       "Bash(dir \"X:\\Daedabyte-Clients\\boilerplate\\src\\components\" /b /s)",
       "Bash(npm run build:*)",
-      "Bash(dir \"X:\\Daedabyte-Clients\\boilerplate\\src\\styles\\abstracts\" /b)"
+      "Bash(dir \"X:\\Daedabyte-Clients\\boilerplate\\src\\styles\\abstracts\" /b)",
+      "Bash(dir \"X:\\Daedabyte-Clients\\boilerplate\\src\\pages\\docs\" /b)"
     ]
   }
 }

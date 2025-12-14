@@ -34,7 +34,7 @@ import Section from '@components/ui/Section.astro';
   />
 
   <!-- Purpose Section -->
-  <Section id="purpose">
+  <Section id="purpose" container={{ size: 'medium' }}>
     <div class="content-block" data-reveal="fade-up">
       <h2>{about.story?.heading}</h2>
       <div class="prose">
@@ -44,7 +44,7 @@ import Section from '@components/ui/Section.astro';
   </Section>
 
   <!-- Philosophy Section -->
-  <Section id="philosophy" classList="section--alt">
+  <Section id="philosophy" classList="section--alt" container={{ size: 'medium' }}>
     <div class="content-block" data-reveal="fade-up">
       <h2>{about.mission?.heading}</h2>
       <div class="prose" set:html={about.mission?.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n\n/g, '</p><p>')} />
@@ -64,7 +64,7 @@ import Section from '@components/ui/Section.astro';
   />
 
   <!-- Tech Stack Section -->
-  <Section id="tech-stack" classList="section--alt">
+  <Section id="tech-stack" classList="section--alt" container={{ size: 'xl' }}>
     <h2>{about.team?.heading}</h2>
     {about.team?.subheading && <p class="section-subtitle">{about.team.subheading}</p>}
 
@@ -80,7 +80,7 @@ import Section from '@components/ui/Section.astro';
   </Section>
 
   <!-- Roadmap Section -->
-  <Section id="roadmap">
+  <Section id="roadmap" container={{ size: 'xl' }}>
     <h2>Future Roadmap</h2>
     <p class="section-subtitle">Where we're headed next. These features are planned to make the boilerplate even more powerful and easier to use.</p>
 

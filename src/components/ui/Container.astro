@@ -1,18 +1,41 @@
 ---
-export interface Props {
-  size?: "small" | "medium" | "large" | "xl" | "full";
-  as?: any;
-  classList?: string;
-}
+/**
+ * Container
+ *
+ * Responsive container component with configurable max-width.
+ * Provides consistent horizontal padding and centering.
+ *
+ * @since 1.0.0
+ *
+ * Best for: Wrapping page content, sections
+ * Avoid when: Need full-bleed content
+ *
+ * @example
+ * <Container size="large">Content here</Container>
+ * <Container as="article" size="medium">Article content</Container>
+ */
 
-const { 
-  size = "full", 
-  as: Tag = "div", 
-  classList = "" 
+import type { ContainerProps } from '@types';
+
+interface Props extends ContainerProps {}
+
+const {
+  size = 'large',
+  as: Tag = 'div',
+  class: className,
+  classList,
+  ...attrs
 } = Astro.props;
+
+const classes = [
+  'container',
+  `container--${size}`,
+  className,
+  classList,
+].filter(Boolean).join(' ');
 ---
 
-<Tag class={`container container--${size} ${classList}`}>
+<Tag class={classes} {...attrs}>
   <slot />
 </Tag>
 

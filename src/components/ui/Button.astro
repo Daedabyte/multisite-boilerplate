@@ -1,37 +1,57 @@
 ---
-export interface Props {
-  variant?: "primary" | "secondary" | "tertiary" | "success" | "danger" | "warning" | "info" | "light" | "dark" | "black" | "white";
-  outline?: boolean;
-  weight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
-  size?: "small" | "medium" | "large";
-  href?: string;
-  type?: "button" | "submit" | "reset";
-  disabled?: boolean;
-  classList?: string;
-}
+/**
+ * Button
+ *
+ * Flexible button component that renders as <a> or <button> based on props.
+ * Supports multiple color variants, sizes, and outline styles.
+ *
+ * @since 1.0.0
+ *
+ * Best for: CTAs, form submissions, navigation actions
+ * Avoid when: Need icon-only buttons (use ButtonIcon)
+ *
+ * @example
+ * <Button variant="primary" href="/contact">Contact Us</Button>
+ * <Button variant="secondary" outline type="submit">Submit</Button>
+ */
+
+import type { ButtonProps } from './buttons/types';
+
+interface Props extends ButtonProps {}
 
 const {
-  variant = "primary",
+  variant = 'primary',
   outline = false,
   weight,
-  size = "medium",
+  size = 'medium',
   href,
-  type = "button",
+  type = 'button',
   disabled = false,
-  classList = "",
+  fullWidth = false,
+  iconBefore,
+  iconAfter,
+  class: className,
+  classList,
   ...attrs
 } = Astro.props;
 
-const Tag = href ? "a" : "button";
-const props = href ? { href } : { type, disabled };
+const Tag = href ? 'a' : 'button';
+const tagProps = href ? { href } : { type, disabled };
+
+const classes = [
+  'btn',
+  `btn--${variant}${outline ? '-outline' : ''}${weight ? `-${weight}` : ''}`,
+  `btn--${size}`,
+  fullWidth && 'btn--full-width',
+  className,
+  classList,
+].filter(Boolean).join(' ');
 ---
 
-<Tag
-  class={`btn btn--${variant}${outline ? "-outline" : ""}${weight ? `-${weight}` : ""} btn--${size} ${classList}`}
-  {...props}
-  {...attrs}
->
+<Tag class={classes} {...tagProps} {...attrs}>
+  {iconBefore && <i class={iconBefore}></i>}
   <slot />
+  {iconAfter && <i class={iconAfter}></i>}
 </Tag>
 
 <style lang="scss" is:global>
@@ -123,6 +143,11 @@ const props = href ? { href } : { type, disabled };
     &--large {
       padding: var(--space-3) var(--space-6);
       font-size: var(--font-size-lg);
+    }
+
+    // Full width
+    &--full-width {
+      width: 100%;
     }
   }
 </style>
