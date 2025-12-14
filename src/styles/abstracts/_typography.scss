@@ -90,8 +90,11 @@
         --font-weight-#{$name}: #{ $weight };
     }
 
+    @each $name, $height in $line-heights {
+        --line-height-#{$name}: #{ $height };
+    }
+
     --font-size-root: #{$font-size-base};
-    --line-height-base: #{$line-height-base};
 }
 
 // ===================================
@@ -108,6 +111,16 @@ $brand-fonts: (
 // ===================================
 $font-size-base: 1rem;
 $line-height-base: 1.6;
+
+// Line height scale
+$line-heights: (
+  'tight': 1.25,
+  'snug': 1.375,
+  'normal': 1.5,
+  'base': 1.6,
+  'relaxed': 1.7,
+  'loose': 2,
+);
 
 $font-sizes: (
   'xs': 0.75rem,
@@ -131,6 +144,110 @@ $font-weights: (
   'semibold': 600,
   'bold': 700
 );
+
+// ===================================
+// Fluid Typography
+// Automatically scales font sizes between viewport widths
+// ===================================
+
+/// Calculate fluid font size using clamp()
+/// @param {Number} $min-size - Minimum font size (in rem)
+/// @param {Number} $max-size - Maximum font size (in rem)
+/// @param {Number} $min-vw - Minimum viewport width (in px), default 320px
+/// @param {Number} $max-vw - Maximum viewport width (in px), default 1280px
+/// @return {String} - CSS clamp() value
+/// @example fluid-type(1rem, 2rem) // Scales from 1rem to 2rem between 320px and 1280px
+@function fluid-type($min-size, $max-size, $min-vw: 320px, $max-vw: 1280px) {
+  // Convert rem to px for calculation if needed
+  $min-size-px: if(unit($min-size) == 'rem', $min-size * 16, $min-size);
+  $max-size-px: if(unit($max-size) == 'rem', $max-size * 16, $max-size);
+
+  // Calculate the slope
+  $slope: calc(($max-size-px - $min-size-px) / ($max-vw - $min-vw));
+
+  // Calculate the y-intercept
+  $y-intercept: calc($min-size-px - ($slope * $min-vw));
+
+  // Build the preferred value (slope * 100vw + y-intercept)
+  $slope-vw: calc($slope * 100);
+
+  @return clamp(#{$min-size}, #{$y-intercept} + #{$slope-vw}vw, #{$max-size});
+}
+
+/// Mixin for fluid typography with fallback
+/// @param {Number} $min-size - Minimum font size
+/// @param {Number} $max-size - Maximum font size
+/// @param {Number} $min-vw - Minimum viewport width
+/// @param {Number} $max-vw - Maximum viewport width
+@mixin fluid-font($min-size, $max-size, $min-vw: 320px, $max-vw: 1280px) {
+  font-size: $min-size; // Fallback
+  font-size: fluid-type($min-size, $max-size, $min-vw, $max-vw);
+}
+
+// ===================================
+// Heading Styles Map
+// Pre-configured heading styles for consistency
+// ===================================
+
+$heading-styles: (
+  'h1': (
+    'size': var(--font-size-4xxl),
+    'size-mobile': var(--font-size-xxl),
+    'weight': var(--font-weight-bold),
+    'line-height': 1.1,
+    'letter-spacing': -0.02em,
+  ),
+  'h2': (
+    'size': var(--font-size-3xxl),
+    'size-mobile': var(--font-size-2xl),
+    'weight': var(--font-weight-bold),
+    'line-height': 1.2,
+    'letter-spacing': -0.01em,
+  ),
+  'h3': (
+    'size': var(--font-size-2xxl),
+    'size-mobile': var(--font-size-xl),
+    'weight': var(--font-weight-semibold),
+    'line-height': 1.3,
+    'letter-spacing': 0,
+  ),
+  'h4': (
+    'size': var(--font-size-xxl),
+    'size-mobile': var(--font-size-lg),
+    'weight': var(--font-weight-semibold),
+    'line-height': 1.4,
+    'letter-spacing': 0,
+  ),
+  'h5': (
+    'size': var(--font-size-xl),
+    'size-mobile': var(--font-size-base),
+    'weight': var(--font-weight-medium),
+    'line-height': 1.5,
+    'letter-spacing': 0,
+  ),
+  'h6': (
+    'size': var(--font-size-lg),
+    'size-mobile': var(--font-size-base),
+    'weight': var(--font-weight-medium),
+    'line-height': 1.5,
+    'letter-spacing': 0,
+  ),
+);
+
+/// Get heading style value
+/// @param {String} $heading - Heading level (h1-h6)
+/// @param {String} $property - Property to get
+/// @return {*} - Property value
+@function heading($heading, $property) {
+  @if not map.has-key($heading-styles, $heading) {
+    @error "Heading '#{$heading}' not found. Available: #{map.keys($heading-styles)}";
+  }
+  $styles: map.get($heading-styles, $heading);
+  @if not map.has-key($styles, $property) {
+    @error "Property '#{$property}' not found for #{$heading}. Available: #{map.keys($styles)}";
+  }
+  @return map.get($styles, $property);
+}
 
 // ===================================
 // Usage Examples

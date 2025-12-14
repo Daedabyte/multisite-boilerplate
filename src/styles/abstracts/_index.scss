@@ -1,0 +1,27 @@
+// ===================================
+// Abstracts Index
+//
+// Barrel file for all abstract partials.
+// Import order matters - dependencies must come first.
+// ===================================
+
+// 1. Breakpoints (no dependencies)
+@forward 'breakpoints';
+
+// 2. Utilities (depends on nothing, defines core values)
+@forward 'utilities';
+
+// 3. Typography (depends on utilities for maps)
+@forward 'typography';
+
+// 4. Colors (depends on utilities for map functions)
+@forward 'colors';
+
+// 5. Mixins (depends on breakpoints, utilities, typography)
+@forward 'mixins';
+
+// 6. Animations (depends on utilities for transitions)
+@forward 'animations';
+
+// 7. Component Config (depends on colors, utilities, typography)
+@forward 'component-config';

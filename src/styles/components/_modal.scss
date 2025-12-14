@@ -1,0 +1,175 @@
+/**
+ * Modal Component Styles
+ *
+ * Styles for data-attribute driven modal dialogs.
+ * Works with src/scripts/behaviors/modal.ts
+ */
+
+@use '../abstracts' as *;
+
+// ===================================
+// CSS Custom Properties (Theming Hooks)
+// ===================================
+
+:root {
+  --modal-max-width: 32rem;
+  --modal-max-width-sm: 24rem;
+  --modal-max-width-lg: 48rem;
+  --modal-max-width-xl: 64rem;
+  --modal-max-width-full: calc(100vw - var(--space-8));
+
+  --modal-padding: var(--space-6);
+  --modal-border-radius: var(--border-radius-lg);
+  --modal-backdrop-color: rgba(0, 0, 0, 0.5);
+  --modal-background: var(--color-white);
+  --modal-shadow: var(--shadow-xl);
+}
+
+// ===================================
+// Base Modal Styles
+// ===================================
+
+dialog[data-modal] {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  padding: 0;
+  border: none;
+  max-width: var(--modal-max-width);
+  width: calc(100% - var(--space-8));
+  max-height: calc(100vh - var(--space-8));
+  background: var(--modal-background);
+  border-radius: var(--modal-border-radius);
+  box-shadow: var(--modal-shadow);
+  overflow: hidden;
+
+  // Backdrop
+  &::backdrop {
+    background: var(--modal-backdrop-color);
+    backdrop-filter: blur(4px);
+  }
+
+  // Opening animation
+  &[open] {
+    animation: modal-show 0.3s ease forwards;
+
+    &::backdrop {
+      animation: modal-backdrop-show 0.3s ease forwards;
+    }
+  }
+
+  // Size variants
+  &[data-modal-size="sm"] {
+    max-width: var(--modal-max-width-sm);
+  }
+
+  &[data-modal-size="lg"] {
+    max-width: var(--modal-max-width-lg);
+  }
+
+  &[data-modal-size="xl"] {
+    max-width: var(--modal-max-width-xl);
+  }
+
+  &[data-modal-size="full"] {
+    max-width: var(--modal-max-width-full);
+    max-height: calc(100vh - var(--space-8));
+  }
+}
+
+// ===================================
+// Modal Structure
+// ===================================
+
+.modal {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--modal-padding);
+    border-bottom: 1px solid var(--color-neutral-200);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-neutral-900);
+  }
+
+  &__close {
+    @include reset-button;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    color: var(--color-neutral-500);
+    border-radius: var(--border-radius-base);
+    transition: var(--transition-fast);
+
+    &:hover {
+      color: var(--color-neutral-900);
+      background: var(--color-neutral-100);
+    }
+
+    &:focus-visible {
+      @include focus-visible;
+    }
+  }
+
+  &__body {
+    padding: var(--modal-padding);
+    overflow-y: auto;
+    max-height: calc(100vh - 16rem);
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    padding: var(--modal-padding);
+    border-top: 1px solid var(--color-neutral-200);
+  }
+}
+
+// ===================================
+// Animations
+// ===================================
+
+@keyframes modal-show {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modal-backdrop-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// ===================================
+// Reduced Motion
+// ===================================
+
+@media (prefers-reduced-motion: reduce) {
+  dialog[data-modal] {
+    &[open] {
+      animation: none;
+
+      &::backdrop {
+        animation: none;
+      }
+    }
+  }
+}

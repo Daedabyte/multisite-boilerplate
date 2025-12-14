@@ -1,0 +1,95 @@
+---
+/**
+ * FeaturesGrid
+ *
+ * Card grid layout for displaying features with icons or images.
+ * Responsive columns adapt from single column on mobile to configurable grid.
+ *
+ * @variant grid
+ * @since 1.0.0
+ *
+ * Best for: Service showcases, product features, benefit lists
+ * Avoid when: Need alternating image/content layout
+ *
+ * @example
+ * <FeaturesGrid
+ *   heading="Our Features"
+ *   subheading="Everything you need to succeed"
+ *   features={[
+ *     { title: 'Fast', description: 'Lightning quick', icon: 'fa-bolt' }
+ *   ]}
+ *   columns={3}
+ * />
+ */
+
+import type { FeaturesGridProps } from './types';
+import Container from '@components/ui/Container.astro';
+
+interface Props extends FeaturesGridProps {}
+
+const {
+  heading,
+  subheading,
+  features,
+  columns = 3,
+  background,
+  class: className,
+  classList,
+  id = 'features',
+  ...attrs
+} = Astro.props;
+
+const sectionClasses = [
+  'features',
+  'features--grid',
+  `features--cols-${columns}`,
+  background?.variant === 'alt' && 'features--alt',
+  className,
+  classList,
+].filter(Boolean).join(' ');
+---
+
+<section
+  id={id}
+  class={sectionClasses}
+  {...attrs}
+>
+  <Container>
+    {(heading || subheading) && (
+      <div class="features__header">
+        {heading && <h2 class="features__heading">{heading}</h2>}
+        {subheading && <p class="features__subheading">{subheading}</p>}
+      </div>
+    )}
+
+    <div class="features__grid">
+      {features.map((feature) => (
+        <div class="features__item">
+          {feature.icon && (
+            <div class="features__icon">
+              <i class={feature.icon} aria-hidden="true"></i>
+            </div>
+          )}
+          {feature.image && (
+            <div class="features__image">
+              <img src={feature.image.src} alt={feature.image.alt || ''} />
+            </div>
+          )}
+          <h3 class="features__title">{feature.title}</h3>
+          <p class="features__description">{feature.description}</p>
+          {feature.link && (
+            <a href={feature.link.href} class="features__link">
+              {feature.link.label || 'Learn more'} →
+            </a>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <slot />
+  </Container>
+</section>
+
+<style lang="scss">
+  @use './features.scss';
+</style>

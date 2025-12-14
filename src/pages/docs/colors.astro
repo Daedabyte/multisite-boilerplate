@@ -1,0 +1,1310 @@
+---
+/**
+ * Color System Documentation
+ *
+ * Showcases the complete color palette system including:
+ * - Brand colors (primary, secondary, tertiary)
+ * - Semantic colors (success, danger, warning, info)
+ * - Neutral palette
+ * - Color usage examples
+ */
+
+import DefaultLayout from '@layouts/DefaultLayout.astro';
+import HeroMinimal from '@components/sections/heroes/HeroMinimal.astro';
+import Section from '@components/ui/Section.astro';
+import Button from '@components/ui/Button.astro';
+---
+
+<DefaultLayout
+  title="Color System - Documentation"
+  description="Complete color palette and usage guide for the boilerplate."
+>
+  <!-- Page Header -->
+  <HeroMinimal
+    title="Color System"
+    subtitle="Brand colors, semantic colors, and neutral palette with CSS custom properties"
+    id="page-header"
+  />
+
+  <!-- Brand Colors -->
+  <Section id="brand-colors">
+    <h2>Brand Colors</h2>
+    <p class="section-subtitle">
+      Primary, secondary, and tertiary colors form the core brand identity.
+      Each color generates a full 50-900 weight palette.
+    </p>
+
+    <div class="color-category">
+      <h3>Primary</h3>
+      <p class="color-description">Main brand color used for primary actions, links, and key UI elements.</p>
+      <div class="color-palette">
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-50)"><span class="weight">50</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-100)"><span class="weight">100</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-200)"><span class="weight">200</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-300)"><span class="weight">300</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-400)"><span class="weight">400</span></div>
+        <div class="color-swatch primary" style="--swatch-color: var(--color-primary-500)"><span class="weight">500</span><span class="label">Base</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-600)"><span class="weight">600</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-700)"><span class="weight">700</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-800)"><span class="weight">800</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-900)"><span class="weight">900</span></div>
+      </div>
+    </div>
+
+    <div class="color-category">
+      <h3>Secondary</h3>
+      <p class="color-description">Supporting brand color for secondary actions and accents.</p>
+      <div class="color-palette">
+        <div class="color-swatch" style="--swatch-color: var(--color-secondary-50)"><span class="weight">50</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-secondary-100)"><span class="weight">100</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-secondary-200)"><span class="weight">200</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-secondary-300)"><span class="weight">300</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-secondary-400)"><span class="weight">400</span></div>
+        <div class="color-swatch primary" style="--swatch-color: var(--color-secondary-500)"><span class="weight">500</span><span class="label">Base</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-secondary-600)"><span class="weight">600</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-secondary-700)"><span class="weight">700</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-secondary-800)"><span class="weight">800</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-secondary-900)"><span class="weight">900</span></div>
+      </div>
+    </div>
+
+    <div class="color-category">
+      <h3>Tertiary</h3>
+      <p class="color-description">Additional accent color for variety and visual interest.</p>
+      <div class="color-palette">
+        <div class="color-swatch" style="--swatch-color: var(--color-tertiary-50)"><span class="weight">50</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-tertiary-100)"><span class="weight">100</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-tertiary-200)"><span class="weight">200</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-tertiary-300)"><span class="weight">300</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-tertiary-400)"><span class="weight">400</span></div>
+        <div class="color-swatch primary" style="--swatch-color: var(--color-tertiary-500)"><span class="weight">500</span><span class="label">Base</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-tertiary-600)"><span class="weight">600</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-tertiary-700)"><span class="weight">700</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-tertiary-800)"><span class="weight">800</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-tertiary-900)"><span class="weight">900</span></div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Semantic Colors -->
+  <Section id="semantic-colors" classList="section--alt">
+    <h2>Semantic Colors</h2>
+    <p class="section-subtitle">
+      Contextual colors for feedback, status indicators, and alerts.
+    </p>
+
+    <div class="semantic-grid">
+      <div class="semantic-card">
+        <div class="semantic-preview" style="--preview-color: var(--color-success)"></div>
+        <h3>Success</h3>
+        <p>Positive actions, confirmations, and successful operations.</p>
+        <div class="color-palette small">
+          <div class="color-swatch" style="--swatch-color: var(--color-success-100)"><span class="weight">100</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--color-success-300)"><span class="weight">300</span></div>
+          <div class="color-swatch primary" style="--swatch-color: var(--color-success-500)"><span class="weight">500</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--color-success-700)"><span class="weight">700</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--color-success-900)"><span class="weight">900</span></div>
+        </div>
+      </div>
+
+      <div class="semantic-card">
+        <div class="semantic-preview" style="--preview-color: var(--color-danger)"></div>
+        <h3>Danger</h3>
+        <p>Errors, destructive actions, and critical warnings.</p>
+        <div class="color-palette small">
+          <div class="color-swatch" style="--swatch-color: var(--color-danger-100)"><span class="weight">100</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--color-danger-300)"><span class="weight">300</span></div>
+          <div class="color-swatch primary" style="--swatch-color: var(--color-danger-500)"><span class="weight">500</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--color-danger-700)"><span class="weight">700</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--color-danger-900)"><span class="weight">900</span></div>
+        </div>
+      </div>
+
+      <div class="semantic-card">
+        <div class="semantic-preview" style="--preview-color: var(--color-warning)"></div>
+        <h3>Warning</h3>
+        <p>Caution indicators, alerts, and attention-grabbing elements.</p>
+        <div class="color-palette small">
+          <div class="color-swatch" style="--swatch-color: var(--color-warning-100)"><span class="weight">100</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--color-warning-300)"><span class="weight">300</span></div>
+          <div class="color-swatch primary" style="--swatch-color: var(--color-warning-500)"><span class="weight">500</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--color-warning-700)"><span class="weight">700</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--color-warning-900)"><span class="weight">900</span></div>
+        </div>
+      </div>
+
+      <div class="semantic-card">
+        <div class="semantic-preview" style="--preview-color: var(--color-info)"></div>
+        <h3>Info</h3>
+        <p>Informational messages, tips, and neutral notifications.</p>
+        <div class="color-palette small">
+          <div class="color-swatch" style="--swatch-color: var(--color-info-100)"><span class="weight">100</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--color-info-300)"><span class="weight">300</span></div>
+          <div class="color-swatch primary" style="--swatch-color: var(--color-info-500)"><span class="weight">500</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--color-info-700)"><span class="weight">700</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--color-info-900)"><span class="weight">900</span></div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Neutral Palette -->
+  <Section id="neutral-colors">
+    <h2>Neutral Palette</h2>
+    <p class="section-subtitle">
+      Grays for text, backgrounds, borders, and UI chrome.
+    </p>
+
+    <div class="color-category">
+      <div class="color-palette large">
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-50)"><span class="weight">50</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-100)"><span class="weight">100</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-200)"><span class="weight">200</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-300)"><span class="weight">300</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-400)"><span class="weight">400</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-500)"><span class="weight">500</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-600)"><span class="weight">600</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-700)"><span class="weight">700</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-800)"><span class="weight">800</span></div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-900)"><span class="weight">900</span></div>
+      </div>
+    </div>
+
+    <div class="neutral-usage">
+      <div class="usage-item">
+        <span class="usage-swatch" style="background: var(--color-neutral-50)"></span>
+        <code>--color-neutral-50</code>
+        <span>Page backgrounds</span>
+      </div>
+      <div class="usage-item">
+        <span class="usage-swatch" style="background: var(--color-neutral-100)"></span>
+        <code>--color-neutral-100</code>
+        <span>Card backgrounds, alt sections</span>
+      </div>
+      <div class="usage-item">
+        <span class="usage-swatch" style="background: var(--color-neutral-200)"></span>
+        <code>--color-neutral-200</code>
+        <span>Borders, dividers</span>
+      </div>
+      <div class="usage-item">
+        <span class="usage-swatch" style="background: var(--color-neutral-500)"></span>
+        <code>--color-neutral-500</code>
+        <span>Placeholder text, icons</span>
+      </div>
+      <div class="usage-item">
+        <span class="usage-swatch" style="background: var(--color-neutral-600)"></span>
+        <code>--color-neutral-600</code>
+        <span>Secondary text</span>
+      </div>
+      <div class="usage-item">
+        <span class="usage-swatch" style="background: var(--color-neutral-900)"></span>
+        <code>--color-neutral-900</code>
+        <span>Primary text, headings</span>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Button Examples -->
+  <Section id="button-colors" classList="section--alt">
+    <h2>Color in Components</h2>
+    <p class="section-subtitle">
+      See how colors are applied to buttons and other interactive elements.
+    </p>
+
+    <div class="button-showcase">
+      <h3>Solid Buttons</h3>
+      <div class="button-row">
+        <Button variant="primary">Primary</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="tertiary">Tertiary</Button>
+        <Button variant="success">Success</Button>
+        <Button variant="danger">Danger</Button>
+        <Button variant="warning">Warning</Button>
+        <Button variant="info">Info</Button>
+      </div>
+
+      <h3>Outline Buttons</h3>
+      <div class="button-row">
+        <Button variant="primary" outline>Primary</Button>
+        <Button variant="secondary" outline>Secondary</Button>
+        <Button variant="tertiary" outline>Tertiary</Button>
+        <Button variant="success" outline>Success</Button>
+        <Button variant="danger" outline>Danger</Button>
+      </div>
+
+      <h3>Dark Variants</h3>
+      <div class="button-row dark-bg">
+        <Button variant="white">White</Button>
+        <Button variant="light">Light</Button>
+        <Button variant="primary" outline>Primary Outline</Button>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Palette Generation Methods -->
+  <Section id="generation-methods">
+    <h2>Palette Generation Methods</h2>
+    <p class="section-subtitle">
+      Compare the four available methods for generating color palettes from a single base color.
+      Each method produces different results based on color theory and perceptual uniformity.
+    </p>
+
+    <div class="method-comparison">
+      <div class="method-card">
+        <h3>Simple (Tint/Shade)</h3>
+        <p>Basic mixing with white (tints) and black (shades). Fast and predictable but can produce muddy dark colors.</p>
+        <div class="color-palette method-palette">
+          <div class="color-swatch" style="--swatch-color: var(--demo-simple-50)"><span class="weight">50</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-simple-100)"><span class="weight">100</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-simple-200)"><span class="weight">200</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-simple-300)"><span class="weight">300</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-simple-400)"><span class="weight">400</span></div>
+          <div class="color-swatch primary" style="--swatch-color: var(--demo-simple-500)"><span class="weight">500</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-simple-600)"><span class="weight">600</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-simple-700)"><span class="weight">700</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-simple-800)"><span class="weight">800</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-simple-900)"><span class="weight">900</span></div>
+        </div>
+        <code class="method-code">generate-color-system($colors, 'simple')</code>
+      </div>
+
+      <div class="method-card">
+        <h3>HSL (Hue-Saturation-Lightness)</h3>
+        <p>Manipulates HSL values directly. Better color theory, maintains hue but can produce oversaturated results.</p>
+        <div class="color-palette method-palette">
+          <div class="color-swatch" style="--swatch-color: var(--demo-hsl-50)"><span class="weight">50</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-hsl-100)"><span class="weight">100</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-hsl-200)"><span class="weight">200</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-hsl-300)"><span class="weight">300</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-hsl-400)"><span class="weight">400</span></div>
+          <div class="color-swatch primary" style="--swatch-color: var(--demo-hsl-500)"><span class="weight">500</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-hsl-600)"><span class="weight">600</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-hsl-700)"><span class="weight">700</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-hsl-800)"><span class="weight">800</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-hsl-900)"><span class="weight">900</span></div>
+        </div>
+        <code class="method-code">generate-color-system($colors, 'hsl')</code>
+      </div>
+
+      <div class="method-card">
+        <h3>Scale (Perceptually Uniform)</h3>
+        <p>Uses color.scale() for proportional adjustments. Recommended for most projects - balanced and natural looking.</p>
+        <div class="color-palette method-palette">
+          <div class="color-swatch" style="--swatch-color: var(--demo-scale-50)"><span class="weight">50</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-scale-100)"><span class="weight">100</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-scale-200)"><span class="weight">200</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-scale-300)"><span class="weight">300</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-scale-400)"><span class="weight">400</span></div>
+          <div class="color-swatch primary" style="--swatch-color: var(--demo-scale-500)"><span class="weight">500</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-scale-600)"><span class="weight">600</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-scale-700)"><span class="weight">700</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-scale-800)"><span class="weight">800</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-scale-900)"><span class="weight">900</span></div>
+        </div>
+        <code class="method-code">generate-color-system($colors, 'scale')</code>
+      </div>
+
+      <div class="method-card">
+        <h3>OKLCH (Perceptual Color Space)</h3>
+        <p>Uses OKLCH color space for true perceptual uniformity. Future-proof, best for accessibility-focused designs.</p>
+        <div class="color-palette method-palette">
+          <div class="color-swatch" style="--swatch-color: var(--demo-oklch-50)"><span class="weight">50</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-oklch-100)"><span class="weight">100</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-oklch-200)"><span class="weight">200</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-oklch-300)"><span class="weight">300</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-oklch-400)"><span class="weight">400</span></div>
+          <div class="color-swatch primary" style="--swatch-color: var(--demo-oklch-500)"><span class="weight">500</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-oklch-600)"><span class="weight">600</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-oklch-700)"><span class="weight">700</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-oklch-800)"><span class="weight">800</span></div>
+          <div class="color-swatch" style="--swatch-color: var(--demo-oklch-900)"><span class="weight">900</span></div>
+        </div>
+        <code class="method-code">generate-color-system($colors, 'oklch')</code>
+      </div>
+    </div>
+
+    <div class="method-recommendation">
+      <h3>Which Method Should I Use?</h3>
+      <ul>
+        <li><strong>Simple:</strong> Quick prototyping, legacy browser support</li>
+        <li><strong>HSL:</strong> When you need precise control over saturation</li>
+        <li><strong>Scale:</strong> General purpose, most balanced results (default)</li>
+        <li><strong>OKLCH:</strong> Maximum perceptual uniformity, modern browsers</li>
+      </ul>
+    </div>
+  </Section>
+
+  <!-- Brand Color Comparison -->
+  <Section id="brand-comparison" classList="section--alt">
+    <h2>Your Brand Colors Compared</h2>
+    <p class="section-subtitle">
+      See how your actual brand colors look with each palette generation method.
+      Compare the results to choose the best method for your project.
+    </p>
+
+    <!-- Primary Color Comparison -->
+    <div class="brand-comparison-group">
+      <div class="brand-comparison-header">
+        <div class="brand-color-preview" style="--preview-bg: var(--color-primary)"></div>
+        <div class="brand-color-info">
+          <h3>Primary</h3>
+          <code>$brand-colors: ('primary': #E8871E)</code>
+        </div>
+      </div>
+      <div class="brand-comparison-grid">
+        <div class="brand-comparison-row">
+          <span class="method-label">Simple</span>
+          <div class="brand-palette">
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-simple-50)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-simple-100)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-simple-200)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-simple-300)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-simple-400)"></div>
+            <div class="mini-swatch base" style="--swatch-color: var(--brand-primary-simple-500)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-simple-600)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-simple-700)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-simple-800)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-simple-900)"></div>
+          </div>
+        </div>
+        <div class="brand-comparison-row">
+          <span class="method-label">HSL</span>
+          <div class="brand-palette">
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-hsl-50)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-hsl-100)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-hsl-200)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-hsl-300)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-hsl-400)"></div>
+            <div class="mini-swatch base" style="--swatch-color: var(--brand-primary-hsl-500)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-hsl-600)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-hsl-700)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-hsl-800)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-hsl-900)"></div>
+          </div>
+        </div>
+        <div class="brand-comparison-row">
+          <span class="method-label">Scale</span>
+          <div class="brand-palette">
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-scale-50)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-scale-100)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-scale-200)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-scale-300)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-scale-400)"></div>
+            <div class="mini-swatch base" style="--swatch-color: var(--brand-primary-scale-500)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-scale-600)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-scale-700)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-scale-800)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-scale-900)"></div>
+          </div>
+        </div>
+        <div class="brand-comparison-row">
+          <span class="method-label">OKLCH</span>
+          <div class="brand-palette">
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-oklch-50)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-oklch-100)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-oklch-200)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-oklch-300)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-oklch-400)"></div>
+            <div class="mini-swatch base" style="--swatch-color: var(--brand-primary-oklch-500)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-oklch-600)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-oklch-700)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-oklch-800)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-primary-oklch-900)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary Color Comparison -->
+    <div class="brand-comparison-group">
+      <div class="brand-comparison-header">
+        <div class="brand-color-preview" style="--preview-bg: var(--color-secondary)"></div>
+        <div class="brand-color-info">
+          <h3>Secondary</h3>
+          <code>$brand-colors: ('secondary': #008148)</code>
+        </div>
+      </div>
+      <div class="brand-comparison-grid">
+        <div class="brand-comparison-row">
+          <span class="method-label">Simple</span>
+          <div class="brand-palette">
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-simple-50)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-simple-100)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-simple-200)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-simple-300)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-simple-400)"></div>
+            <div class="mini-swatch base" style="--swatch-color: var(--brand-secondary-simple-500)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-simple-600)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-simple-700)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-simple-800)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-simple-900)"></div>
+          </div>
+        </div>
+        <div class="brand-comparison-row">
+          <span class="method-label">HSL</span>
+          <div class="brand-palette">
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-hsl-50)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-hsl-100)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-hsl-200)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-hsl-300)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-hsl-400)"></div>
+            <div class="mini-swatch base" style="--swatch-color: var(--brand-secondary-hsl-500)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-hsl-600)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-hsl-700)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-hsl-800)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-hsl-900)"></div>
+          </div>
+        </div>
+        <div class="brand-comparison-row">
+          <span class="method-label">Scale</span>
+          <div class="brand-palette">
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-scale-50)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-scale-100)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-scale-200)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-scale-300)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-scale-400)"></div>
+            <div class="mini-swatch base" style="--swatch-color: var(--brand-secondary-scale-500)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-scale-600)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-scale-700)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-scale-800)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-scale-900)"></div>
+          </div>
+        </div>
+        <div class="brand-comparison-row">
+          <span class="method-label">OKLCH</span>
+          <div class="brand-palette">
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-oklch-50)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-oklch-100)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-oklch-200)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-oklch-300)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-oklch-400)"></div>
+            <div class="mini-swatch base" style="--swatch-color: var(--brand-secondary-oklch-500)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-oklch-600)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-oklch-700)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-oklch-800)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-secondary-oklch-900)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tertiary Color Comparison -->
+    <div class="brand-comparison-group">
+      <div class="brand-comparison-header">
+        <div class="brand-color-preview" style="--preview-bg: var(--color-tertiary)"></div>
+        <div class="brand-color-info">
+          <h3>Tertiary</h3>
+          <code>$brand-colors: ('tertiary': #339966)</code>
+        </div>
+      </div>
+      <div class="brand-comparison-grid">
+        <div class="brand-comparison-row">
+          <span class="method-label">Simple</span>
+          <div class="brand-palette">
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-simple-50)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-simple-100)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-simple-200)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-simple-300)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-simple-400)"></div>
+            <div class="mini-swatch base" style="--swatch-color: var(--brand-tertiary-simple-500)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-simple-600)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-simple-700)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-simple-800)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-simple-900)"></div>
+          </div>
+        </div>
+        <div class="brand-comparison-row">
+          <span class="method-label">HSL</span>
+          <div class="brand-palette">
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-hsl-50)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-hsl-100)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-hsl-200)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-hsl-300)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-hsl-400)"></div>
+            <div class="mini-swatch base" style="--swatch-color: var(--brand-tertiary-hsl-500)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-hsl-600)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-hsl-700)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-hsl-800)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-hsl-900)"></div>
+          </div>
+        </div>
+        <div class="brand-comparison-row">
+          <span class="method-label">Scale</span>
+          <div class="brand-palette">
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-scale-50)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-scale-100)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-scale-200)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-scale-300)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-scale-400)"></div>
+            <div class="mini-swatch base" style="--swatch-color: var(--brand-tertiary-scale-500)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-scale-600)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-scale-700)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-scale-800)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-scale-900)"></div>
+          </div>
+        </div>
+        <div class="brand-comparison-row">
+          <span class="method-label">OKLCH</span>
+          <div class="brand-palette">
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-oklch-50)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-oklch-100)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-oklch-200)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-oklch-300)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-oklch-400)"></div>
+            <div class="mini-swatch base" style="--swatch-color: var(--brand-tertiary-oklch-500)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-oklch-600)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-oklch-700)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-oklch-800)"></div>
+            <div class="mini-swatch" style="--swatch-color: var(--brand-tertiary-oklch-900)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comparison-tip">
+      <h4>Pro Tip</h4>
+      <p>Look at the <strong>50-200</strong> weights (light variants) and <strong>700-900</strong> weights (dark variants) to spot the biggest differences between methods. Some methods preserve hue better in the extremes, while others may shift toward gray or brown.</p>
+    </div>
+  </Section>
+
+  <!-- Usage Examples -->
+  <Section id="usage" classList="section--alt">
+    <h2>Usage</h2>
+    <p class="section-subtitle">
+      How to use colors in your SCSS and CSS.
+    </p>
+
+    <div class="code-grid">
+      <div class="code-block">
+        <h4>CSS Custom Properties</h4>
+        <pre><code>{`/* Using CSS variables directly */
+.element {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary-600);
+}
+
+/* With specific weights */
+.card {
+  background: var(--color-neutral-50);
+  border: 1px solid var(--color-neutral-200);
+}
+
+/* Semantic aliases */
+.text-muted {
+  color: var(--color-text-muted);
+}`}</code></pre>
+      </div>
+
+      <div class="code-block">
+        <h4>SCSS Color Function</h4>
+        <pre><code>{`@use '../styles/abstracts' as *;
+
+// Using the color() function
+.element {
+  background-color: color('primary', 500);
+  border-color: color('primary', 600);
+
+  &:hover {
+    background-color: color('primary', 600);
+  }
+}
+
+// Neutral colors
+.card {
+  background: color('neutral', 50);
+  border: 1px solid color('neutral', 200);
+  color: color('neutral', 900);
+}`}</code></pre>
+      </div>
+
+      <div class="code-block">
+        <h4>Customizing Brand Colors</h4>
+        <pre><code>{`// src/styles/abstracts/_colors.scss
+
+// Change base brand colors
+$brand-colors: (
+  'primary': #E8871E,    // Your brand orange
+  'secondary': #008148,  // Your brand green
+  'tertiary': #339966,   // Accent color
+  'success': #28a745,
+  'danger': #dc3545,
+  'warning': #ffc107,
+  'info': #17a2b8,
+);
+
+// Palettes auto-generate 50-900 weights!
+$colors: generate-color-system(
+  $brand-colors,
+  'scale'
+);`}</code></pre>
+      </div>
+
+      <div class="code-block">
+        <h4>Palette Generation Methods</h4>
+        <pre><code>{`// Available generation methods:
+
+// 'simple' - Basic tint/shade mixing
+$colors: generate-color-system($brand-colors, 'simple');
+
+// 'hsl' - HSL manipulation (better color theory)
+$colors: generate-color-system($brand-colors, 'hsl');
+
+// 'scale' - Perceptually uniform (recommended)
+$colors: generate-color-system($brand-colors, 'scale');
+
+// 'oklch' - OKLCH color space (future-proof)
+$colors: generate-color-system($brand-colors, 'oklch');`}</code></pre>
+      </div>
+    </div>
+  </Section>
+</DefaultLayout>
+
+<style lang="scss" is:global>
+  @use 'sass:color';
+  @use 'sass:math';
+  @use '../../styles/abstracts' as *;
+
+  // ===================================
+  // Demo Palette Generation
+  // Generate all 4 methods from the same base color for comparison
+  // ===================================
+
+  $demo-base: #3B82F6; // A nice blue for demonstration
+
+  // Method 1: Simple (tint/shade)
+  $demo-simple: (
+    50: color.mix(white, $demo-base, 95%),
+    100: color.mix(white, $demo-base, 90%),
+    200: color.mix(white, $demo-base, 75%),
+    300: color.mix(white, $demo-base, 50%),
+    400: color.mix(white, $demo-base, 25%),
+    500: $demo-base,
+    600: color.mix(black, $demo-base, 15%),
+    700: color.mix(black, $demo-base, 30%),
+    800: color.mix(black, $demo-base, 45%),
+    900: color.mix(black, $demo-base, 60%),
+  );
+
+  // Method 2: HSL manipulation
+  $demo-hsl-color: color.to-space($demo-base, hsl);
+  $demo-hsl-hue: color.channel($demo-hsl-color, 'hue');
+  $demo-hsl-sat: color.channel($demo-hsl-color, 'saturation');
+  $demo-hsl-light: color.channel($demo-hsl-color, 'lightness');
+
+  $demo-hsl: (
+    50: color.change($demo-hsl-color, $saturation: math.max($demo-hsl-sat - 30%, 10%), $lightness: math.min($demo-hsl-light + 40%, 95%)),
+    100: color.change($demo-hsl-color, $saturation: math.max($demo-hsl-sat - 20%, 15%), $lightness: math.min($demo-hsl-light + 35%, 90%)),
+    200: color.change($demo-hsl-color, $saturation: math.max($demo-hsl-sat - 10%, 20%), $lightness: math.min($demo-hsl-light + 25%, 85%)),
+    300: color.change($demo-hsl-color, $lightness: math.min($demo-hsl-light + 15%, 75%)),
+    400: color.change($demo-hsl-color, $lightness: math.min($demo-hsl-light + 8%, 65%)),
+    500: $demo-base,
+    600: color.change($demo-hsl-color, $saturation: math.min($demo-hsl-sat + 5%, 100%), $lightness: math.max($demo-hsl-light - 8%, 25%)),
+    700: color.change($demo-hsl-color, $saturation: math.min($demo-hsl-sat + 10%, 100%), $lightness: math.max($demo-hsl-light - 18%, 20%)),
+    800: color.change($demo-hsl-color, $saturation: math.min($demo-hsl-sat + 15%, 100%), $lightness: math.max($demo-hsl-light - 28%, 15%)),
+    900: color.change($demo-hsl-color, $saturation: math.min($demo-hsl-sat + 20%, 100%), $lightness: math.max($demo-hsl-light - 38%, 10%)),
+  );
+
+  // Method 3: Scale (perceptually uniform)
+  $demo-scale: (
+    50: color.scale($demo-base, $lightness: 80%, $saturation: -60%),
+    100: color.scale($demo-base, $lightness: 70%, $saturation: -50%),
+    200: color.scale($demo-base, $lightness: 50%, $saturation: -30%),
+    300: color.scale($demo-base, $lightness: 30%, $saturation: -20%),
+    400: color.scale($demo-base, $lightness: 15%, $saturation: -10%),
+    500: $demo-base,
+    600: color.scale($demo-base, $lightness: -10%, $saturation: 10%),
+    700: color.scale($demo-base, $lightness: -25%, $saturation: 15%),
+    800: color.scale($demo-base, $lightness: -40%, $saturation: 20%),
+    900: color.scale($demo-base, $lightness: -60%, $saturation: 25%),
+  );
+
+  // Method 4: OKLCH (perceptual color space)
+  $demo-oklch-color: color.to-space($demo-base, oklch);
+  $demo-oklch-chroma: color.channel($demo-oklch-color, 'chroma');
+
+  $demo-oklch: (
+    50: color.to-space(color.change($demo-oklch-color, $lightness: 95%, $chroma: math.max($demo-oklch-chroma * 0.3, 0.01)), rgb),
+    100: color.to-space(color.change($demo-oklch-color, $lightness: 90%, $chroma: math.max($demo-oklch-chroma * 0.4, 0.01)), rgb),
+    200: color.to-space(color.change($demo-oklch-color, $lightness: 80%, $chroma: $demo-oklch-chroma * 0.6), rgb),
+    300: color.to-space(color.change($demo-oklch-color, $lightness: 70%, $chroma: $demo-oklch-chroma * 0.8), rgb),
+    400: color.to-space(color.change($demo-oklch-color, $lightness: 60%, $chroma: $demo-oklch-chroma * 0.9), rgb),
+    500: $demo-base,
+    600: color.to-space(color.change($demo-oklch-color, $lightness: 40%, $chroma: math.min($demo-oklch-chroma * 1.1, 0.4)), rgb),
+    700: color.to-space(color.change($demo-oklch-color, $lightness: 30%, $chroma: math.min($demo-oklch-chroma * 1.2, 0.4)), rgb),
+    800: color.to-space(color.change($demo-oklch-color, $lightness: 20%, $chroma: math.min($demo-oklch-chroma * 1.3, 0.4)), rgb),
+    900: color.to-space(color.change($demo-oklch-color, $lightness: 10%, $chroma: math.min($demo-oklch-chroma * 1.4, 0.4)), rgb),
+  );
+
+  // Generate CSS custom properties for each method
+  :root {
+    @each $weight, $color-value in $demo-simple {
+      --demo-simple-#{$weight}: #{$color-value};
+    }
+    @each $weight, $color-value in $demo-hsl {
+      --demo-hsl-#{$weight}: #{$color-value};
+    }
+    @each $weight, $color-value in $demo-scale {
+      --demo-scale-#{$weight}: #{$color-value};
+    }
+    @each $weight, $color-value in $demo-oklch {
+      --demo-oklch-#{$weight}: #{$color-value};
+    }
+  }
+
+  // ===================================
+  // Brand Color Comparison Palettes
+  // Generate all 4 methods for each brand color
+  // ===================================
+
+  // Brand colors from _colors.scss
+  $brand-primary: #E8871E;
+  $brand-secondary: #008148;
+  $brand-tertiary: #339966;
+
+  // Mixin to generate all 4 palette methods for a single color
+  @mixin generate-brand-comparison($name, $base-color) {
+    // Simple method
+    $simple: (
+      50: color.mix(white, $base-color, 95%),
+      100: color.mix(white, $base-color, 90%),
+      200: color.mix(white, $base-color, 75%),
+      300: color.mix(white, $base-color, 50%),
+      400: color.mix(white, $base-color, 25%),
+      500: $base-color,
+      600: color.mix(black, $base-color, 15%),
+      700: color.mix(black, $base-color, 30%),
+      800: color.mix(black, $base-color, 45%),
+      900: color.mix(black, $base-color, 60%),
+    );
+
+    @each $weight, $value in $simple {
+      --brand-#{$name}-simple-#{$weight}: #{$value};
+    }
+
+    // HSL method
+    $hsl-color: color.to-space($base-color, hsl);
+    $hsl-sat: color.channel($hsl-color, 'saturation');
+    $hsl-light: color.channel($hsl-color, 'lightness');
+
+    $hsl: (
+      50: color.change($hsl-color, $saturation: math.max($hsl-sat - 30%, 10%), $lightness: math.min($hsl-light + 40%, 95%)),
+      100: color.change($hsl-color, $saturation: math.max($hsl-sat - 20%, 15%), $lightness: math.min($hsl-light + 35%, 90%)),
+      200: color.change($hsl-color, $saturation: math.max($hsl-sat - 10%, 20%), $lightness: math.min($hsl-light + 25%, 85%)),
+      300: color.change($hsl-color, $lightness: math.min($hsl-light + 15%, 75%)),
+      400: color.change($hsl-color, $lightness: math.min($hsl-light + 8%, 65%)),
+      500: $base-color,
+      600: color.change($hsl-color, $saturation: math.min($hsl-sat + 5%, 100%), $lightness: math.max($hsl-light - 8%, 25%)),
+      700: color.change($hsl-color, $saturation: math.min($hsl-sat + 10%, 100%), $lightness: math.max($hsl-light - 18%, 20%)),
+      800: color.change($hsl-color, $saturation: math.min($hsl-sat + 15%, 100%), $lightness: math.max($hsl-light - 28%, 15%)),
+      900: color.change($hsl-color, $saturation: math.min($hsl-sat + 20%, 100%), $lightness: math.max($hsl-light - 38%, 10%)),
+    );
+
+    @each $weight, $value in $hsl {
+      --brand-#{$name}-hsl-#{$weight}: #{$value};
+    }
+
+    // Scale method
+    $scale: (
+      50: color.scale($base-color, $lightness: 80%, $saturation: -60%),
+      100: color.scale($base-color, $lightness: 70%, $saturation: -50%),
+      200: color.scale($base-color, $lightness: 50%, $saturation: -30%),
+      300: color.scale($base-color, $lightness: 30%, $saturation: -20%),
+      400: color.scale($base-color, $lightness: 15%, $saturation: -10%),
+      500: $base-color,
+      600: color.scale($base-color, $lightness: -10%, $saturation: 10%),
+      700: color.scale($base-color, $lightness: -25%, $saturation: 15%),
+      800: color.scale($base-color, $lightness: -40%, $saturation: 20%),
+      900: color.scale($base-color, $lightness: -60%, $saturation: 25%),
+    );
+
+    @each $weight, $value in $scale {
+      --brand-#{$name}-scale-#{$weight}: #{$value};
+    }
+
+    // OKLCH method
+    $oklch-color: color.to-space($base-color, oklch);
+    $oklch-chroma: color.channel($oklch-color, 'chroma');
+
+    $oklch: (
+      50: color.to-space(color.change($oklch-color, $lightness: 95%, $chroma: math.max($oklch-chroma * 0.3, 0.01)), rgb),
+      100: color.to-space(color.change($oklch-color, $lightness: 90%, $chroma: math.max($oklch-chroma * 0.4, 0.01)), rgb),
+      200: color.to-space(color.change($oklch-color, $lightness: 80%, $chroma: $oklch-chroma * 0.6), rgb),
+      300: color.to-space(color.change($oklch-color, $lightness: 70%, $chroma: $oklch-chroma * 0.8), rgb),
+      400: color.to-space(color.change($oklch-color, $lightness: 60%, $chroma: $oklch-chroma * 0.9), rgb),
+      500: $base-color,
+      600: color.to-space(color.change($oklch-color, $lightness: 40%, $chroma: math.min($oklch-chroma * 1.1, 0.4)), rgb),
+      700: color.to-space(color.change($oklch-color, $lightness: 30%, $chroma: math.min($oklch-chroma * 1.2, 0.4)), rgb),
+      800: color.to-space(color.change($oklch-color, $lightness: 20%, $chroma: math.min($oklch-chroma * 1.3, 0.4)), rgb),
+      900: color.to-space(color.change($oklch-color, $lightness: 10%, $chroma: math.min($oklch-chroma * 1.4, 0.4)), rgb),
+    );
+
+    @each $weight, $value in $oklch {
+      --brand-#{$name}-oklch-#{$weight}: #{$value};
+    }
+  }
+
+  // Generate comparison palettes for all brand colors
+  :root {
+    @include generate-brand-comparison('primary', $brand-primary);
+    @include generate-brand-comparison('secondary', $brand-secondary);
+    @include generate-brand-comparison('tertiary', $brand-tertiary);
+  }
+
+  .section--alt {
+    background-color: var(--color-neutral-100);
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-neutral-600);
+    max-width: 40rem;
+    margin-inline: auto;
+    margin-bottom: var(--space-8);
+  }
+
+  .color-category {
+    margin-bottom: var(--space-12);
+
+    h3 {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-2);
+    }
+
+    .color-description {
+      color: var(--color-neutral-600);
+      margin-bottom: var(--space-4);
+    }
+  }
+
+  .color-palette {
+    display: flex;
+    gap: var(--space-1);
+    flex-wrap: wrap;
+    justify-content: center;
+
+    &.small {
+      gap: var(--space-1);
+    }
+
+    &.large .color-swatch {
+      width: 5rem;
+      height: 5rem;
+
+      @include media-up('md') {
+        width: 6rem;
+        height: 6rem;
+      }
+    }
+  }
+
+  .color-swatch {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: var(--border-radius-base);
+    background-color: var(--swatch-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    transition: transform var(--transition-fast);
+
+    @include media-up('md') {
+      width: 4.5rem;
+      height: 4.5rem;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      z-index: 1;
+    }
+
+    &.primary {
+      box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-neutral-400);
+    }
+
+    .weight {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-white);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    }
+
+    .label {
+      font-size: 0.625rem;
+      color: var(--color-white);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+      opacity: 0.8;
+    }
+  }
+
+  .semantic-grid {
+    display: grid;
+    gap: var(--space-6);
+
+    @include media-up('md') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media-up('xl') {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .semantic-card {
+    background: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-neutral-200);
+    text-align: center;
+
+    h3 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-2);
+    }
+
+    p {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+      margin-bottom: var(--space-4);
+    }
+  }
+
+  .semantic-preview {
+    width: 4rem;
+    height: 4rem;
+    border-radius: var(--border-radius-full);
+    background-color: var(--preview-color);
+    margin: 0 auto var(--space-4);
+  }
+
+  .neutral-usage {
+    display: grid;
+    gap: var(--space-3);
+    max-width: 40rem;
+    margin: var(--space-8) auto 0;
+    text-align: left;
+  }
+
+  .usage-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--color-neutral-200);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .usage-swatch {
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--border-radius-sm);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+  }
+
+  .usage-item code {
+    font-size: var(--font-size-sm);
+    background: var(--color-neutral-100);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--border-radius-sm);
+    flex-shrink: 0;
+  }
+
+  .usage-item span:last-child {
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-600);
+  }
+
+  .button-showcase {
+    max-width: 48rem;
+    margin-inline: auto;
+    text-align: left;
+
+    h3 {
+      font-size: var(--font-size-base);
+      margin-top: var(--space-8);
+      margin-bottom: var(--space-4);
+      color: var(--color-neutral-600);
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+
+    &.dark-bg {
+      background: var(--color-neutral-900);
+      padding: var(--space-6);
+      border-radius: var(--border-radius-lg);
+    }
+  }
+
+  .code-grid {
+    display: grid;
+    gap: var(--space-6);
+    text-align: left;
+
+    @include media-up('lg') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .code-block {
+    background: var(--color-neutral-900);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+
+    h4 {
+      padding: var(--space-3) var(--space-4);
+      margin: 0;
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-400);
+      border-bottom: 1px solid var(--color-neutral-800);
+    }
+
+    pre {
+      margin: 0;
+      padding: var(--space-4);
+      overflow-x: auto;
+    }
+
+    code {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-200);
+      background: none;
+    }
+  }
+
+  // ===================================
+  // Palette Generation Methods Comparison
+  // ===================================
+
+  .method-comparison {
+    display: grid;
+    gap: var(--space-6);
+
+    @include media-up('lg') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .method-card {
+    background: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-neutral-200);
+    text-align: center;
+
+    h3 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-2);
+      color: var(--color-neutral-900);
+    }
+
+    p {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+      margin-bottom: var(--space-4);
+      min-height: 3rem;
+    }
+  }
+
+  .method-palette {
+    margin-bottom: var(--space-4);
+
+    .color-swatch {
+      width: 2.5rem;
+      height: 2.5rem;
+
+      @include media-up('md') {
+        width: 3rem;
+        height: 3rem;
+      }
+    }
+  }
+
+  .method-code {
+    display: block;
+    font-size: var(--font-size-xs);
+    background: var(--color-neutral-100);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--border-radius-sm);
+    color: var(--color-neutral-700);
+  }
+
+  .method-recommendation {
+    margin-top: var(--space-8);
+    padding: var(--space-6);
+    background: var(--color-neutral-50);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-neutral-200);
+    text-align: left;
+    max-width: 48rem;
+    margin-inline: auto;
+
+    h3 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-4);
+      color: var(--color-neutral-900);
+    }
+
+    ul {
+      margin: 0;
+      padding-left: var(--space-5);
+
+      li {
+        margin-bottom: var(--space-2);
+        color: var(--color-neutral-700);
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        strong {
+          color: var(--color-neutral-900);
+        }
+      }
+    }
+  }
+
+  // ===================================
+  // Brand Color Comparison Styles
+  // ===================================
+
+  .brand-comparison-group {
+    background: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-6);
+    margin-bottom: var(--space-6);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .brand-comparison-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-neutral-200);
+  }
+
+  .brand-color-preview {
+    width: 4rem;
+    height: 4rem;
+    border-radius: var(--border-radius-lg);
+    background-color: var(--preview-bg);
+    box-shadow: var(--shadow-sm);
+    flex-shrink: 0;
+  }
+
+  .brand-color-info {
+    h3 {
+      font-size: var(--font-size-xl);
+      margin: 0 0 var(--space-1);
+      color: var(--color-neutral-900);
+    }
+
+    code {
+      font-size: var(--font-size-sm);
+      background: var(--color-neutral-100);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--border-radius-sm);
+      color: var(--color-neutral-600);
+    }
+  }
+
+  .brand-comparison-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .brand-comparison-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .method-label {
+    width: 4rem;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-neutral-600);
+    flex-shrink: 0;
+  }
+
+  .brand-palette {
+    display: flex;
+    gap: 2px;
+    flex: 1;
+  }
+
+  .mini-swatch {
+    flex: 1;
+    height: 2.5rem;
+    background-color: var(--swatch-color);
+    transition: transform var(--transition-fast);
+
+    &:first-child {
+      border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm);
+    }
+
+    &:last-child {
+      border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+    }
+
+    &:hover {
+      transform: scaleY(1.2);
+      z-index: 1;
+    }
+
+    &.base {
+      box-shadow: inset 0 0 0 2px var(--color-white), inset 0 0 0 4px var(--color-neutral-400);
+    }
+
+    @include media-up('md') {
+      height: 3rem;
+    }
+  }
+
+  .comparison-tip {
+    margin-top: var(--space-6);
+    padding: var(--space-5);
+    background: var(--color-info-50);
+    border: 1px solid var(--color-info-200);
+    border-radius: var(--border-radius-lg);
+    max-width: 48rem;
+    margin-inline: auto;
+
+    h4 {
+      font-size: var(--font-size-base);
+      color: var(--color-info-700);
+      margin: 0 0 var(--space-2);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+
+      &::before {
+        content: '💡';
+      }
+    }
+
+    p {
+      font-size: var(--font-size-sm);
+      color: var(--color-info-800);
+      margin: 0;
+      line-height: var(--line-height-relaxed);
+    }
+  }
+</style>

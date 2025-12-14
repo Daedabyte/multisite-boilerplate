@@ -1,0 +1,587 @@
+---
+/**
+ * Components Showcase
+ *
+ * Demonstrates all available component variants with examples.
+ * Use this page as a reference when building new pages.
+ */
+
+import DefaultLayout from '@layouts/DefaultLayout.astro';
+
+// Hero variants (import directly from .astro files)
+import HeroStandard from '@components/sections/heroes/HeroStandard.astro';
+import HeroSplit from '@components/sections/heroes/HeroSplit.astro';
+import HeroMinimal from '@components/sections/heroes/HeroMinimal.astro';
+
+// Features variants (import directly from .astro files)
+import FeaturesGrid from '@components/sections/features/FeaturesGrid.astro';
+import FeaturesList from '@components/sections/features/FeaturesList.astro';
+import FeaturesAlternating from '@components/sections/features/FeaturesAlternating.astro';
+
+// CTA variants (import directly from .astro files)
+import CTASimple from '@components/sections/cta/CTASimple.astro';
+import CTABanner from '@components/sections/cta/CTABanner.astro';
+import CTASplit from '@components/sections/cta/CTASplit.astro';
+
+// UI components
+import Section from '@components/ui/Section.astro';
+import Container from '@components/ui/Container.astro';
+import Button from '@components/ui/Button.astro';
+
+// Images
+import backgroundImg from '@assets/images/background.png';
+import placeholderImg from '@assets/images/placeholder.png';
+
+// Sample data
+const sampleFeatures = [
+  {
+    title: 'Fast Performance',
+    description: 'Optimized for speed with minimal JavaScript and efficient asset loading.',
+    icon: 'fa-solid fa-bolt',
+  },
+  {
+    title: 'Fully Responsive',
+    description: 'Looks great on any device, from mobile phones to large desktop screens.',
+    icon: 'fa-solid fa-mobile-screen',
+  },
+  {
+    title: 'Easy to Customize',
+    description: 'Built with CSS custom properties for quick theming and customization.',
+    icon: 'fa-solid fa-palette',
+  },
+];
+
+const alternatingFeatures = [
+  {
+    title: 'Content-First Architecture',
+    description: 'Our boilerplate separates content from presentation, making it easy to update text and images without touching code. Perfect for AI-assisted content population.',
+    image: { src: placeholderImg.src, alt: 'Content architecture diagram' },
+    icon: 'fa-solid fa-file-lines',
+  },
+  {
+    title: 'Variant-Based Components',
+    description: 'Each component category offers multiple variants that share the same TypeScript interface. Switch layouts without restructuring your content data.',
+    image: { src: placeholderImg.src, alt: 'Component variants illustration' },
+    icon: 'fa-solid fa-layer-group',
+  },
+  {
+    title: 'Configuration-Driven',
+    description: 'Global site settings control component selection, theming, and behavior. One config file, site-wide changes.',
+    image: { src: placeholderImg.src, alt: 'Configuration settings' },
+    icon: 'fa-solid fa-sliders',
+  },
+];
+---
+
+<DefaultLayout
+  title="Components - Documentation"
+  description="Showcase of all available component variants in the boilerplate."
+>
+  <!-- Page Header -->
+  <HeroMinimal
+    title="Components Showcase"
+    subtitle="Explore all available component variants and their usage"
+    id="page-header"
+  />
+
+  <!-- Hero Variants Section -->
+  <Section id="heroes">
+    <h2>Hero Variants</h2>
+    <p class="section-subtitle">
+      Heroes support multiple layouts. All variants share the same props interface.
+    </p>
+
+    <div class="variant-grid">
+      <div class="variant-card">
+        <h3>HeroStandard</h3>
+        <p>Full-width with background image and overlay. Best for landing pages.</p>
+        <code>import HeroStandard from '@components/sections/heroes/HeroStandard.astro';</code>
+      </div>
+      <div class="variant-card">
+        <h3>HeroSplit</h3>
+        <p>Content and image side by side. Best for product showcases.</p>
+        <code>import HeroSplit from '@components/sections/heroes/HeroSplit.astro';</code>
+      </div>
+      <div class="variant-card">
+        <h3>HeroMinimal</h3>
+        <p>Text only with optional breadcrumbs. Best for inner pages.</p>
+        <code>import HeroMinimal from '@components/sections/heroes/HeroMinimal.astro';</code>
+      </div>
+    </div>
+  </Section>
+
+  <!-- HeroStandard Demo -->
+  <div class="demo-section">
+    <div class="demo-label">HeroStandard</div>
+  </div>
+  <HeroStandard
+    title="Standard Hero Example"
+    subtitle="Full-width hero with background image and overlay. Perfect for landing pages and home pages where you want maximum visual impact."
+    backgroundImage={backgroundImg.src}
+    actions={[
+      { label: 'Get Started', href: '#', variant: 'primary' },
+      { label: 'Learn More', href: '#', variant: 'white' },
+    ]}
+    size="partial"
+    alignment="center"
+    id="hero-standard-demo"
+  />
+
+  <!-- HeroSplit Demo -->
+  <div class="demo-section">
+    <div class="demo-label">HeroSplit</div>
+  </div>
+  <HeroSplit
+    title="Split Hero Example"
+    subtitle="This variant places content and imagery side by side, great for product showcases and SaaS landing pages."
+    image={{ src: placeholderImg.src, alt: 'Product showcase' }}
+    imagePosition="right"
+    actions={[
+      { label: 'Primary Action', href: '#', variant: 'primary' },
+      { label: 'Secondary', href: '#', variant: 'secondary' },
+    ]}
+    size="auto"
+    id="hero-split-demo"
+  />
+
+  <!-- HeroSplit Demo (Image Left) -->
+  <div class="demo-section">
+    <div class="demo-label">HeroSplit (Image Left)</div>
+  </div>
+  <HeroSplit
+    title="Split Hero - Left Image"
+    subtitle="The same Split Hero variant but with the image positioned on the left side. Use imagePosition='left' to achieve this layout."
+    image={{ src: placeholderImg.src, alt: 'App screenshot' }}
+    imagePosition="left"
+    actions={[
+      { label: 'Download App', href: '#', variant: 'primary' },
+    ]}
+    size="auto"
+    id="hero-split-left-demo"
+  />
+
+  <!-- HeroMinimal Demo -->
+  <div class="demo-section">
+    <div class="demo-label">HeroMinimal</div>
+  </div>
+  <HeroMinimal
+    title="Minimal Hero Example"
+    subtitle="Simple text-only hero perfect for inner pages, documentation, and content sections."
+    breadcrumbs={[
+      { href: '/', label: 'Home' },
+      { href: '/docs', label: 'Docs' },
+      { href: '/docs/components', label: 'Components' },
+    ]}
+    id="hero-minimal-demo"
+  />
+
+  <!-- Features Variants Section -->
+  <Section id="features" classList="section--alt">
+    <h2>Features Variants</h2>
+    <p class="section-subtitle">
+      Display feature lists, benefits, or services with different layouts.
+    </p>
+
+    <div class="variant-grid">
+      <div class="variant-card">
+        <h3>FeaturesGrid</h3>
+        <p>Card grid layout with configurable columns (2, 3, or 4).</p>
+        <code>import FeaturesGrid from '@components/sections/features/FeaturesGrid.astro';</code>
+      </div>
+      <div class="variant-card">
+        <h3>FeaturesList</h3>
+        <p>Vertical list with optional dividers. Clean and scannable.</p>
+        <code>import FeaturesList from '@components/sections/features/FeaturesList.astro';</code>
+      </div>
+      <div class="variant-card">
+        <h3>FeaturesAlternating</h3>
+        <p>Zigzag layout with images. Great for detailed explanations.</p>
+        <code>import FeaturesAlternating from '@components/sections/features/FeaturesAlternating.astro';</code>
+      </div>
+    </div>
+  </Section>
+
+  <!-- FeaturesGrid Demo -->
+  <div class="demo-section">
+    <div class="demo-label">FeaturesGrid (3 columns)</div>
+  </div>
+  <FeaturesGrid
+    heading="Features Grid Example"
+    subheading="Card grid layout with icons. Configurable columns: 2, 3, or 4."
+    features={sampleFeatures}
+    columns={3}
+    id="features-grid-demo"
+  />
+
+  <!-- FeaturesGrid Demo (4 columns) -->
+  <div class="demo-section">
+    <div class="demo-label">FeaturesGrid (4 columns)</div>
+  </div>
+  <FeaturesGrid
+    heading="Four Column Grid"
+    subheading="Same component with columns={4} for more compact layouts."
+    features={[...sampleFeatures, { title: 'Secure', description: 'Built with security best practices and regular audits.', icon: 'fa-solid fa-shield-halved' }]}
+    columns={4}
+    background={{ variant: 'alt' }}
+    id="features-grid-4-demo"
+  />
+
+  <!-- FeaturesList Demo -->
+  <div class="demo-section">
+    <div class="demo-label">FeaturesList</div>
+  </div>
+  <FeaturesList
+    heading="Features List Example"
+    subheading="Vertical list with dividers. Clean and scannable."
+    features={sampleFeatures}
+    dividers={true}
+    id="features-list-demo"
+  />
+
+  <!-- FeaturesAlternating Demo -->
+  <div class="demo-section">
+    <div class="demo-label">FeaturesAlternating</div>
+  </div>
+  <FeaturesAlternating
+    heading="Features Alternating Example"
+    subheading="Zigzag layout with images. Great for detailed explanations."
+    features={alternatingFeatures}
+    id="features-alternating-demo"
+  />
+
+  <!-- CTA Variants Section -->
+  <Section id="cta-variants" classList="section--alt">
+    <h2>CTA Variants</h2>
+    <p class="section-subtitle">
+      Call-to-action sections for converting visitors.
+    </p>
+
+    <div class="variant-grid">
+      <div class="variant-card">
+        <h3>CTASimple</h3>
+        <p>Centered text with action buttons. Clean and focused.</p>
+        <code>import CTASimple from '@components/sections/cta/CTASimple.astro';</code>
+      </div>
+      <div class="variant-card">
+        <h3>CTABanner</h3>
+        <p>Full-width banner with background. High visual impact.</p>
+        <code>import CTABanner from '@components/sections/cta/CTABanner.astro';</code>
+      </div>
+      <div class="variant-card">
+        <h3>CTASplit</h3>
+        <p>Content with featured image. Great for app downloads.</p>
+        <code>import CTASplit from '@components/sections/cta/CTASplit.astro';</code>
+      </div>
+    </div>
+  </Section>
+
+  <!-- CTASimple Demo -->
+  <div class="demo-section">
+    <div class="demo-label">CTASimple</div>
+  </div>
+  <CTASimple
+    heading="Simple CTA Example"
+    description="This is a centered call-to-action with clean, focused design. Perfect for newsletter signups or general CTAs."
+    actions={[
+      { label: 'Get Started', href: '#', variant: 'primary' },
+      { label: 'Learn More', href: '#', variant: 'secondary' },
+    ]}
+    id="cta-simple-demo"
+  />
+
+  <!-- CTASimple Demo (Dark) -->
+  <div class="demo-section">
+    <div class="demo-label">CTASimple (Dark Background)</div>
+  </div>
+  <CTASimple
+    heading="Dark Background CTA"
+    description="Same CTASimple component with background={{ variant: 'dark' }} for contrast."
+    actions={[
+      { label: 'Get Started', href: '#', variant: 'white' },
+      { label: 'Learn More', href: '#', variant: 'secondary' },
+    ]}
+    background={{ variant: 'dark' }}
+    id="cta-simple-dark-demo"
+  />
+
+  <!-- CTABanner Demo -->
+  <div class="demo-section">
+    <div class="demo-label">CTABanner</div>
+  </div>
+  <CTABanner
+    heading="Banner CTA Example"
+    description="Full-width banner with high visual impact. Great for promotional messages."
+    actions={[
+      { label: 'Contact Us', href: '/contact', variant: 'white' },
+    ]}
+    id="cta-banner-demo"
+  />
+
+  <!-- CTABanner Demo (Compact) -->
+  <div class="demo-section">
+    <div class="demo-label">CTABanner (Compact)</div>
+  </div>
+  <CTABanner
+    heading="Compact Banner CTA"
+    description="Same component with compact={true} for smaller footprint."
+    actions={[
+      { label: 'Sign Up Now', href: '#', variant: 'white' },
+    ]}
+    compact={true}
+    id="cta-banner-compact-demo"
+  />
+
+  <!-- CTASplit Demo -->
+  <div class="demo-section">
+    <div class="demo-label">CTASplit</div>
+  </div>
+  <CTASplit
+    heading="Split CTA Example"
+    description="Content paired with a featured image. Ideal for app downloads or product showcases."
+    image={{ src: placeholderImg.src, alt: 'App preview' }}
+    imagePosition="right"
+    actions={[
+      { label: 'Download Now', href: '#', variant: 'primary' },
+    ]}
+    id="cta-split-demo"
+  />
+
+  <!-- CTASplit Demo (Image Left) -->
+  <div class="demo-section">
+    <div class="demo-label">CTASplit (Image Left)</div>
+  </div>
+  <CTASplit
+    heading="Split CTA - Left Image"
+    description="Same component with imagePosition='left' for opposite layout."
+    image={{ src: placeholderImg.src, alt: 'Dashboard preview' }}
+    imagePosition="left"
+    actions={[
+      { label: 'Try Free', href: '#', variant: 'primary' },
+      { label: 'View Demo', href: '#', variant: 'secondary' },
+    ]}
+    background={{ variant: 'alt' }}
+    id="cta-split-left-demo"
+  />
+
+  <!-- UI Components Section -->
+  <Section id="ui-components">
+    <h2>UI Components</h2>
+    <p class="section-subtitle">
+      Reusable primitives for building custom sections.
+    </p>
+
+    <div class="ui-demo">
+      <h3>Buttons</h3>
+      <div class="button-demo">
+        <Button variant="primary">Primary</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="tertiary">Tertiary</Button>
+        <Button variant="success">Success</Button>
+        <Button variant="danger">Danger</Button>
+        <Button variant="warning">Warning</Button>
+      </div>
+
+      <h4>Outline Variants</h4>
+      <div class="button-demo">
+        <Button variant="primary" outline>Primary</Button>
+        <Button variant="secondary" outline>Secondary</Button>
+        <Button variant="dark" outline>Dark</Button>
+      </div>
+
+      <h4>Sizes</h4>
+      <div class="button-demo">
+        <Button variant="primary" size="small">Small</Button>
+        <Button variant="primary" size="medium">Medium</Button>
+        <Button variant="primary" size="large">Large</Button>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Code Examples Section -->
+  <Section id="usage" classList="section--alt">
+    <h2>Usage Examples</h2>
+    <p class="section-subtitle">
+      How to use components in your pages.
+    </p>
+
+    <div class="code-examples">
+      <div class="code-block">
+        <h3>Import from barrel exports</h3>
+        <pre><code>{`// Import specific variants
+import { HeroStandard, HeroSplit } from '@components/sections/heroes';
+import { FeaturesGrid } from '@components/sections/features';
+import { CTABanner } from '@components/sections/cta';
+
+// Use with content data
+import { homepage } from '@data/content';
+
+<HeroStandard {...homepage.hero} />
+<FeaturesGrid features={homepage.features.items} />`}</code></pre>
+      </div>
+
+      <div class="code-block">
+        <h3>Content Data Structure</h3>
+        <pre><code>{`// src/data/content/homepage.ts
+export const homepage = {
+  hero: {
+    title: 'Welcome',
+    subtitle: 'Your tagline here',
+    actions: [
+      { label: 'Get Started', href: '/contact', variant: 'primary' }
+    ],
+  },
+  features: {
+    heading: 'Our Features',
+    items: [
+      { title: 'Feature 1', description: '...', icon: 'fa-star' }
+    ],
+  },
+};`}</code></pre>
+      </div>
+    </div>
+  </Section>
+</DefaultLayout>
+
+<style lang="scss" is:global>
+  @use '../../styles/abstracts' as *;
+
+  .section--alt {
+    background-color: var(--color-neutral-100);
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-neutral-600);
+    max-width: 40rem;
+    margin-inline: auto;
+    margin-bottom: var(--space-8);
+  }
+
+  .demo-section {
+    background: var(--color-neutral-900);
+    padding: var(--space-2) var(--space-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .demo-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-white);
+    font-family: var(--font-family-mono, monospace);
+    letter-spacing: 0.025em;
+
+    &::before {
+      content: '< ';
+      color: var(--color-neutral-500);
+    }
+
+    &::after {
+      content: ' />';
+      color: var(--color-neutral-500);
+    }
+  }
+
+  .variant-grid {
+    display: grid;
+    gap: var(--space-6);
+    text-align: left;
+    margin-top: var(--space-8);
+
+    @include media-up('md') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .variant-card {
+    background: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-neutral-200);
+
+    h3 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-2);
+      color: var(--color-primary);
+    }
+
+    p {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+      margin-bottom: var(--space-4);
+    }
+
+    code {
+      display: block;
+      font-size: var(--font-size-xs);
+      background: var(--color-neutral-100);
+      padding: var(--space-2);
+      border-radius: var(--border-radius-sm);
+      overflow-x: auto;
+    }
+  }
+
+  .ui-demo {
+    text-align: left;
+    max-width: 48rem;
+    margin-inline: auto;
+
+    h3 {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-4);
+    }
+
+    h4 {
+      font-size: var(--font-size-base);
+      margin-top: var(--space-6);
+      margin-bottom: var(--space-3);
+      color: var(--color-neutral-600);
+    }
+  }
+
+  .button-demo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .code-examples {
+    display: grid;
+    gap: var(--space-6);
+    text-align: left;
+
+    @include media-up('lg') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .code-block {
+    background: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-neutral-200);
+
+    h3 {
+      font-size: var(--font-size-base);
+      padding: var(--space-4);
+      background: var(--color-neutral-900);
+      color: var(--color-white);
+      margin: 0;
+    }
+
+    pre {
+      margin: 0;
+      padding: var(--space-4);
+      overflow-x: auto;
+      background: var(--color-neutral-50);
+    }
+
+    code {
+      font-size: var(--font-size-sm);
+      background: none;
+      padding: 0;
+    }
+  }
+</style>

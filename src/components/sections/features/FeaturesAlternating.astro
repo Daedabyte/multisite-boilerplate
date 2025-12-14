@@ -1,0 +1,95 @@
+---
+/**
+ * FeaturesAlternating
+ *
+ * Zigzag/alternating layout with image and content side by side.
+ * Each feature row alternates image position left/right.
+ *
+ * @variant alternating
+ * @since 1.0.0
+ *
+ * Best for: Detailed feature explanations, product walkthroughs, process steps
+ * Avoid when: Features don't have strong visual imagery
+ *
+ * @example
+ * <FeaturesAlternating
+ *   heading="How It Works"
+ *   features={[
+ *     {
+ *       title: 'Step 1',
+ *       description: 'Get started easily',
+ *       image: { src: '/step1.jpg', alt: 'Step 1' }
+ *     }
+ *   ]}
+ * />
+ */
+
+import type { FeaturesAlternatingProps } from './types';
+import Container from '@components/ui/Container.astro';
+
+interface Props extends FeaturesAlternatingProps {}
+
+const {
+  heading,
+  subheading,
+  features,
+  background,
+  class: className,
+  classList,
+  id = 'features',
+  ...attrs
+} = Astro.props;
+
+const sectionClasses = [
+  'features',
+  'features--alternating',
+  background?.variant === 'alt' && 'features--alt',
+  className,
+  classList,
+].filter(Boolean).join(' ');
+---
+
+<section
+  id={id}
+  class={sectionClasses}
+  {...attrs}
+>
+  <Container>
+    {(heading || subheading) && (
+      <div class="features__header">
+        {heading && <h2 class="features__heading">{heading}</h2>}
+        {subheading && <p class="features__subheading">{subheading}</p>}
+      </div>
+    )}
+
+    <div class="features__rows">
+      {features.map((feature, index) => (
+        <div class={`features__row ${index % 2 === 1 ? 'features__row--reverse' : ''}`}>
+          <div class="features__row-image">
+            <img src={feature.image.src} alt={feature.image.alt || ''} />
+          </div>
+          <div class="features__row-content">
+            {feature.icon && (
+              <div class="features__icon">
+                <i class={feature.icon} aria-hidden="true"></i>
+              </div>
+            )}
+            <h3 class="features__title">{feature.title}</h3>
+            <p class="features__description">{feature.description}</p>
+            {feature.link && (
+              <a href={feature.link.href} class="features__link">
+                {feature.link.label || 'Learn more'} →
+              </a>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <slot />
+  </Container>
+</section>
+
+<style lang="scss">
+  @use './features.scss';
+</style>

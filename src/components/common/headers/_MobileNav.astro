@@ -1,0 +1,221 @@
+---
+/**
+ * _MobileNav - Shared Mobile Navigation Component
+ *
+ * Internal component for mobile navigation drawer with slide-in panels.
+ * Supports nested navigation up to 3 levels deep.
+ *
+ * @internal Prefixed with underscore to indicate non-public component
+ */
+
+import type { MobileNavProps } from './types';
+import { isNavLink, showInHeader } from '@types';
+
+interface Props extends MobileNavProps {}
+
+const { items, currentPath, isOpen = false } = Astro.props;
+
+// Filter items for header/mobile display
+const mobileItems = Object.values(items).filter(showInHeader);
+---
+
+<button
+  class="mobile-nav__toggle"
+  aria-expanded={isOpen ? 'true' : 'false'}
+  aria-controls="mobile-nav"
+  aria-label="Toggle navigation"
+>
+  <span class="mobile-nav__toggle-icon"></span>
+  <span class="sr-only">Toggle navigation</span>
+</button>
+
+<div class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav__close" aria-label="Close navigation">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+
+  <nav class="mobile-nav__menu" aria-label="Mobile navigation">
+    {mobileItems.map((item) => (
+        <div class="mobile-nav__item">
+          {isNavLink(item) && !item.children ? (
+            <a
+              href={item.url}
+              class="mobile-nav__link"
+              aria-current={currentPath === item.url ? 'page' : undefined}
+              {...item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+            >
+              {item.label}
+            </a>
+          ) : (
+            <button
+              class="mobile-nav__link mobile-nav__link--has-children"
+              aria-expanded="false"
+              aria-haspopup="true"
+            >
+              {item.label}
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          )}
+
+          {item.children && (
+            <div class="mobile-nav__panel">
+              <button class="mobile-nav__back" aria-label="Go back">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              <button class="mobile-nav__close" aria-label="Close navigation">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+
+              <div class="mobile-nav__panel-header">
+                {isNavLink(item) ? (
+                  <a href={item.url} class="mobile-nav__panel-title">
+                    {item.label}
+                  </a>
+                ) : (
+                  <span class="mobile-nav__panel-title">{item.label}</span>
+                )}
+              </div>
+
+              {Object.values(item.children).filter(showInHeader).map((subItem) => (
+                  <div class="mobile-nav__item">
+                    {isNavLink(subItem) && !subItem.children ? (
+                      <a
+                        href={subItem.url}
+                        class="mobile-nav__link"
+                        aria-current={currentPath === subItem.url ? 'page' : undefined}
+                        {...subItem.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+                      >
+                        {subItem.label}
+                      </a>
+                    ) : (
+                      <button
+                        class="mobile-nav__link mobile-nav__link--has-children"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                      >
+                        {subItem.label}
+                        <i class="fa-solid fa-chevron-right"></i>
+                      </button>
+                    )}
+
+                    {subItem.children && (
+                      <div class="mobile-nav__panel">
+                        <button class="mobile-nav__back" aria-label="Go back">
+                          <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <button class="mobile-nav__close" aria-label="Close navigation">
+                          <i class="fa-solid fa-xmark"></i>
+                        </button>
+
+                        <div class="mobile-nav__panel-header">
+                          {isNavLink(subItem) ? (
+                            <a href={subItem.url} class="mobile-nav__panel-title">
+                              {subItem.label}
+                            </a>
+                          ) : (
+                            <span class="mobile-nav__panel-title">{subItem.label}</span>
+                          )}
+                        </div>
+
+                        {Object.values(subItem.children).filter(showInHeader).map((subSubItem) => (
+                            <div class="mobile-nav__item">
+                              {isNavLink(subSubItem) ? (
+                                <a
+                                  href={subSubItem.url}
+                                  class="mobile-nav__link"
+                                  aria-current={currentPath === subSubItem.url ? 'page' : undefined}
+                                  {...subSubItem.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+                                >
+                                  {subSubItem.label}
+                                </a>
+                              ) : (
+                                <span class="mobile-nav__link">{subSubItem.label}</span>
+                              )}
+                            </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+              ))}
+            </div>
+          )}
+        </div>
+    ))}
+  </nav>
+</div>
+
+<div class="mobile-nav__overlay"></div>
+
+<script>
+  function initMobileNav() {
+    const toggle = document.querySelector('.mobile-nav__toggle');
+    const mobileNav = document.querySelector('.mobile-nav');
+    const overlay = document.querySelector('.mobile-nav__overlay');
+    const closeButtons = document.querySelectorAll('.mobile-nav__close');
+    const backButtons = document.querySelectorAll('.mobile-nav__back');
+    const linkButtons = document.querySelectorAll('.mobile-nav__link--has-children');
+
+    function closeMobileNav() {
+      toggle?.setAttribute('aria-expanded', 'false');
+      mobileNav?.classList.remove('is-open');
+      document.body.classList.remove('no-scroll');
+      // Reset all panels
+      document.querySelectorAll('.mobile-nav__panel.is-open').forEach(panel => {
+        panel.classList.remove('is-open');
+      });
+      document.querySelectorAll('.mobile-nav__link--has-children[aria-expanded="true"]').forEach(btn => {
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    toggle?.addEventListener('click', () => {
+      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) {
+        closeMobileNav();
+      } else {
+        toggle.setAttribute('aria-expanded', 'true');
+        mobileNav?.classList.add('is-open');
+        document.body.classList.add('no-scroll');
+      }
+    });
+
+    closeButtons.forEach(btn => {
+      btn.addEventListener('click', closeMobileNav);
+    });
+
+    overlay?.addEventListener('click', closeMobileNav);
+
+    backButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const panel = btn.closest('.mobile-nav__panel');
+        const trigger = panel?.previousElementSibling;
+        panel?.classList.remove('is-open');
+        if (trigger instanceof HTMLElement) {
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    linkButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const panel = btn.nextElementSibling;
+        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+        panel?.classList.toggle('is-open', !isExpanded);
+      });
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeMobileNav();
+      }
+    });
+  }
+
+  // Initialize on load
+  initMobileNav();
+
+  // Re-initialize after Astro page transitions
+  document.addEventListener('astro:page-load', initMobileNav);
+</script>

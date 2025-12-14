@@ -1,0 +1,89 @@
+---
+/**
+ * CTASplit
+ *
+ * Split layout CTA with image alongside content.
+ * Visual impact with space for featured imagery.
+ *
+ * @variant split
+ * @since 1.0.0
+ *
+ * Best for: Product showcases, app downloads, feature highlights
+ * Avoid when: Don't have strong visual content
+ *
+ * @example
+ * <CTASplit
+ *   heading="Download Our App"
+ *   description="Available on iOS and Android."
+ *   image={{ src: '/app-mockup.png', alt: 'App mockup' }}
+ *   imagePosition="right"
+ *   actions={[{ label: 'Get the App', href: '/download' }]}
+ * />
+ */
+
+import type { CTASplitProps } from './types';
+import Container from '@components/ui/Container.astro';
+
+interface Props extends CTASplitProps {}
+
+const {
+  heading,
+  description,
+  actions = [],
+  image,
+  imagePosition = 'right',
+  background,
+  class: className,
+  classList,
+  id = 'cta',
+  ...attrs
+} = Astro.props;
+
+const sectionClasses = [
+  'cta',
+  'cta--split',
+  `cta--image-${imagePosition}`,
+  background?.variant === 'alt' && 'cta--alt',
+  className,
+  classList,
+].filter(Boolean).join(' ');
+---
+
+<section
+  id={id}
+  class={sectionClasses}
+  {...attrs}
+>
+  <Container>
+    <div class="cta__inner">
+      <div class="cta__content">
+        <h2 class="cta__heading">{heading}</h2>
+        {description && <p class="cta__description">{description}</p>}
+
+        {actions.length > 0 && (
+          <div class="cta__actions">
+            {actions.map((action, index) => (
+              <a
+                href={action.href}
+                class={`btn btn--${action.variant ?? (index === 0 ? 'primary' : 'outline')}`}
+                {...action.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+              >
+                {action.label}
+              </a>
+            ))}
+          </div>
+        )}
+
+        <slot />
+      </div>
+
+      <div class="cta__image">
+        <img src={image.src} alt={image.alt} />
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style lang="scss">
+  @use './cta.scss';
+</style>

@@ -4,3 +4,6 @@
 @use './base/typography';
 @use './base/base';
 @use './base/utilities';
+
+// Component styles (data-attribute driven behaviors)
+@use './components/index';

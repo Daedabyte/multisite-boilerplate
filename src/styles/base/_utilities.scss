@@ -175,3 +175,506 @@
 .no-scroll {
   overflow: hidden;
 }
+
+// ===================================
+// Gap Utilities
+// ===================================
+
+@each $key, $value in $spacers {
+  .gap-#{$key} {
+    gap: var(--space-#{$key});
+  }
+
+  .gap-x-#{$key} {
+    column-gap: var(--space-#{$key});
+  }
+
+  .gap-y-#{$key} {
+    row-gap: var(--space-#{$key});
+  }
+}
+
+// ===================================
+// Flexbox Utilities
+// ===================================
+
+// Flex direction
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.flex-col-reverse {
+  flex-direction: column-reverse;
+}
+
+// Flex wrap
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+// Justify content
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
+// Align items
+.items-start {
+  align-items: flex-start;
+}
+
+.items-end {
+  align-items: flex-end;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-baseline {
+  align-items: baseline;
+}
+
+.items-stretch {
+  align-items: stretch;
+}
+
+// Align self
+.self-auto {
+  align-self: auto;
+}
+
+.self-start {
+  align-self: flex-start;
+}
+
+.self-end {
+  align-self: flex-end;
+}
+
+.self-center {
+  align-self: center;
+}
+
+.self-stretch {
+  align-self: stretch;
+}
+
+// Flex grow/shrink
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.flex-auto {
+  flex: 1 1 auto;
+}
+
+.flex-initial {
+  flex: 0 1 auto;
+}
+
+.flex-none {
+  flex: none;
+}
+
+.grow {
+  flex-grow: 1;
+}
+
+.grow-0 {
+  flex-grow: 0;
+}
+
+.shrink {
+  flex-shrink: 1;
+}
+
+.shrink-0 {
+  flex-shrink: 0;
+}
+
+// ===================================
+// Width & Height Utilities
+// ===================================
+
+.w-full {
+  width: 100%;
+}
+
+.w-screen {
+  width: 100vw;
+}
+
+.w-auto {
+  width: auto;
+}
+
+.w-fit {
+  width: fit-content;
+}
+
+.w-min {
+  width: min-content;
+}
+
+.w-max {
+  width: max-content;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.h-auto {
+  height: auto;
+}
+
+.h-fit {
+  height: fit-content;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.min-h-full {
+  min-height: 100%;
+}
+
+.max-w-none {
+  max-width: none;
+}
+
+.max-w-full {
+  max-width: 100%;
+}
+
+.max-w-prose {
+  max-width: var(--content-max-width, 65ch);
+}
+
+@each $name, $value in $container-max-widths {
+  .max-w-#{$name} {
+    max-width: var(--container-max-width-#{$name});
+  }
+}
+
+// ===================================
+// Position Utilities
+// ===================================
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.sticky {
+  position: sticky;
+}
+
+.static {
+  position: static;
+}
+
+// Inset utilities
+.inset-0 {
+  inset: 0;
+}
+
+.inset-x-0 {
+  left: 0;
+  right: 0;
+}
+
+.inset-y-0 {
+  top: 0;
+  bottom: 0;
+}
+
+.top-0 {
+  top: 0;
+}
+
+.right-0 {
+  right: 0;
+}
+
+.bottom-0 {
+  bottom: 0;
+}
+
+.left-0 {
+  left: 0;
+}
+
+// ===================================
+// Z-Index Utilities
+// ===================================
+
+@each $name, $value in $z-index {
+  .z-#{$name} {
+    z-index: var(--z-index-#{$name});
+  }
+}
+
+.z-0 {
+  z-index: 0;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.z-20 {
+  z-index: 20;
+}
+
+.z-50 {
+  z-index: 50;
+}
+
+.-z-10 {
+  z-index: -10;
+}
+
+// ===================================
+// Border Radius Utilities
+// ===================================
+
+@each $name, $value in $border-radii {
+  .rounded-#{$name} {
+    border-radius: var(--border-radius-#{$name});
+  }
+}
+
+.rounded-none {
+  border-radius: 0;
+}
+
+// ===================================
+// Overflow Utilities
+// ===================================
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-visible {
+  overflow: visible;
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
+
+// ===================================
+// Aspect Ratio Utilities
+// ===================================
+
+@each $name, $value in $aspect-ratios {
+  .aspect-#{$name} {
+    aspect-ratio: var(--aspect-ratio-#{$name});
+  }
+}
+
+.aspect-auto {
+  aspect-ratio: auto;
+}
+
+// ===================================
+// Object Fit Utilities
+// ===================================
+
+.object-contain {
+  object-fit: contain;
+}
+
+.object-cover {
+  object-fit: cover;
+}
+
+.object-fill {
+  object-fit: fill;
+}
+
+.object-none {
+  object-fit: none;
+}
+
+.object-scale-down {
+  object-fit: scale-down;
+}
+
+.object-center {
+  object-position: center;
+}
+
+.object-top {
+  object-position: top;
+}
+
+.object-bottom {
+  object-position: bottom;
+}
+
+// ===================================
+// Cursor Utilities
+// ===================================
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-default {
+  cursor: default;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+.cursor-wait {
+  cursor: wait;
+}
+
+// ===================================
+// Pointer Events Utilities
+// ===================================
+
+.pointer-events-none {
+  pointer-events: none;
+}
+
+.pointer-events-auto {
+  pointer-events: auto;
+}
+
+// ===================================
+// User Select Utilities
+// ===================================
+
+.select-none {
+  user-select: none;
+}
+
+.select-text {
+  user-select: text;
+}
+
+.select-all {
+  user-select: all;
+}
+
+// ===================================
+// Opacity Utilities
+// ===================================
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-25 {
+  opacity: 0.25;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.opacity-75 {
+  opacity: 0.75;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+// ===================================
+// Shadow Utilities
+// ===================================
+
+@each $name, $value in $shadows {
+  .shadow-#{$name} {
+    box-shadow: var(--shadow-#{$name});
+  }
+}
+
+.shadow-none {
+  box-shadow: none;
+}
+
+// ===================================
+// Transition Utilities
+// ===================================
+
+@each $name, $value in $transitions {
+  .transition-#{$name} {
+    transition: var(--transition-#{$name});
+  }
+}
+
+.transition-none {
+  transition: none;
+}

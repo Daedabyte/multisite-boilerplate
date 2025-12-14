@@ -1,19 +1,281 @@
 ---
-import DefaultLayout from '../layouts/DefaultLayout.astro';
-import Section from '../components/ui/Section.astro';
-import Button from '../components/ui/Button.astro';
-import Hero from '../components/layout/Hero.astro';
-import background from '../assets/images/background.png'
+/**
+ * Homepage
+ *
+ * Demonstrates the boilerplate's component system with config-driven
+ * sections populated from typed content data.
+ */
+
+import DefaultLayout from '@layouts/DefaultLayout.astro';
+import { homepage } from '@data/content';
+
+// Hero variants (import directly from .astro files)
+import HeroStandard from '@components/sections/heroes/HeroStandard.astro';
+
+// Images
+import backgroundImg from '@assets/images/background.png';
+
+// Features variants (import directly from .astro files)
+import FeaturesGrid from '@components/sections/features/FeaturesGrid.astro';
+
+// CTA variants (import directly from .astro files)
+import CTABanner from '@components/sections/cta/CTABanner.astro';
+
+// UI components
+import Section from '@components/ui/Section.astro';
+import Container from '@components/ui/Container.astro';
 ---
 
 <DefaultLayout
-  title="Home - Your Site Name"
-  description="Welcome to our website. We provide excellent services and solutions."
+  title="Home - Multisite Boilerplate"
+  description="A flexible, variant-based Astro boilerplate for rapid website development."
 >
-  <Hero backgroundImage={background.src} size="full" classList="hero--home">
-      <h1>Welcome to Your Site</h1>
-      <p>Build fast, modern websites with this comprehensive boilerplate.</p>
-      <Button href="/about" weight={800} outline={true}>Learn More</Button>
-      <Button href="/about" variant="tertiary" weight={700} outline={true}>Learn More</Button>
-  </Hero>
+  <!-- Hero Section: Using content data -->
+  <HeroStandard
+    title={homepage.hero.title}
+    subtitle={homepage.hero.subtitle}
+    actions={homepage.hero.actions}
+    size={homepage.hero.size}
+    alignment={homepage.hero.alignment}
+    backgroundImage={backgroundImg.src}
+  />
+
+  <!-- Features Section: Grid variant -->
+  <FeaturesGrid
+    heading={homepage.features?.heading}
+    subheading={homepage.features?.subheading}
+    features={homepage.features?.items.map(item => ({
+      title: item.title,
+      description: item.description,
+      icon: item.icon,
+    })) ?? []}
+    columns={homepage.features?.columns ?? 3}
+  />
+
+  <!-- Stats Section: Custom with counter animation -->
+  <Section id="stats" classList="section--dark">
+    <div class="stats-grid">
+      {homepage.stats?.items.map((stat) => (
+        <div class="stat-item" data-reveal="fade-up">
+          <span
+            class="stat-value"
+            data-counter
+            data-counter-target={stat.value.replace(/\D/g, '')}
+            data-counter-suffix={stat.value.replace(/[0-9]/g, '')}
+          >
+            0
+          </span>
+          <span class="stat-label">{stat.label}</span>
+          {stat.description && <span class="stat-description">{stat.description}</span>}
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- About Section: Custom layout -->
+  <Section id="about">
+    <div class="about-content" data-reveal="fade-up">
+      <h2>{homepage.about?.heading}</h2>
+      <p>{homepage.about?.content}</p>
+      {homepage.about?.cta && (
+        <a href={homepage.about.cta.href} class={`btn btn--${homepage.about.cta.variant ?? 'primary'}`}>
+          {homepage.about.cta.label}
+        </a>
+      )}
+    </div>
+  </Section>
+
+  <!-- Testimonials Section: Custom grid with stagger -->
+  <Section id="testimonials" classList="section--alt">
+    <h2>{homepage.testimonials?.heading}</h2>
+    {homepage.testimonials?.subheading && <p class="section-subtitle">{homepage.testimonials.subheading}</p>}
+
+    <div class="testimonials-grid" data-stagger data-stagger-delay="100">
+      {homepage.testimonials?.items.map((testimonial) => (
+        <div class="testimonial-card">
+          {testimonial.rating && (
+            <div class="testimonial-rating">
+              {Array(testimonial.rating).fill(null).map(() => (
+                <i class="fa-solid fa-star"></i>
+              ))}
+            </div>
+          )}
+          <blockquote class="testimonial-quote">"{testimonial.quote}"</blockquote>
+          <div class="testimonial-author">
+            <strong>{testimonial.author}</strong>
+            {testimonial.title && <span>{testimonial.title}</span>}
+            {testimonial.company && <span>{testimonial.company}</span>}
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- FAQ Section: Accordion behavior -->
+  <Section id="faq">
+    <h2>{homepage.faq?.heading}</h2>
+    {homepage.faq?.subheading && <p class="section-subtitle">{homepage.faq.subheading}</p>}
+
+    <div class="faq-container" data-accordion data-accordion-multiple="false">
+      {homepage.faq?.items.map((item, index) => (
+        <div class="faq-item" data-accordion-item>
+          <button
+            class="faq-trigger"
+            data-accordion-trigger
+            aria-expanded={index === 0 ? 'true' : 'false'}
+          >
+            <span>{item.question}</span>
+          </button>
+          <div class="faq-content" data-accordion-content data-accordion-open={index === 0 ? 'true' : undefined}>
+            <p>{item.answer}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- CTA Section: Banner variant -->
+  <CTABanner
+    heading={homepage.cta?.heading ?? 'Ready to Get Started?'}
+    description={homepage.cta?.description}
+    actions={homepage.cta?.actions}
+  />
 </DefaultLayout>
+
+<style lang="scss" is:global>
+  @use '../styles/abstracts' as *;
+
+  // Stats Section
+  .section--dark {
+    background-color: var(--color-neutral-900);
+    color: var(--color-white);
+  }
+
+  .section--alt {
+    background-color: var(--color-neutral-100);
+  }
+
+  .stats-grid {
+    display: grid;
+    gap: var(--space-8);
+    text-align: center;
+
+    @include media-up('sm') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media-up('lg') {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .stat-value {
+    font-size: var(--font-size-xxxl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+  }
+
+  .stat-label {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .stat-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-400);
+  }
+
+  // About Section
+  .about-content {
+    max-width: 40rem;
+    margin-inline: auto;
+    text-align: center;
+
+    h2 {
+      font-size: var(--font-size-xxl);
+      margin-bottom: var(--space-4);
+    }
+
+    p {
+      font-size: var(--font-size-lg);
+      color: var(--color-neutral-600);
+      margin-bottom: var(--space-6);
+      white-space: pre-line;
+    }
+  }
+
+  // Section subtitle
+  .section-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-neutral-600);
+    max-width: 40rem;
+    margin-inline: auto;
+    margin-bottom: var(--space-12);
+  }
+
+  // Testimonials
+  .testimonials-grid {
+    display: grid;
+    gap: var(--space-6);
+    text-align: left;
+    margin-top: var(--space-8);
+
+    @include media-up('md') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media-up('lg') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .testimonial-card {
+    background: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-base);
+  }
+
+  .testimonial-rating {
+    color: var(--color-warning);
+    margin-bottom: var(--space-3);
+  }
+
+  .testimonial-quote {
+    font-size: var(--font-size-base);
+    font-style: italic;
+    color: var(--color-neutral-700);
+    margin: 0 0 var(--space-4);
+    padding: 0;
+    border: none;
+    background: none;
+  }
+
+  .testimonial-author {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    font-size: var(--font-size-sm);
+
+    strong {
+      color: var(--color-black);
+    }
+
+    span {
+      color: var(--color-neutral-500);
+    }
+  }
+
+  // FAQ
+  .faq-container {
+    max-width: 48rem;
+    margin-inline: auto;
+    text-align: left;
+  }
+</style>

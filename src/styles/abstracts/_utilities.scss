@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 // ===================================
 // Utility Variables
 // ===================================
@@ -181,6 +183,11 @@
     @each $name, $value in $arbitrary {
         --#{$name}: #{$value};
     }
+
+    // Aspect ratios
+    @each $name, $value in $aspect-ratios {
+        --aspect-ratio-#{$name}: #{$value};
+    }
 }
 
 // Spacing
@@ -250,13 +257,36 @@ $z-index: (
 // Set Arbitrary Variables for Global Use SCSS and CSS
 // ===================================
 
+// Mobile breakpoint key for responsive toggles
 $mobile-breakpoint: "md";
 
+// Aspect ratios for responsive media
+$aspect-ratios: (
+    'square': math.div(1, 1),
+    'video': math.div(16, 9),
+    'photo': math.div(4, 3),
+    'portrait': math.div(3, 4),
+    'wide': math.div(21, 9),
+    'golden': math.div(1.618, 1)
+);
+
+// Get an aspect ratio from the aspect-ratios map
+/// @param {String} $name - Aspect ratio name (e.g., 'video')
+/// @return {Number} - Aspect ratio value
+/// @example aspect-ratio('video') // returns 16 / 9
+@function aspect-ratio($name) {
+    @if not map.has-key($aspect-ratios, $name) {
+        @error "Aspect ratio '#{$name}' not found. Available: #{map.keys($aspect-ratios)}";
+    }
+    @return map.get($aspect-ratios, $name);
+}
+
+// Arbitrary variables for global use
 $arbitrary: (
     'grid-columns': 12,
     'grid-gutter': 1.5rem,
     'header-height-base': 5rem,
     'header-height-sm': 4rem,
-    'color-header-bg': var(--color-black),
-    'color-mobile-toggle': if(text-contrast(var(--color-header-bg)), var(--color-white), var(--color-black))
+    'content-max-width': 65ch,
+    'mobile-breakpoint': $mobile-breakpoint
 );

@@ -68,3 +68,102 @@ $breakpoints: (
     @warn "Invalid breakpoints.";
   }
 }
+
+// ===================================
+// Container Queries
+// Modern CSS container query support
+// ===================================
+
+// Container sizes for container queries
+$container-sizes: (
+  'xs': 320px,
+  'sm': 480px,
+  'md': 640px,
+  'lg': 800px,
+  'xl': 1024px
+);
+
+/// Get container size from map
+/// @param {String} $name - Container size name
+/// @return {String} - Container size value
+@function container-size($name) {
+  @if not map.has-key($container-sizes, $name) {
+    @error "Container size '#{$name}' not found. Available: #{map.keys($container-sizes)}";
+  }
+  @return map.get($container-sizes, $name);
+}
+
+/// Define a container context
+/// @param {String} $name - Container name for reference
+@mixin container($name: null) {
+  container-type: inline-size;
+  @if $name {
+    container-name: #{$name};
+  }
+}
+
+/// Container query - minimum width
+/// @param {String} $size - Size key from $container-sizes or custom value
+/// @param {String} $name - Optional container name to target
+@mixin container-up($size, $name: null) {
+  $width: if(map.has-key($container-sizes, $size), map.get($container-sizes, $size), $size);
+  @if $name {
+    @container #{$name} (min-width: #{$width}) {
+      @content;
+    }
+  } @else {
+    @container (min-width: #{$width}) {
+      @content;
+    }
+  }
+}
+
+/// Container query - maximum width
+/// @param {String} $size - Size key from $container-sizes or custom value
+/// @param {String} $name - Optional container name to target
+@mixin container-down($size, $name: null) {
+  $width: if(map.has-key($container-sizes, $size), map.get($container-sizes, $size), $size);
+  @if $name {
+    @container #{$name} (max-width: #{$width - 0.02px}) {
+      @content;
+    }
+  } @else {
+    @container (max-width: #{$width - 0.02px}) {
+      @content;
+    }
+  }
+}
+
+// ===================================
+// Orientation and Preference Queries
+// ===================================
+
+@mixin landscape {
+  @media (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin portrait {
+  @media (orientation: portrait) {
+    @content;
+  }
+}
+
+@mixin hover-supported {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+
+@mixin touch-device {
+  @media (hover: none) and (pointer: coarse) {
+    @content;
+  }
+}
+
+@mixin high-contrast {
+  @media (prefers-contrast: more) {
+    @content;
+  }
+}

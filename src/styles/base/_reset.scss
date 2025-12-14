@@ -54,14 +54,20 @@ h6 {
 }
 
 a {
-  color: var(--color-primary);
-  text-decoration: underline;
+  color: var(--link-color);
+  text-decoration: var(--link-decoration);
   text-underline-offset: 0.2em;
-  
+  transition: var(--link-transition);
+
   &:hover {
-    color: var(--color-primary-700);
+    color: var(--link-color-hover);
+    text-decoration: var(--link-decoration-hover);
   }
-  
+
+  /*&:visited {
+    color: var(--link-color-visited);
+  }*/
+
   &:focus-visible {
     @include focus-visible;
   }

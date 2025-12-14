@@ -1,0 +1,311 @@
+/**
+ * Features Section Component Styles
+ * Shared styles for all features variants
+ */
+
+@use 'sass:map';
+@use '../../../styles/abstracts' as *;
+
+// ===================================
+// Base Features Styles
+// ===================================
+
+.features {
+  padding-block: var(--section-padding-y);
+  background-color: var(--section-background);
+
+  &--alt {
+    background-color: var(--section-background-alt);
+  }
+
+  &__header {
+    text-align: center;
+    max-width: 40rem;
+    margin-inline: auto;
+    margin-bottom: var(--space-12);
+  }
+
+  &__heading {
+    font-size: var(--font-size-xxl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-4);
+    color: var(--color-black);
+  }
+
+  &__subheading {
+    font-size: var(--font-size-lg);
+    color: var(--color-neutral-600);
+    margin: 0;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 0 auto var(--space-4);
+    background-color: var(--color-primary-100);
+    border-radius: var(--border-radius-lg);
+    color: var(--color-primary);
+    font-size: var(--font-size-xl);
+  }
+
+  &__image {
+    margin-bottom: var(--space-4);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+
+  &__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-2);
+    color: var(--color-black);
+  }
+
+  &__description {
+    font-size: var(--font-size-base);
+    color: var(--color-neutral-600);
+    margin: 0;
+    line-height: var(--line-height-relaxed);
+  }
+
+  &__link {
+    display: inline-block;
+    margin-top: var(--space-3);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: var(--transition-fast);
+
+    &:hover {
+      color: var(--color-primary-700);
+    }
+  }
+}
+
+// ===================================
+// Variant: Grid
+// ===================================
+
+.features--grid {
+  .features__grid {
+    display: grid;
+    gap: var(--space-8);
+
+    @include media-up('md') {
+      gap: var(--space-10);
+    }
+  }
+
+  .features__item {
+    text-align: center;
+  }
+
+  &.features--cols-2 {
+    .features__grid {
+      @include media-up('md') {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+
+  &.features--cols-3 {
+    .features__grid {
+      @include media-up('md') {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @include media-up('lg') {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  }
+
+  &.features--cols-4 {
+    .features__grid {
+      @include media-up('sm') {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @include media-up('lg') {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  }
+}
+
+// ===================================
+// Variant: List
+// ===================================
+
+.features--list {
+  .features__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .features__list-item {
+    display: flex;
+    gap: var(--space-4);
+    padding-block: var(--space-6);
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  .features__icon {
+    flex-shrink: 0;
+    margin-bottom: 0;
+  }
+
+  .features__list-content {
+    flex: 1;
+  }
+
+  &.features--dividers {
+    .features__list-item {
+      border-bottom: 1px solid var(--color-neutral-200);
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+// ===================================
+// Variant: Alternating
+// ===================================
+
+.features--alternating {
+  .features__rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+  }
+
+  .features__row {
+    display: grid;
+    gap: var(--space-8);
+    align-items: center;
+
+    @include media-up('lg') {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+    }
+  }
+
+  .features__row--reverse {
+    @include media-up('lg') {
+      .features__row-image {
+        order: 1;
+      }
+    }
+  }
+
+  .features__row-image {
+    border-radius: var(--border-radius-xl);
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+
+  .features__row-content {
+    .features__title {
+      font-size: var(--font-size-xl);
+
+      @include media-up('lg') {
+        font-size: var(--font-size-xxl);
+      }
+    }
+
+    .features__description {
+      font-size: var(--font-size-lg);
+    }
+  }
+
+  .features__icon {
+    width: 4rem;
+    height: 4rem;
+    font-size: var(--font-size-xxl);
+  }
+}
+
+// ===================================
+// Variant: Cards
+// ===================================
+
+.features--cards {
+  .features__grid {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .features__item {
+    background-color: var(--card-background);
+    border: 1px solid var(--card-border-color);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    transition: var(--transition-base);
+  }
+
+  &.features--hover {
+    .features__item {
+      &:hover {
+        box-shadow: var(--card-shadow-hover);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  &.features--cols-2 {
+    .features__grid {
+      @include media-up('md') {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+
+  &.features--cols-3 {
+    .features__grid {
+      @include media-up('md') {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @include media-up('lg') {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  }
+
+  &.features--cols-4 {
+    .features__grid {
+      @include media-up('sm') {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @include media-up('lg') {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  }
+}

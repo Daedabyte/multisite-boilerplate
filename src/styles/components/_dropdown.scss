@@ -1,0 +1,212 @@
+/**
+ * Dropdown Component Styles
+ *
+ * Styles for data-attribute driven dropdowns.
+ * Works with src/scripts/behaviors/dropdown.ts
+ */
+
+@use '../abstracts' as *;
+
+// ===================================
+// CSS Custom Properties (Theming Hooks)
+// ===================================
+
+:root {
+  --dropdown-min-width: 12rem;
+  --dropdown-max-width: 20rem;
+  --dropdown-padding: var(--space-2);
+  --dropdown-background: var(--color-white);
+  --dropdown-border-color: var(--color-neutral-200);
+  --dropdown-border-radius: var(--border-radius-base);
+  --dropdown-shadow: var(--shadow-lg);
+
+  --dropdown-item-padding: var(--space-2) var(--space-3);
+  --dropdown-item-color: var(--color-neutral-700);
+  --dropdown-item-hover-background: var(--color-neutral-100);
+  --dropdown-item-hover-color: var(--color-neutral-900);
+  --dropdown-item-active-background: var(--color-primary-50);
+  --dropdown-item-active-color: var(--color-primary);
+
+  --dropdown-divider-color: var(--color-neutral-200);
+  --dropdown-transition: var(--transition-fast);
+}
+
+// ===================================
+// Base Dropdown Styles
+// ===================================
+
+[data-dropdown] {
+  position: relative;
+  display: inline-block;
+}
+
+// ===================================
+// Dropdown Trigger
+// ===================================
+
+[data-dropdown-trigger] {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+
+  // Chevron icon
+  &::after {
+    content: '';
+    display: block;
+    width: 0.75rem;
+    height: 0.75rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.2s ease;
+  }
+
+  &[aria-expanded="true"]::after {
+    transform: rotate(180deg);
+  }
+}
+
+// ===================================
+// Dropdown Content
+// ===================================
+
+[data-dropdown-content] {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: var(--z-index-dropdown);
+  min-width: var(--dropdown-min-width);
+  max-width: var(--dropdown-max-width);
+  margin-top: var(--space-1);
+  padding: var(--dropdown-padding);
+  background: var(--dropdown-background);
+  border: 1px solid var(--dropdown-border-color);
+  border-radius: var(--dropdown-border-radius);
+  box-shadow: var(--dropdown-shadow);
+
+  &[hidden] {
+    display: none;
+  }
+
+  // Opening animation
+  [data-dropdown-open] > & {
+    animation: dropdown-show 0.15s ease;
+  }
+}
+
+@keyframes dropdown-show {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ===================================
+// Dropdown Items
+// ===================================
+
+[data-dropdown-item] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--dropdown-item-padding);
+  border: none;
+  background: none;
+  color: var(--dropdown-item-color);
+  font-size: var(--font-size-base);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: calc(var(--dropdown-border-radius) - 2px);
+  transition: var(--dropdown-transition);
+
+  &:hover {
+    background: var(--dropdown-item-hover-background);
+    color: var(--dropdown-item-hover-color);
+  }
+
+  &:focus-visible {
+    @include focus-visible;
+    outline-offset: -2px;
+  }
+
+  &[aria-selected="true"],
+  &[data-dropdown-active] {
+    background: var(--dropdown-item-active-background);
+    color: var(--dropdown-item-active-color);
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // Icon slot
+  i,
+  svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+}
+
+// ===================================
+// Dropdown Divider
+// ===================================
+
+[data-dropdown-divider] {
+  height: 1px;
+  margin: var(--space-2) 0;
+  background: var(--dropdown-divider-color);
+}
+
+// ===================================
+// Dropdown Header
+// ===================================
+
+[data-dropdown-header] {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-neutral-500);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+// ===================================
+// Position Variants
+// ===================================
+
+[data-dropdown][data-dropdown-right] {
+  [data-dropdown-content] {
+    left: auto;
+    right: 0;
+  }
+}
+
+[data-dropdown][data-dropdown-up] {
+  [data-dropdown-content] {
+    top: auto;
+    bottom: 100%;
+    margin-top: 0;
+    margin-bottom: var(--space-1);
+  }
+}
+
+// ===================================
+// Reduced Motion
+// ===================================
+
+@media (prefers-reduced-motion: reduce) {
+  [data-dropdown-open] > [data-dropdown-content] {
+    animation: none;
+  }
+}

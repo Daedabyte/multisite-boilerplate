@@ -1,323 +1,445 @@
-# Multisite Boilerplate - Development Guidelines
+# Multisite Boilerplate
 
-## Overview
-This boilerplate provides a structured approach to building fast, maintainable Astro websites with a hybrid styling architecture and organized component system.
+A flexible, variant-based Astro boilerplate for rapid website development. Features configuration-driven component selection, data-attribute driven JavaScript behaviors, and a content-first architecture.
+
+## Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+```
 
 ---
 
-## 🏗️ Project Structure & Architecture
+## Architecture Overview
 
-### Core Directories
+### Core Concepts
 
-```text
+1. **Component Variants** - Each component category (headers, footers, heroes) has multiple variants that share TypeScript interfaces
+2. **Configuration-Driven** - Site config determines which component variants are used globally
+3. **Data-Attribute Behaviors** - JavaScript behaviors are opt-in via `data-*` attributes
+4. **Content-First** - Typed content structures enable AI-assisted content population
+
+### Project Structure
+
+```
 src/
 ├── components/
-│   ├── sections/          # Page-specific sections
-│   ├── ui/               # Reusable UI components
-│   └── common/           # Site-wide components (Header, Footer)
-├── layouts/              # Page layout templates
-├── pages/               # Route-based pages
-└── styles/              # Global SCSS architecture
+│   ├── common/
+│   │   ├── headers/          # Header variants (Standard, Centered, Minimal)
+│   │   └── footers/          # Footer variants (Standard, Simple, Centered)
+│   ├── sections/
+│   │   ├── heroes/           # Hero variants (Standard, Split, Minimal)
+│   │   ├── features/         # Feature section variants
+│   │   └── cta/              # CTA variants
+│   └── ui/                   # Reusable UI components (Button, Card, Container)
+├── data/
+│   ├── config.ts             # Site configuration
+│   ├── content/              # Page content data files
+│   └── site/                 # Site-wide data (navigation)
+├── layouts/
+│   ├── BaseLayout.astro      # HTML base layout
+│   └── DefaultLayout.astro   # Config-driven header/footer selection
+├── scripts/
+│   ├── core/                 # Utility functions (dom, events, observers, scroll)
+│   ├── behaviors/            # Interactive behaviors (modal, accordion, tabs)
+│   ├── animations/           # Scroll animations (reveal, stagger, counter)
+│   └── init.ts               # Auto-initialization
+├── styles/
+│   ├── abstracts/            # Variables, mixins, functions
+│   ├── base/                 # Reset, typography, base elements
+│   └── components/           # Component-specific styles
+└── types/                    # Centralized TypeScript interfaces
 ```
 
-### 1. Page Sections (`src/components/sections/`)
+---
 
-**Purpose:** Break down pages into isolated, manageable sections
+## Component System
 
-**Guidelines:**
-- Create focused, single-purpose components for each page section
-- Keep sections decentralized to enable faster, isolated updates
-- Use descriptive naming: `HeroSection.astro`, `FeaturesGrid.astro`, `TestimonialsCarousel.astro`
+### Variant-Based Architecture
 
-**Example Structure:**
-```text
-src/components/sections/
-├── home/
-│   ├── HeroSection.astro
-│   ├── ServicesOverview.astro
-│   └── CallToActionSection.astro
-├── about/
-│   ├── TeamSection.astro
-│   └── CompanyHistorySection.astro
-└── contact/
-    └── ContactFormSection.astro
+Each component category provides multiple variants with shared interfaces. Switching variants never requires content restructuring.
+
+#### Headers
+
+| Variant | Description | Best For |
+|---------|-------------|----------|
+| `HeaderStandard` | Logo left, nav right | Corporate sites, blogs |
+| `HeaderCentered` | Logo center, nav split | Brand-focused sites, restaurants |
+| `HeaderMinimal` | Logo + hamburger only | Portfolios, single-page sites |
+
+#### Footers
+
+| Variant | Description | Best For |
+|---------|-------------|----------|
+| `FooterStandard` | Multi-column with link groups | Corporate, e-commerce |
+| `FooterSimple` | Single row minimal | Landing pages, portfolios |
+| `FooterCentered` | Centered, stacked layout | Brand-focused sites |
+
+#### Heroes
+
+| Variant | Description | Best For |
+|---------|-------------|----------|
+| `HeroStandard` | Background image with overlay | Landing pages, marketing |
+| `HeroSplit` | Content + image side by side | Product showcases, SaaS |
+| `HeroMinimal` | Text only with breadcrumbs | Inner pages, documentation |
+
+### Configuration-Driven Selection
+
+Set component variants globally in `src/data/config.ts`:
+
+```typescript
+export const config: SiteConfig = {
+  // ... other config
+  components: {
+    header: 'standard',  // 'standard' | 'centered' | 'minimal'
+    footer: 'standard',  // 'standard' | 'simple' | 'centered'
+  },
+};
 ```
 
-**Usage:**
+The `DefaultLayout.astro` automatically selects the correct component:
+
 ```astro
 ---
-// src/pages/index.astro
-import PageLayout from '../layouts/PageLayout.astro';
-import HeroSection from '../components/sections/home/HeroSection.astro';
-import ServicesOverview from '../components/sections/home/ServicesOverview.astro';
-import CallToActionSection from '../components/sections/home/CallToActionSection.astro';
+import { componentConfig } from "@data/config";
+import { HeaderStandard, HeaderCentered, HeaderMinimal } from "@components/common/headers";
+
+const headers = {
+  standard: HeaderStandard,
+  centered: HeaderCentered,
+  minimal: HeaderMinimal,
+};
+
+const Header = headers[componentConfig.header];
 ---
 
-<PageLayout title="Home">
-  <HeroSection />
-  <ServicesOverview />
-  <CallToActionSection />
-</PageLayout>
+<Header />
 ```
 
-### 2. Reusable UI Components (`src/components/ui/`)
+### Path Aliases
 
-**Purpose:** House components that appear multiple times across the project
+Import components using path aliases:
 
-**When to Move to UI:**
-- Component is used in 2+ different locations
-- Component provides generic functionality (buttons, cards, modals)
-- Component is likely to be reused in future development
-
-**Examples:**
-```text
-src/components/ui/
-├── Button.astro          # Primary/secondary/outline variants
-├── Card.astro            # Generic content container
-├── Container.astro       # Layout container with size variants
-├── Modal.astro           # Reusable modal component
-├── FormField.astro       # Input field with label and validation
-└── Badge.astro           # Status/category indicators
+```typescript
+import { HeaderStandard } from '@components/common/headers';
+import { HeroSplit } from '@components/sections/heroes';
+import type { NavItem } from '@types/navigation';
+import { config } from '@data/config';
 ```
-
-**Migration Strategy:**
-1. Develop components in their initial location
-2. When reuse is identified, move to `src/components/ui/`
-3. Update all imports to reflect new location
-4. Document component props and variants
-
-### 3. Page Organization (`src/pages/`)
-
-**File-Based Routing:**
-- Each `.astro` file becomes a route
-- Nested folders create nested routes
-- Use `index.astro` for directory default pages
-
-**Subpage Strategy Decision Points:**
-
-**Option A: Dedicated Index Pages**
-```text
-src/pages/
-├── services/
-│   ├── index.astro       # /services (overview page)
-│   ├── moving.astro      # /services/moving
-│   └── storage.astro     # /services/storage
-```
-**When to Use:** Complex section with substantial overview content
-
-**Option B: Direct Subpages**
-```text
-src/pages/
-├── services/
-│   ├── moving.astro      # /services/moving
-│   └── storage.astro     # /services/storage
-```
-**When to Use:** Simple navigation, no dedicated overview needed
-
-**Decision Matrix:**
-- **Create index page if:** Section needs navigation, overview content, or SEO landing page
-- **Skip index page if:** Subpages are independent or section is simple
 
 ---
 
-## 🎨 SCSS Architecture
+## JavaScript Behaviors
 
-### Hybrid Styling Approach
+### Data-Attribute Driven
 
-1. **SCSS Modules** - Global foundation and reusable systems
-2. **Utility Classes** - Quick spacing, typography, and layout helpers  
-3. **Component SCSS** - Component-specific styling within `.astro` files
+All JavaScript behaviors are opt-in via `data-*` attributes. No JavaScript changes needed per-project.
 
-### 1. SCSS Modules (Global Foundation)
+### Available Behaviors
 
-**Purpose:** Global styles, design system foundation, reusable mixins/functions
+#### Modal
 
-**Location:** `src/styles/` directory
+```html
+<button data-modal-trigger="contact-modal">Open</button>
+<dialog data-modal="contact-modal" data-modal-close-on-overlay="true">
+  <button data-modal-close>×</button>
+  <div>Modal content</div>
+</dialog>
+```
 
-**When to Use:**
-- Base element styling (typography, links, forms)
-- Global component classes (buttons, cards, containers)
-- Mixins and functions for reuse
-- Design tokens and variables
+#### Accordion
 
-**Example:**
+```html
+<div data-accordion data-accordion-multiple="false">
+  <div data-accordion-item>
+    <button data-accordion-trigger>Question</button>
+    <div data-accordion-content>Answer</div>
+  </div>
+</div>
+```
+
+#### Tabs
+
+```html
+<div data-tabs>
+  <div role="tablist">
+    <button data-tab-trigger="tab1" data-tab-active>Tab 1</button>
+    <button data-tab-trigger="tab2">Tab 2</button>
+  </div>
+  <div data-tab-content="tab1" data-tab-active>Content 1</div>
+  <div data-tab-content="tab2">Content 2</div>
+</div>
+```
+
+#### Dropdown
+
+```html
+<div data-dropdown>
+  <button data-dropdown-trigger>Menu</button>
+  <div data-dropdown-content>
+    <a href="#" data-dropdown-item>Item 1</a>
+    <a href="#" data-dropdown-item>Item 2</a>
+  </div>
+</div>
+```
+
+#### Form Validation
+
+```html
+<form data-validate>
+  <div data-field>
+    <label for="email">Email</label>
+    <input
+      type="email"
+      id="email"
+      data-validate-required
+      data-validate-email
+      data-validate-message-required="Email is required"
+    />
+    <span data-field-error></span>
+  </div>
+</form>
+```
+
+### Animation System
+
+#### Scroll Reveal
+
+```html
+<div data-reveal="fade-up" data-reveal-delay="100">Content</div>
+```
+
+Reveal types: `fade`, `fade-up`, `fade-down`, `fade-left`, `fade-right`, `zoom`, `flip`
+
+#### Stagger Animation
+
+```html
+<div data-stagger data-stagger-delay="100">
+  <div>Child 1</div>
+  <div>Child 2</div>
+  <div>Child 3</div>
+</div>
+```
+
+#### Counter Animation
+
+```html
+<span data-counter data-counter-target="1500" data-counter-duration="2000">0</span>
+```
+
+#### Parallax
+
+```html
+<div data-parallax data-parallax-speed="0.5">Background content</div>
+```
+
+### Auto-Initialization
+
+All behaviors auto-initialize when `DefaultLayout.astro` is used:
+
+```astro
+<script>
+  import '@scripts/init';
+</script>
+```
+
+Or initialize manually:
+
+```typescript
+import * as modal from '@scripts/behaviors/modal';
+modal.init();
+```
+
+---
+
+## Content Data Structure
+
+### Typed Content Files
+
+Create content data files in `src/data/content/`:
+
+```typescript
+// src/data/content/homepage.ts
+import type { HomepageContent } from './types';
+
+export const homepage: HomepageContent = {
+  hero: {
+    variant: 'standard',
+    title: 'Welcome to Our Site',
+    subtitle: 'We help you achieve your goals',
+    actions: [
+      { label: 'Get Started', href: '/contact', variant: 'primary' }
+    ],
+  },
+  features: {
+    heading: 'Our Features',
+    items: [
+      { title: 'Feature 1', description: 'Description', icon: 'fa-star' }
+    ],
+  },
+};
+```
+
+### Usage in Pages
+
+```astro
+---
+import { homepage } from '@data/content';
+import { HeroStandard } from '@components/sections/heroes';
+---
+
+<HeroStandard {...homepage.hero} />
+```
+
+---
+
+## SCSS Architecture
+
+### CSS Custom Properties
+
+All components use CSS custom properties for theming:
+
 ```scss
-// src/styles/components/_hero.scss
-@use '../abstracts' as *;
+// Header theming
+--header-height: 5rem;
+--header-background: var(--color-black);
+--header-color: var(--color-white);
 
-.hero {
-  padding: map.get($spacers, 16) 0;
-  background: linear-gradient(135deg, $color-primary, $color-primary-dark);
-  
-  &__title {
-    @include text-size('4xl');
-    color: $color-white;
-    margin-bottom: map.get($spacers, 6);
-    
-    @include media-up('lg') {
-      @include text-size('5xl');
-    }
+// Form theming
+--input-border-color: var(--color-neutral-300);
+--input-focus-border-color: var(--color-primary);
+
+// Section theming
+--section-padding-y: var(--space-16);
+--section-background: var(--color-white);
+```
+
+### Abstracts System
+
+```scss
+// Access design tokens
+@use '../styles/abstracts' as *;
+
+.component {
+  padding: spacer(6);
+  background: color('primary', 500);
+  border-radius: border-radius('lg');
+
+  @include media-up('lg') {
+    padding: spacer(8);
   }
 }
 ```
 
-### 2. Utility Classes (Quick Helpers)
+### Component SCSS Pattern
 
-**Purpose:** Consistent spacing, typography sizing, display properties, and text alignment
+Each component category has a shared SCSS file:
 
-**When to Use:**
-- Quick spacing adjustments (`mt-4`, `px-6`, `py-8`)
-- Typography sizing (`text-lg`, `text-2xl`)
-- Display properties (`flex`, `hidden`, `block`)
-- Text alignment (`text-center`, `text-left`)
-- Responsive visibility (`md:hidden`, `lg:flex`)
+```scss
+// src/components/common/headers/headers.scss
+@use 'sass:map';
+@use '../../../styles/abstracts' as *;
 
-**Acceptable Utilities:**
-```css
-/* Spacing */
-.mt-4, .mb-6, .px-8, .py-12, .m-0
+.header {
+  position: fixed;
+  width: 100%;
+  background-color: var(--header-background);
 
-/* Typography */
-.text-sm, .text-lg, .text-2xl, .text-4xl
-
-/* Display */
-.flex, .grid, .hidden, .block, .inline-block
-
-/* Text Alignment */
-.text-center, .text-left, .text-right
-
-/* Responsive */
-.md:flex, .lg:hidden, .xl:block
-```
-
-**❌ DON'T Use Utilities For:**
-- Colors (use CSS custom properties)
-- Complex layouts (use component SCSS)
-- Brand-specific styling (use component SCSS)
-- Interactive states (use component SCSS)
-
-### 3. Component SCSS (Specific Styling)
-
-**Purpose:** Component-specific styling, custom layouts, brand elements, interactive states
-
-**Location:** `<style lang="scss">` blocks within `.astro` files
-
-**When to Use:**
-- Component-specific layouts and positioning
-- Brand colors and custom styling
-- Interactive states (hover, focus, active)
-- Complex responsive behavior
-- Unique visual treatments
-
-**Accessing the Design System:**
-
-**Method 1: Import SCSS Abstracts**
-```astro
-<style lang="scss">
-  @use '../styles/abstracts' as *;
-  
-  .service-card {
-    padding: map.get($spacers, 6);
-    background: $color-white;
-    border-radius: $border-radius-lg;
-    
-    &:hover {
-      transform: translateY(-4px);
-      box-shadow: $shadow-lg;
-    }
-  }
-</style>
-```
-
-**Method 2: Use CSS Custom Properties**
-```astro
-<style lang="scss">
-  .quote-form {
-    background: var(--color-white);
-    padding: var(--space-8);
-    border-radius: var(--border-radius-lg);
-    
-    &__input:focus {
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px rgba(var(--color-primary), 0.1);
-    }
-  }
-</style>
+  &--standard { /* variant styles */ }
+  &--centered { /* variant styles */ }
+  &--minimal { /* variant styles */ }
+}
 ```
 
 ---
 
-## 📋 Development Workflow
+## TypeScript Interfaces
 
-### Component Development Process
+### Centralized Types
 
-1. **Start with Sections:** Build page-specific components in `src/components/sections/`
-2. **Identify Reuse:** Monitor for components used 2+ times
-3. **Extract to UI:** Move reusable components to `src/components/ui/`
-4. **Update Imports:** Refactor all references to new locations
-5. **Document Props:** Add clear prop interfaces and usage examples
+All types are in `src/types/`:
 
-### Styling Decision Tree
+```typescript
+// Base props shared by all components
+import type { BaseProps } from '@types/components';
 
-**Start Here:** Can this be accomplished with utility classes?
-- **Yes:** Use utilities (`mt-4`, `text-lg`, `flex`)
-- **No:** Continue...
+// Navigation types with guards
+import { type NavItem, isNavLink, hasChildren } from '@types/navigation';
 
-**Is this a global, reusable pattern?**
-- **Yes:** Create/extend SCSS modules in `src/styles/`
-- **No:** Use component SCSS with `<style lang="scss">`
-
-**Does it need design system values?**
-- **Yes:** Import abstracts or use CSS custom properties
-- **No:** Use standard CSS values
-
-### Page Structure Recommendations
-
-**Simple Pages:**
-```astro
-<!-- Minimal imports, direct content -->
----
-import PageLayout from '../layouts/PageLayout.astro';
-import Container from '../components/ui/Container.astro';
----
-
-<PageLayout title="About">
-  <Container>
-    <h1>About Us</h1>
-    <!-- Direct content -->
-  </Container>
-</PageLayout>
+// Content types for pages
+import type { HomepageContent, AboutPageContent } from '@data/content/types';
 ```
 
-**Complex Pages:**
-```astro
-<!-- Section-based architecture -->
----
-import PageLayout from '../layouts/PageLayout.astro';
-import HeroSection from '../components/sections/about/HeroSection.astro';
-import TeamSection from '../components/sections/about/TeamSection.astro';
-import ValuesSection from '../components/sections/about/ValuesSection.astro';
----
+### Component Props Pattern
 
-<PageLayout title="About">
-  <HeroSection />
-  <TeamSection />
-  <ValuesSection />
-</PageLayout>
+```typescript
+// src/components/sections/heroes/types.ts
+import type { BaseProps, CTAAction, ContainerProps } from '@types/components';
+
+export type HeroVariant = 'standard' | 'split' | 'minimal';
+
+export interface HeroProps extends BaseProps {
+  title: string;
+  subtitle?: string;
+  actions?: CTAAction[];
+  size?: 'full' | 'partial' | 'auto';
+  alignment?: 'left' | 'center' | 'right';
+}
 ```
 
 ---
 
-## 🎯 Key Principles
+## Development Workflow
 
-1. **Decentralize sections** for faster, isolated updates
-2. **Centralize reusable UI** for consistency and maintainability
-3. **Start with utilities** for quick layouts and spacing
-4. **Use global SCSS modules** for reusable patterns
-5. **Add component SCSS** for custom styling and interactions
-6. **Make deliberate decisions** about subpage index pages
-7. **Keep components focused** on single responsibilities
-8. **Favor CSS custom properties** for values that might change
-9. **Use SCSS variables** for complex calculations and mixins
+### Adding a New Component Variant
 
-This architecture enables rapid development while maintaining code organization, reusability, and long-term maintainability.
+1. Create variant file: `ComponentVariant.astro`
+2. Add documentation header comment
+3. Import shared types from `types.ts`
+4. Use shared styles from component SCSS
+5. Export from `index.ts`
+
+### Adding a New Behavior
+
+1. Create behavior file in `src/scripts/behaviors/`
+2. Export `init()` for auto-initialization
+3. Export programmatic API
+4. Add data attribute documentation
+5. Import in `src/scripts/init.ts`
+
+### Per-Client Customization
+
+1. Update `src/data/config.ts` with site settings
+2. Choose component variants
+3. Customize CSS custom properties
+4. Create content data files
+5. Override SCSS variables in abstracts
+
+---
+
+## Key Principles
+
+1. **Props are content-shaped, not design-shaped** - Variants handle layout, props handle content
+2. **Underscore prefix for internal components** - `_MobileNav.astro` indicates non-public
+3. **No JavaScript for layout differences** - Use CSS and data attributes
+4. **Each variant is self-contained** - Can be understood in isolation
+5. **Accessibility first** - Proper ARIA, focus management, keyboard navigation
+6. **2-3 variants per category initially** - Add variants as patterns emerge
+
+---
+
+## Commands
+
+```bash
+npm run dev       # Start dev server
+npm run build     # Build for production
+npm run preview   # Preview production build
+npm run astro     # Run Astro CLI
+```

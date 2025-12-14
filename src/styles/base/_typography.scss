@@ -13,50 +13,77 @@ h1, h2, h3, h4, h5, h6 {
   }*/
 }
 
+// Mobile-first heading sizes (smaller on mobile, larger on desktop)
 h1 {
-  font-size: var(--font-size-4xl);
-  
+  font-size: var(--font-size-xxl);
+  letter-spacing: -0.02em;
+
   @include media-up('md') {
-    font-size: var(--font-size-xxl);
+    font-size: var(--font-size-3xxl);
+  }
+
+  @include media-up('lg') {
+    font-size: var(--font-size-4xxl);
   }
 }
 
 h2 {
-  font-size: var(--font-size-3xl);
-  
+  font-size: var(--font-size-2xl);
+  letter-spacing: -0.01em;
+
   @include media-up('md') {
-    font-size: var(--font-size-4xl);
+    font-size: var(--font-size-xxl);
+  }
+
+  @include media-up('lg') {
+    font-size: var(--font-size-2xxl);
   }
 }
 
 h3 {
-  font-size: var(--font-size-2xl);
-  
+  font-size: var(--font-size-xl);
+
   @include media-up('md') {
-    font-size: var(--font-size-3xl);
+    font-size: var(--font-size-2xl);
+  }
+
+  @include media-up('lg') {
+    font-size: var(--font-size-xxl);
   }
 }
 
 h4 {
-  font-size: var(--font-size-xl);
-  
+  font-size: var(--font-size-lg);
+
   @include media-up('md') {
+    font-size: var(--font-size-xl);
+  }
+
+  @include media-up('lg') {
     font-size: var(--font-size-2xl);
   }
 }
 
 h5 {
-  font-size: var(--font-size-lg);
-  
+  font-size: var(--font-size-base);
+
   @include media-up('md') {
+    font-size: var(--font-size-lg);
+  }
+
+  @include media-up('lg') {
     font-size: var(--font-size-xl);
   }
 }
 
 h6 {
-  font-size: var(--font-size-base);
-  
+  font-size: var(--font-size-sm);
+
   @include media-up('md') {
+    font-size: var(--font-size-base);
+  }
+
+  @include media-up('lg') {
     font-size: var(--font-size-lg);
   }
 }

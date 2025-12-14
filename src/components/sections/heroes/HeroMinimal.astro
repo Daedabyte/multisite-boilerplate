@@ -1,0 +1,82 @@
+---
+/**
+ * HeroMinimal
+ *
+ * Simple text-only hero with optional breadcrumbs.
+ * Perfect for inner pages and content sections.
+ *
+ * @variant minimal
+ * @since 1.0.0
+ *
+ * Best for: Inner pages, blog posts, documentation
+ * Avoid when: Need strong visual impact on landing pages
+ *
+ * @example
+ * <HeroMinimal
+ *   title="About Us"
+ *   subtitle="Learn more about our company"
+ *   breadcrumbs={[
+ *     { href: '/', label: 'Home' },
+ *     { href: '/about', label: 'About' }
+ *   ]}
+ * />
+ */
+
+import type { HeroMinimalProps } from './types';
+import Container from '@components/ui/Container.astro';
+
+interface Props extends HeroMinimalProps {}
+
+const {
+  title,
+  subtitle,
+  breadcrumbs = [],
+  alignment = 'center',
+  container,
+  class: className,
+  classList,
+  id = 'hero',
+  ...attrs
+} = Astro.props;
+
+const heroClasses = [
+  'hero',
+  'hero--minimal',
+  `hero--${alignment}`,
+  className,
+  classList,
+].filter(Boolean).join(' ');
+---
+
+<section id={id} class={heroClasses} {...attrs}>
+  <Container {...container}>
+    <div class="hero__inner">
+      <div class="hero__content">
+        {breadcrumbs.length > 0 && (
+          <nav class="hero__breadcrumbs" aria-label="Breadcrumb">
+            {breadcrumbs.map((crumb, index) => (
+              <>
+                {index > 0 && <span class="separator">/</span>}
+                {index === breadcrumbs.length - 1 ? (
+                  <span aria-current="page">{crumb.label}</span>
+                ) : (
+                  <a href={crumb.href}>{crumb.label}</a>
+                )}
+              </>
+            ))}
+          </nav>
+        )}
+
+        <h1 class="hero__title">{title}</h1>
+
+        {subtitle && <p class="hero__subtitle">{subtitle}</p>}
+
+        <slot />
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style lang="scss">
+  @use './heroes.scss';
+</style>

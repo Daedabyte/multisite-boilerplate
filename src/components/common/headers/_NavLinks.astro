@@ -1,0 +1,89 @@
+---
+/**
+ * _NavLinks - Shared Navigation Links Component
+ *
+ * Internal component for rendering navigation links with dropdown support.
+ * Used by header variants for desktop navigation.
+ *
+ * @internal Prefixed with underscore to indicate non-public component
+ */
+
+import type { NavLinksProps } from './types';
+import { isNavLink, showInHeader } from '@types';
+
+interface Props extends NavLinksProps {}
+
+const { items, currentPath, depth = 0 } = Astro.props;
+
+// Filter items that should be shown in header
+const headerItems = Object.entries(items).filter(([_, item]) => showInHeader(item));
+---
+
+<ul class="nav__list">
+{headerItems.map(([key, item]) => (
+  <li class="nav__item">
+      {isNavLink(item) ? (
+        <a
+          href={item.url}
+          class={`nav__link ${item.children ? 'nav__link--has-dropdown' : ''}`}
+          aria-current={currentPath === item.url ? 'page' : undefined}
+          {...item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+        >
+          {item.label}
+        </a>
+      ) : (
+        <span
+          class="nav__link nav__link--has-dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          {item.label}
+        </span>
+      )}
+      {item.children && (
+        <ul class="nav__dropdown">
+          {Object.entries(item.children).filter(([_, subItem]) => showInHeader(subItem)).map(([subKey, subItem]) => (
+            <li class="nav__dropdown-item">
+              {isNavLink(subItem) ? (
+                <a
+                  href={subItem.url}
+                  class={`nav__dropdown-link ${subItem.children ? 'nav__dropdown-link--has-children' : ''}`}
+                  aria-current={currentPath === subItem.url ? 'page' : undefined}
+                  {...subItem.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+                >
+                  {subItem.label}
+                </a>
+              ) : (
+                <span class="nav__dropdown-link">
+                  {subItem.label}
+                </span>
+              )}
+              {subItem.children && (
+                <ul class="nav__dropdown nav__dropdown--nested">
+                  {Object.entries(subItem.children).filter(([_, subSubItem]) => showInHeader(subSubItem)).map(([subSubKey, subSubItem]) => (
+                    <li class="nav__dropdown-item">
+                      {isNavLink(subSubItem) ? (
+                        <a
+                          href={subSubItem.url}
+                          class="nav__dropdown-link"
+                          aria-current={currentPath === subSubItem.url ? 'page' : undefined}
+                          {...subSubItem.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+                        >
+                          {subSubItem.label}
+                        </a>
+                      ) : (
+                        <span class="nav__dropdown-link">
+                          {subSubItem.label}
+                        </span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
+  ))}
+</ul>

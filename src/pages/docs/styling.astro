@@ -1,0 +1,866 @@
+---
+/**
+ * Styling & Theming Demo
+ *
+ * Demonstrates the SCSS architecture, CSS custom properties,
+ * and theming capabilities of the boilerplate.
+ */
+
+import DefaultLayout from '@layouts/DefaultLayout.astro';
+import HeroMinimal from '@components/sections/heroes/HeroMinimal.astro';
+import Section from '@components/ui/Section.astro';
+import Button from '@components/ui/Button.astro';
+---
+
+<DefaultLayout
+  title="Styling & Theming - Documentation"
+  description="Guide to the SCSS architecture and CSS custom properties system."
+>
+  <!-- Page Header -->
+  <HeroMinimal
+    title="Styling & Theming"
+    subtitle="CSS custom properties and SCSS architecture for easy customization"
+    id="page-header"
+  />
+
+  <!-- Color System -->
+  <Section id="colors">
+    <h2>Color System</h2>
+    <p class="section-subtitle">
+      All colors are defined in SCSS maps and exposed as CSS custom properties.
+    </p>
+
+    <div class="color-section">
+      <h3>Primary Colors</h3>
+      <div class="color-palette">
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-100)">
+          <span>100</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-200)">
+          <span>200</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-300)">
+          <span>300</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-400)">
+          <span>400</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-500)">
+          <span>500</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-600)">
+          <span>600</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-700)">
+          <span>700</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-800)">
+          <span>800</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-primary-900)">
+          <span>900</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-section">
+      <h3>Secondary Colors</h3>
+      <div class="color-palette">
+        <div class="color-swatch" style="--swatch-color: var(--color-secondary-100)">
+          <span>100</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-secondary-300)">
+          <span>300</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-secondary-500)">
+          <span>500</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-secondary-700)">
+          <span>700</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-secondary-900)">
+          <span>900</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-section">
+      <h3>Neutral Colors</h3>
+      <div class="color-palette">
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-50)">
+          <span>50</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-100)">
+          <span>100</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-200)">
+          <span>200</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-300)">
+          <span>300</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-400)">
+          <span>400</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-500)">
+          <span>500</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-600)">
+          <span>600</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-700)">
+          <span>700</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-800)">
+          <span>800</span>
+        </div>
+        <div class="color-swatch" style="--swatch-color: var(--color-neutral-900)">
+          <span>900</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-section">
+      <h3>Semantic Colors</h3>
+      <div class="color-palette semantic">
+        <div class="color-swatch large" style="--swatch-color: var(--color-success)">
+          <span>Success</span>
+        </div>
+        <div class="color-swatch large" style="--swatch-color: var(--color-danger)">
+          <span>Danger</span>
+        </div>
+        <div class="color-swatch large" style="--swatch-color: var(--color-warning)">
+          <span>Warning</span>
+        </div>
+        <div class="color-swatch large" style="--swatch-color: var(--color-info)">
+          <span>Info</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <h4>Usage in SCSS</h4>
+      <pre><code>{`@use '../styles/abstracts' as *;
+
+.my-element {
+  // Using the color() function
+  background-color: color('primary', 500);
+  color: color('neutral', 100);
+
+  // Or use CSS custom properties directly
+  border-color: var(--color-primary);
+}`}</code></pre>
+    </div>
+  </Section>
+
+  <!-- Typography -->
+  <Section id="typography" classList="section--alt">
+    <h2>Typography</h2>
+    <p class="section-subtitle">
+      Font sizes, weights, and line heights as CSS custom properties.
+    </p>
+
+    <div class="typography-demo">
+      <div class="type-sample" style="font-size: var(--font-size-xs)">
+        <span class="type-label">XS (0.75rem)</span>
+        <span>The quick brown fox jumps over the lazy dog</span>
+      </div>
+      <div class="type-sample" style="font-size: var(--font-size-sm)">
+        <span class="type-label">SM (0.875rem)</span>
+        <span>The quick brown fox jumps over the lazy dog</span>
+      </div>
+      <div class="type-sample" style="font-size: var(--font-size-base)">
+        <span class="type-label">Base (1rem)</span>
+        <span>The quick brown fox jumps over the lazy dog</span>
+      </div>
+      <div class="type-sample" style="font-size: var(--font-size-lg)">
+        <span class="type-label">LG (1.125rem)</span>
+        <span>The quick brown fox jumps over the lazy dog</span>
+      </div>
+      <div class="type-sample" style="font-size: var(--font-size-xl)">
+        <span class="type-label">XL (1.25rem)</span>
+        <span>The quick brown fox jumps over the lazy dog</span>
+      </div>
+      <div class="type-sample" style="font-size: var(--font-size-xxl)">
+        <span class="type-label">XXL (1.5rem)</span>
+        <span>The quick brown fox jumps</span>
+      </div>
+      <div class="type-sample" style="font-size: var(--font-size-xxxl)">
+        <span class="type-label">XXXL (2rem)</span>
+        <span>The quick brown fox</span>
+      </div>
+    </div>
+
+    <h3 style="margin-top: var(--space-12)">Font Weights</h3>
+    <div class="weight-demo">
+      <span style="font-weight: var(--font-weight-normal)">Normal (400)</span>
+      <span style="font-weight: var(--font-weight-medium)">Medium (500)</span>
+      <span style="font-weight: var(--font-weight-semibold)">Semibold (600)</span>
+      <span style="font-weight: var(--font-weight-bold)">Bold (700)</span>
+    </div>
+
+    <div class="code-block" style="margin-top: var(--space-8)">
+      <h4>Usage</h4>
+      <pre><code>{`.heading {
+  font-size: var(--font-size-xxl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+.body-text {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+}`}</code></pre>
+    </div>
+  </Section>
+
+  <!-- Spacing -->
+  <Section id="spacing">
+    <h2>Spacing System</h2>
+    <p class="section-subtitle">
+      Consistent spacing scale using CSS custom properties.
+    </p>
+
+    <div class="spacing-demo">
+      <div class="spacing-item">
+        <div class="spacing-box" style="width: var(--space-1); height: var(--space-1)"></div>
+        <code>--space-1</code>
+        <span>0.25rem</span>
+      </div>
+      <div class="spacing-item">
+        <div class="spacing-box" style="width: var(--space-2); height: var(--space-2)"></div>
+        <code>--space-2</code>
+        <span>0.5rem</span>
+      </div>
+      <div class="spacing-item">
+        <div class="spacing-box" style="width: var(--space-3); height: var(--space-3)"></div>
+        <code>--space-3</code>
+        <span>0.75rem</span>
+      </div>
+      <div class="spacing-item">
+        <div class="spacing-box" style="width: var(--space-4); height: var(--space-4)"></div>
+        <code>--space-4</code>
+        <span>1rem</span>
+      </div>
+      <div class="spacing-item">
+        <div class="spacing-box" style="width: var(--space-6); height: var(--space-6)"></div>
+        <code>--space-6</code>
+        <span>1.5rem</span>
+      </div>
+      <div class="spacing-item">
+        <div class="spacing-box" style="width: var(--space-8); height: var(--space-8)"></div>
+        <code>--space-8</code>
+        <span>2rem</span>
+      </div>
+      <div class="spacing-item">
+        <div class="spacing-box" style="width: var(--space-12); height: var(--space-12)"></div>
+        <code>--space-12</code>
+        <span>3rem</span>
+      </div>
+      <div class="spacing-item">
+        <div class="spacing-box" style="width: var(--space-16); height: var(--space-16)"></div>
+        <code>--space-16</code>
+        <span>4rem</span>
+      </div>
+    </div>
+
+    <div class="code-block" style="margin-top: var(--space-8)">
+      <h4>Usage</h4>
+      <pre><code>{`.card {
+  padding: var(--space-6);
+  margin-bottom: var(--space-8);
+  gap: var(--space-4);
+}
+
+// Or use the spacer() function in SCSS
+.element {
+  padding: spacer(6);
+  margin-block: spacer(8);
+}`}</code></pre>
+    </div>
+  </Section>
+
+  <!-- Component Theming -->
+  <Section id="component-theming" classList="section--alt">
+    <h2>Component Theming</h2>
+    <p class="section-subtitle">
+      Override component styles using CSS custom properties.
+    </p>
+
+    <div class="theme-demo">
+      <div class="theme-category">
+        <h3>Header Variables</h3>
+        <div class="var-list">
+          <code>--header-height</code>
+          <code>--header-background</code>
+          <code>--header-color</code>
+          <code>--header-border-color</code>
+          <code>--header-shadow</code>
+          <code>--header-logo-height</code>
+        </div>
+      </div>
+
+      <div class="theme-category">
+        <h3>Hero Variables</h3>
+        <div class="var-list">
+          <code>--hero-min-height</code>
+          <code>--hero-padding-y</code>
+          <code>--hero-background</code>
+          <code>--hero-color</code>
+          <code>--hero-overlay-color</code>
+          <code>--hero-title-size</code>
+        </div>
+      </div>
+
+      <div class="theme-category">
+        <h3>Button Variables</h3>
+        <div class="var-list">
+          <code>--button-padding-x</code>
+          <code>--button-padding-y</code>
+          <code>--button-font-size</code>
+          <code>--button-font-weight</code>
+          <code>--button-border-radius</code>
+        </div>
+      </div>
+
+      <div class="theme-category">
+        <h3>Card Variables</h3>
+        <div class="var-list">
+          <code>--card-background</code>
+          <code>--card-border-color</code>
+          <code>--card-border-radius</code>
+          <code>--card-shadow</code>
+          <code>--card-shadow-hover</code>
+          <code>--card-padding</code>
+        </div>
+      </div>
+
+      <div class="theme-category">
+        <h3>Form Variables</h3>
+        <div class="var-list">
+          <code>--form-input-height</code>
+          <code>--form-input-border-color</code>
+          <code>--form-input-focus-border-color</code>
+          <code>--form-input-border-radius</code>
+          <code>--form-label-font-size</code>
+        </div>
+      </div>
+
+      <div class="theme-category">
+        <h3>Section Variables</h3>
+        <div class="var-list">
+          <code>--section-padding-y</code>
+          <code>--section-background</code>
+          <code>--section-background-alt</code>
+          <code>--section-max-width</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block" style="margin-top: var(--space-8)">
+      <h4>Customizing Variables</h4>
+      <pre><code>{`/* In your custom styles or _base.scss */
+:root {
+  /* Override default values */
+  --header-height: 4.5rem;
+  --header-background: var(--color-white);
+  --card-border-radius: var(--border-radius-xl);
+  --button-border-radius: var(--border-radius-full);
+}
+
+/* Or scope to specific sections */
+.dark-section {
+  --section-background: var(--color-neutral-900);
+  --card-background: var(--color-neutral-800);
+}`}</code></pre>
+    </div>
+  </Section>
+
+  <!-- SCSS Architecture -->
+  <Section id="architecture">
+    <h2>SCSS Architecture</h2>
+    <p class="section-subtitle">
+      How the stylesheet structure is organized.
+    </p>
+
+    <div class="architecture-grid">
+      <div class="arch-card">
+        <h3>abstracts/</h3>
+        <p>Variables, mixins, functions. No CSS output.</p>
+        <ul>
+          <li><code>_colors.scss</code> - Color maps & functions</li>
+          <li><code>_typography.scss</code> - Font variables</li>
+          <li><code>_utilities.scss</code> - Spacing, shadows, borders</li>
+          <li><code>_breakpoints.scss</code> - Media query mixins</li>
+          <li><code>_mixins.scss</code> - Utility mixins</li>
+          <li><code>_component-config.scss</code> - Component theming</li>
+        </ul>
+      </div>
+
+      <div class="arch-card">
+        <h3>base/</h3>
+        <p>Reset, typography, base element styles.</p>
+        <ul>
+          <li><code>_reset.scss</code> - CSS reset</li>
+          <li><code>_typography.scss</code> - Heading styles</li>
+          <li><code>_base.scss</code> - Body, links, tables</li>
+          <li><code>_utilities.scss</code> - Utility classes</li>
+        </ul>
+      </div>
+
+      <div class="arch-card">
+        <h3>components/</h3>
+        <p>Global component styles (data-attribute behaviors).</p>
+        <ul>
+          <li><code>_modal.scss</code></li>
+          <li><code>_accordion.scss</code></li>
+          <li><code>_tabs.scss</code></li>
+          <li><code>_dropdown.scss</code></li>
+          <li><code>_forms.scss</code></li>
+        </ul>
+      </div>
+
+      <div class="arch-card">
+        <h3>Component SCSS</h3>
+        <p>Each component category has its own stylesheet.</p>
+        <ul>
+          <li><code>headers/headers.scss</code></li>
+          <li><code>footers/footers.scss</code></li>
+          <li><code>heroes/heroes.scss</code></li>
+          <li><code>features/features.scss</code></li>
+          <li><code>cta/cta.scss</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="code-block" style="margin-top: var(--space-8)">
+      <h4>Using Abstracts in Components</h4>
+      <pre><code>{`// In any SCSS file
+@use '../styles/abstracts' as *;
+
+.my-component {
+  // Use color function
+  background: color('primary', 100);
+
+  // Use spacing
+  padding: spacer(6);
+
+  // Use media queries
+  @include media-up('lg') {
+    padding: spacer(8);
+  }
+
+  // Use other mixins
+  @include focus-visible;
+  @include visually-hidden;
+}`}</code></pre>
+    </div>
+  </Section>
+
+  <!-- Breakpoints -->
+  <Section id="breakpoints" classList="section--alt">
+    <h2>Breakpoints</h2>
+    <p class="section-subtitle">
+      Mobile-first responsive design with intuitive media query mixins.
+    </p>
+
+    <div class="breakpoint-demo">
+      <div class="bp-item">
+        <code>sm</code>
+        <span>640px</span>
+      </div>
+      <div class="bp-item">
+        <code>md</code>
+        <span>768px</span>
+      </div>
+      <div class="bp-item">
+        <code>lg</code>
+        <span>1024px</span>
+      </div>
+      <div class="bp-item">
+        <code>xl</code>
+        <span>1280px</span>
+      </div>
+      <div class="bp-item">
+        <code>xxl</code>
+        <span>1536px</span>
+      </div>
+    </div>
+
+    <div class="code-block" style="margin-top: var(--space-8)">
+      <h4>Media Query Mixins</h4>
+      <pre><code>{`// Mobile-first (min-width)
+@include media-up('md') {
+  // Styles for md and up
+}
+
+// Desktop-first (max-width)
+@include media-down('lg') {
+  // Styles for lg and below
+}
+
+// Specific range
+@include media-between('sm', 'lg') {
+  // Styles between sm and lg
+}`}</code></pre>
+    </div>
+
+    <div class="responsive-indicator">
+      <span class="bp-indicator" data-bp="xs">XS</span>
+      <span class="bp-indicator" data-bp="sm">SM</span>
+      <span class="bp-indicator" data-bp="md">MD</span>
+      <span class="bp-indicator" data-bp="lg">LG</span>
+      <span class="bp-indicator" data-bp="xl">XL</span>
+      <span class="bp-indicator" data-bp="xxl">XXL</span>
+    </div>
+    <p class="indicator-label">Current breakpoint highlighted above</p>
+  </Section>
+</DefaultLayout>
+
+<style lang="scss" is:global>
+  @use '../../styles/abstracts' as *;
+
+  .section--alt {
+    background-color: var(--color-neutral-100);
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-neutral-600);
+    max-width: 40rem;
+    margin-inline: auto;
+    margin-bottom: var(--space-8);
+  }
+
+  // Color palettes
+  .color-section {
+    margin-bottom: var(--space-8);
+
+    h3 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-4);
+    }
+  }
+
+  .color-palette {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    justify-content: center;
+
+    &.semantic {
+      gap: var(--space-4);
+    }
+  }
+
+  .color-swatch {
+    width: 4rem;
+    height: 4rem;
+    border-radius: var(--border-radius-base);
+    background-color: var(--swatch-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+
+    &.large {
+      width: 6rem;
+      height: 6rem;
+    }
+
+    span {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-white);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  // Typography demo
+  .typography-demo {
+    text-align: left;
+    max-width: 48rem;
+    margin-inline: auto;
+  }
+
+  .type-sample {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--color-neutral-200);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .type-label {
+    min-width: 8rem;
+    font-size: var(--font-size-xs);
+    color: var(--color-neutral-500);
+  }
+
+  .weight-demo {
+    display: flex;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: var(--font-size-lg);
+    margin-top: var(--space-4);
+  }
+
+  // Spacing demo
+  .spacing-demo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    justify-content: center;
+  }
+
+  .spacing-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .spacing-box {
+    background-color: var(--color-primary);
+    border-radius: var(--border-radius-sm);
+  }
+
+  // Theme demo
+  .theme-demo {
+    display: grid;
+    gap: var(--space-6);
+    text-align: left;
+
+    @include media-up('md') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media-up('xl') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .theme-category {
+    background: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-neutral-200);
+
+    h3 {
+      font-size: var(--font-size-base);
+      margin-bottom: var(--space-3);
+      color: var(--color-primary);
+    }
+  }
+
+  .var-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+
+    code {
+      font-size: var(--font-size-sm);
+      background: var(--color-neutral-100);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--border-radius-sm);
+    }
+  }
+
+  // Architecture cards
+  .architecture-grid {
+    display: grid;
+    gap: var(--space-6);
+    text-align: left;
+
+    @include media-up('md') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .arch-card {
+    background: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-neutral-200);
+
+    h3 {
+      font-size: var(--font-size-lg);
+      color: var(--color-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    p {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+      margin-bottom: var(--space-4);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      padding: var(--space-1) 0;
+      font-size: var(--font-size-sm);
+
+      code {
+        background: var(--color-neutral-100);
+        padding: var(--space-1) var(--space-2);
+        border-radius: var(--border-radius-sm);
+      }
+    }
+  }
+
+  // Breakpoint demo
+  .breakpoint-demo {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .bp-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-4);
+    background: var(--color-white);
+    border-radius: var(--border-radius-base);
+    border: 1px solid var(--color-neutral-200);
+    min-width: 5rem;
+
+    code {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary);
+    }
+
+    span {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+    }
+  }
+
+  .responsive-indicator {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-8);
+  }
+
+  .bp-indicator {
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-neutral-200);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-neutral-600);
+    transition: var(--transition-fast);
+
+    // Default: show XS as active
+    &[data-bp="xs"] {
+      background: var(--color-primary);
+      color: var(--color-white);
+    }
+
+    @include media-up('sm') {
+      &[data-bp="xs"] {
+        background: var(--color-neutral-200);
+        color: var(--color-neutral-600);
+      }
+      &[data-bp="sm"] {
+        background: var(--color-primary);
+        color: var(--color-white);
+      }
+    }
+
+    @include media-up('md') {
+      &[data-bp="sm"] {
+        background: var(--color-neutral-200);
+        color: var(--color-neutral-600);
+      }
+      &[data-bp="md"] {
+        background: var(--color-primary);
+        color: var(--color-white);
+      }
+    }
+
+    @include media-up('lg') {
+      &[data-bp="md"] {
+        background: var(--color-neutral-200);
+        color: var(--color-neutral-600);
+      }
+      &[data-bp="lg"] {
+        background: var(--color-primary);
+        color: var(--color-white);
+      }
+    }
+
+    @include media-up('xl') {
+      &[data-bp="lg"] {
+        background: var(--color-neutral-200);
+        color: var(--color-neutral-600);
+      }
+      &[data-bp="xl"] {
+        background: var(--color-primary);
+        color: var(--color-white);
+      }
+    }
+
+    @include media-up('xxl') {
+      &[data-bp="xl"] {
+        background: var(--color-neutral-200);
+        color: var(--color-neutral-600);
+      }
+      &[data-bp="xxl"] {
+        background: var(--color-primary);
+        color: var(--color-white);
+      }
+    }
+  }
+
+  .indicator-label {
+    text-align: center;
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-500);
+    margin-top: var(--space-2);
+  }
+
+  // Code blocks
+  .code-block {
+    background: var(--color-neutral-900);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    text-align: left;
+    max-width: 48rem;
+    margin-inline: auto;
+
+    h4 {
+      padding: var(--space-3) var(--space-4);
+      margin: 0;
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-400);
+      border-bottom: 1px solid var(--color-neutral-800);
+    }
+
+    pre {
+      margin: 0;
+      padding: var(--space-4);
+      overflow-x: auto;
+    }
+
+    code {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-200);
+      background: none;
+    }
+  }
+</style>

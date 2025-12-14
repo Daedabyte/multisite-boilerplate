@@ -89,8 +89,167 @@
   @media (prefers-color-scheme: dark) {
     @content;
   }
-  
+
   [data-theme="dark"] {
     @content;
+  }
+}
+
+// ===================================
+// Visual Effects
+// ===================================
+
+// Customizable focus ring
+@mixin focus-ring($color: var(--color-primary), $width: 2px, $offset: 2px, $style: solid) {
+  &:focus-visible {
+    outline: $width $style $color;
+    outline-offset: $offset;
+  }
+}
+
+// Overlay for backgrounds (images, heroes, etc.)
+@mixin overlay($color: rgba(0, 0, 0, 0.5), $position: absolute) {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: $position;
+    inset: 0;
+    background: $color;
+    z-index: 1;
+  }
+
+  > * {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+// Gradient overlay
+@mixin gradient-overlay($direction: to bottom, $from: rgba(0, 0, 0, 0), $to: rgba(0, 0, 0, 0.7)) {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient($direction, $from, $to);
+    z-index: 1;
+  }
+
+  > * {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+// Aspect ratio container (for older browser support)
+@mixin aspect-ratio($ratio: 16 / 9) {
+  aspect-ratio: $ratio;
+
+  // Fallback for older browsers
+  @supports not (aspect-ratio: 1) {
+    &::before {
+      content: '';
+      display: block;
+      padding-top: calc(100% / #{$ratio});
+    }
+  }
+}
+
+// Glass morphism effect
+@mixin glass($blur: 10px, $opacity: 0.8, $color: white) {
+  background: rgba($color, $opacity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+}
+
+// ===================================
+// Layout Helpers
+// ===================================
+
+// Flex center
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Flex between
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Absolute center
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Cover parent (fill container)
+@mixin cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+// Object fit image
+@mixin object-fit($fit: cover, $position: center) {
+  object-fit: $fit;
+  object-position: $position;
+  width: 100%;
+  height: 100%;
+}
+
+// ===================================
+// Interactive States
+// ===================================
+
+// Button base reset with hover
+@mixin button-base {
+  @include reset-button;
+  @include focus-ring;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+// Link with animated underline
+@mixin link-underline($color: currentColor, $height: 1px) {
+  position: relative;
+  text-decoration: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: $height;
+    background: $color;
+    transition: width var(--transition-base);
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+// Card hover effect
+@mixin card-hover($lift: -4px, $shadow: var(--shadow-lg)) {
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+
+  &:hover {
+    transform: translateY($lift);
+    box-shadow: $shadow;
   }
 }

@@ -1,0 +1,87 @@
+---
+/**
+ * CTABanner
+ *
+ * Full-width banner call-to-action with optional background.
+ * High-impact layout for converting visitors.
+ *
+ * @variant banner
+ * @since 1.0.0
+ *
+ * Best for: Page endings, promotional banners, urgent calls to action
+ * Avoid when: Need subtle or minimal design
+ *
+ * @example
+ * <CTABanner
+ *   heading="Limited Time Offer"
+ *   description="Get 50% off your first order."
+ *   actions={[{ label: 'Shop Now', href: '/shop', variant: 'white' }]}
+ *   compact={false}
+ * />
+ */
+
+import type { CTABannerProps } from './types';
+import Container from '@components/ui/Container.astro';
+
+interface Props extends CTABannerProps {}
+
+const {
+  heading,
+  description,
+  actions = [],
+  compact = false,
+  background,
+  class: className,
+  classList,
+  id = 'cta',
+  ...attrs
+} = Astro.props;
+
+const bgImage = background?.image;
+
+const sectionClasses = [
+  'cta',
+  'cta--banner',
+  compact && 'cta--compact',
+  background?.variant === 'dark' && 'cta--dark',
+  background?.variant === 'primary' && 'cta--primary',
+  className,
+  classList,
+].filter(Boolean).join(' ');
+---
+
+<section
+  id={id}
+  class={sectionClasses}
+  style={bgImage ? `--cta-bg-image: url(${bgImage})` : undefined}
+  {...attrs}
+>
+  <Container>
+    <div class="cta__inner">
+      <div class="cta__content">
+        <h2 class="cta__heading">{heading}</h2>
+        {description && <p class="cta__description">{description}</p>}
+      </div>
+
+      {actions.length > 0 && (
+        <div class="cta__actions">
+          {actions.map((action, index) => (
+            <a
+              href={action.href}
+              class={`btn btn--${action.variant ?? (index === 0 ? 'white' : 'outline-white')}`}
+              {...action.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+            >
+              {action.label}
+            </a>
+          ))}
+        </div>
+      )}
+
+      <slot />
+    </div>
+  </Container>
+</section>
+
+<style lang="scss">
+  @use './cta.scss';
+</style>

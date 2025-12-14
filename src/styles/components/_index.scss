@@ -1,0 +1,13 @@
+/**
+ * Component Styles Index
+ *
+ * Central import point for all component-level styles.
+ * These styles work with the data-attribute driven JavaScript behaviors.
+ */
+
+// Behavior Components
+@forward 'modal';
+@forward 'accordion';
+@forward 'tabs';
+@forward 'dropdown';
+@forward 'forms';

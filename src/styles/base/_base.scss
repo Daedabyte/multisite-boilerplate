@@ -4,191 +4,254 @@
 @use '../abstracts' as *;
 
 // ===================================
-// Base Element Styles
+// CSS Custom Properties Generation
 // ===================================
 
 :root {
+  // Design tokens
   @include generate-color-properties();
   @include generate-font-properties();
   @include generate-utility-properties();
+  @include generate-component-properties();
+
+  // Color scheme support
+  color-scheme: light dark;
 }
 
 // ===================================
-// Dark Mode Override
+// Dark Mode Configuration
+// Uncomment and customize as needed
 // ===================================
-/*[data-theme="dark"] {
-  --color-neutral-500: #{color('neutral', 400)};
-  --color-neutral-600: #{color('neutral', 300)};
-  --color-neutral-700: #{color('neutral', 200)};
-  --color-neutral-800: #{color('neutral', 100)};
-  --color-neutral-900: #{color('neutral', 50)};
-}*/
 
-/*@media (prefers-color-scheme: dark) {
-  :root {
-    --color-neutral-500: #{color('neutral', 400)};
-    --color-neutral-600: #{color('neutral', 300)};
-    --color-neutral-700: #{color('neutral', 200)};
-    --color-neutral-800: #{color('neutral', 100)};
-    --color-neutral-900: #{color('neutral', 50)};
+/*
+[data-theme="dark"],
+.dark {
+  // Invert neutral scale for dark mode
+  --color-background: #{color('neutral', 900)};
+  --color-surface: #{color('neutral', 800)};
+  --color-border: #{color('neutral', 700)};
+  --color-text: #{color('neutral', 50)};
+  --color-text-muted: #{color('neutral', 400)};
+  --color-text-subtle: #{color('neutral', 500)};
+
+  // Component overrides
+  --card-background: var(--color-neutral-800);
+  --card-border-color: var(--color-neutral-700);
+  --header-background: var(--color-neutral-900);
+  --footer-background: var(--color-neutral-900);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-background: #{color('neutral', 900)};
+    --color-surface: #{color('neutral', 800)};
+    --color-border: #{color('neutral', 700)};
+    --color-text: #{color('neutral', 50)};
+    --color-text-muted: #{color('neutral', 400)};
+    --color-text-subtle: #{color('neutral', 500)};
   }
-}*/
-
-// Box sizing
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
 }
+*/
 
-// Root
+// ===================================
+// Smooth Scrolling & Reduced Motion
+// ===================================
+
 html {
-  font-size: 16px;
   scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
 }
 
-// Body
+// ===================================
+// Scroll Lock (for modals/drawers)
+// Prevents body scroll while maintaining visual position
+// ===================================
+
+body.scroll-locked {
+  overflow: hidden;
+  // Prevent layout shift from scrollbar disappearing
+  padding-right: var(--scrollbar-width, 0);
+
+  // Keep header fixed in same position
+  .header {
+    padding-right: var(--scrollbar-width, 0);
+  }
+}
+
+// ===================================
+// Body Enhancements
+// (Base styles in _reset.scss)
+// ===================================
+
 body {
-  margin: 0;
-  padding: 0;
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
-  color: var(--color-black);
-  background-color: var(--color-white);
+  // Prevent horizontal overflow from animations/transforms
   overflow-x: hidden;
+
+  // Ensure body fills viewport
+  display: flex;
+  flex-direction: column;
 }
 
-// Main content wrapper
+// ===================================
+// Main Content Area
+// ===================================
+
 main {
   position: relative;
   z-index: 1;
+  flex: 1; // Push footer to bottom in flex body
 }
 
-// Images
-img {
-  max-width: 100%;
-  height: auto;
-  vertical-align: middle;
-  border-style: none;
-}
+// ===================================
+// Selection Styling
+// ===================================
 
-// Links
-a {
-  color: var(--color-primary);
-  text-decoration: none;
-  transition: var(--transition-base);
-  
-  &:hover {
-    color: var(--color-primary-700);
-  }
-}
-
-// Lists
-ul,
-ol {
-  margin: 0;
-  padding: 0;
-}
-
-// Blockquote
-blockquote {
-  margin: 0 0 1rem;
-  padding: 1rem 1.5rem;
-  border-left: 4px solid var(--color-primary);
-  background-color: color.adjust(color('neutral', 200), $lightness: 3%);
-  font-style: italic;
-}
-
-// Code
-code {
-  padding: 0.2rem 0.4rem;
-  font-size: 0.875em;
-  color: var(--color-secondary);
-  background-color: var(--color-neutral-200);
-  border-radius: var(--border-radius-sm);
-}
-
-pre {
-  margin: 0 0 1rem;
-  padding: 1rem;
-  background-color: var(--color-neutral-200);
-  border-radius: var(--border-radius-sm);
-  overflow-x: auto;
-  
-  code {
-    padding: 0;
-    background-color: transparent;
-    color: inherit;
-  }
-}
-
-// Tables
-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-th,
-td {
-  padding: 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid #dee2e6;
-}
-
-th {
-  font-weight: var(--font-weight-semibold);
-  border-bottom-width: 2px;
-}
-
-// Horizontal rule
-hr {
-  margin: 2rem 0;
-  border: 0;
-  border-top: 1px solid rgba(var(--color-neutral-500), 0.1);
-}
-
-// Selection
 ::selection {
-  background-color: rgba(var(--color-primary-500), 0.2);
-  color: var(--color-neutral-500);
+  background-color: color.change(color('primary', 500), $alpha: 0.2);
+  color: var(--color-neutral-900);
 }
 
-::-moz-selection {
-  background-color: rgba(var(--color-primary-500), 0.2);
-  color: var(--color-neutral-500);
+// ===================================
+// Focus Styles
+// (Enhanced from _reset.scss)
+// ===================================
+
+// Remove default focus for mouse users
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
-// Focus visible
+// Enhanced focus for keyboard users
 :focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-// Scrollbar styles (Webkit)
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+// Skip to content link styling handled in _utilities.scss
+
+// ===================================
+// Table Enhancements
+// ===================================
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: var(--space-4);
 }
 
-::-webkit-scrollbar-track {
-  background: var(--color-neutral-200);
+th,
+td {
+  padding: var(--space-3);
+  text-align: left;
+  border-bottom: 1px solid var(--color-neutral-200);
+  vertical-align: top;
 }
 
-::-webkit-scrollbar-thumb {
-  background: color.adjust(color('neutral', 500), $lightness: 40%);
-  border-radius: 5px;
-  
+th {
+  font-weight: var(--font-weight-semibold);
+  border-bottom-width: 2px;
+  color: var(--color-neutral-900);
+  background-color: var(--color-neutral-50);
+}
+
+// Striped tables
+.table-striped tbody tr:nth-child(odd) {
+  background-color: var(--color-neutral-50);
+}
+
+// Hoverable tables
+.table-hover tbody tr {
+  transition: background-color var(--transition-fast);
+
   &:hover {
-    background: color.adjust(color('neutral', 500), $lightness: 30%);
+    background-color: var(--color-neutral-100);
   }
 }
 
-// Firefox scrollbar
+// ===================================
+// Scrollbar Styling
+// ===================================
+
+// Modern scrollbar (Firefox)
 * {
   scrollbar-width: thin;
-  scrollbar-color: color.adjust(color('neutral', 500), $lightness: 40%) var(--color-neutral-200);
+  scrollbar-color: var(--color-neutral-400) var(--color-neutral-100);
+}
+
+// Webkit scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-neutral-100);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-neutral-400);
+  border-radius: 4px;
+  border: 2px solid var(--color-neutral-100);
+
+  &:hover {
+    background: var(--color-neutral-500);
+  }
+}
+
+// ===================================
+// Print Styles
+// ===================================
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+
+  // Don't show links for images, internal anchors
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "";
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid var(--color-neutral-500);
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+
+  // Hide non-essential elements
+  header,
+  footer,
+  nav,
+  .no-print {
+    display: none !important;
+  }
 }

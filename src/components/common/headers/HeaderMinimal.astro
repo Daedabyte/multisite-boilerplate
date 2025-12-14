@@ -1,0 +1,119 @@
+---
+/**
+ * HeaderMinimal
+ *
+ * Logo with hamburger menu only. Navigation accessed via mobile drawer.
+ * Clean, minimal layout suitable for single-page sites or portfolios.
+ *
+ * @variant minimal
+ * @since 1.0.0
+ *
+ * Best for: Portfolios, single-page sites, mobile-first designs
+ * Avoid when: Users need quick access to multiple sections
+ *
+ * @example
+ * <HeaderMinimal
+ *   logo={{ src: logo, alt: 'Company' }}
+ *   navigation={navItems}
+ * />
+ */
+
+import type { HeaderMinimalProps } from './types';
+import Container from '@components/ui/Container.astro';
+import MobileNav from './_MobileNav.astro';
+import { Image } from 'astro:assets';
+import { navigation } from '@data/site/navigation';
+import logoIcon from '@assets/images/logo_icon.png';
+
+interface Props extends HeaderMinimalProps {}
+
+const {
+  logo,
+  navigation: navItems = navigation,
+  transparent = true,
+  sticky = true,
+  container,
+  class: className,
+  classList,
+  ...attrs
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const headerClasses = [
+  'header',
+  'header--minimal',
+  transparent && 'header--transparent',
+  className,
+  classList,
+].filter(Boolean).join(' ');
+---
+
+<header
+  class={headerClasses}
+  role="banner"
+  data-transparent={transparent}
+  data-sticky={sticky}
+  {...attrs}
+>
+  <Container {...container}>
+    <div class="header__inner">
+      <a href={logo?.href ?? '/'} class="header__logo" aria-label="Home">
+        {logo?.src ? (
+          <Image
+            src={logo.src}
+            alt={logo.alt}
+            width={logo.width ?? 40}
+            height={logo.height ?? 40}
+            loading="eager"
+          />
+        ) : (
+          <Image
+            src={logoIcon}
+            alt="Site Logo"
+            width={40}
+            height={40}
+            loading="eager"
+          />
+        )}
+      </a>
+
+      <MobileNav items={navItems} currentPath={currentPath} />
+    </div>
+  </Container>
+</header>
+
+<style lang="scss" is:global>
+  @use './headers.scss';
+
+  // Override: Always show mobile toggle for minimal variant
+  .header--minimal {
+    .mobile-nav__toggle {
+      display: flex !important;
+    }
+  }
+</style>
+
+<script>
+  function initHeaderScroll() {
+    const header = document.querySelector('.header[data-transparent="true"]');
+
+    if (header) {
+      const handleScroll = () => {
+        // Don't change transparency while scroll is locked (modal open)
+        if (document.body.classList.contains('scroll-locked')) return;
+
+        if (window.scrollY > 50) {
+          header.classList.remove('header--transparent');
+        } else {
+          header.classList.add('header--transparent');
+        }
+      };
+
+      handleScroll();
+      window.addEventListener('scroll', handleScroll);
+    }
+  }
+
+  initHeaderScroll();
+  document.addEventListener('astro:page-load', initHeaderScroll);
+</script>

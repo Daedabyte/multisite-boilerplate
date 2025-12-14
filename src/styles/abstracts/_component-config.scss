@@ -1,0 +1,343 @@
+/**
+ * Component Configuration
+ *
+ * CSS Custom Properties for component theming.
+ * These provide hooks for per-client design customization.
+ */
+
+@use 'sass:map';
+
+// ===================================
+// Component Theme Configuration
+// ===================================
+
+// Header theming
+$header-config: (
+  'height': 5rem,
+  'height-mobile': 4rem,
+  'background': var(--color-black),
+  'color': var(--color-white),
+  'border-color': transparent,
+  'shadow': var(--shadow-sm),
+  'logo-height': 3rem,
+  'logo-height-mobile': 2.5rem,
+);
+
+// Footer theming
+$footer-config: (
+  'background': var(--color-black),
+  'color': var(--color-neutral-300),
+  'heading-color': var(--color-white),
+  'link-color': var(--color-neutral-400),
+  'link-hover-color': var(--color-white),
+  'border-color': var(--color-neutral-600),
+  'padding-y': var(--space-12),
+);
+
+// Hero section theming
+$hero-config: (
+  'min-height': 100vh,
+  'min-height-partial': 50vh,
+  'padding-y': var(--space-16),
+  'background': var(--color-neutral-900),
+  'color': var(--color-white),
+  'overlay-color': rgba(0, 0, 0, 0.5),
+  'title-size': var(--font-size-xxxl),
+  'title-size-mobile': var(--font-size-xxl),
+  'subtitle-size': var(--font-size-xl),
+  'subtitle-size-mobile': var(--font-size-lg),
+);
+
+// Button theming
+$button-config: (
+  'padding-x': var(--space-6),
+  'padding-y': var(--space-3),
+  'font-size': var(--font-size-base),
+  'font-weight': var(--font-weight-medium),
+  'border-radius': var(--border-radius-base),
+  'transition': var(--transition-fast),
+);
+
+// Card theming
+$card-config: (
+  'background': var(--color-white),
+  'border-color': var(--color-neutral-200),
+  'border-radius': var(--border-radius-lg),
+  'shadow': var(--shadow-base),
+  'shadow-hover': var(--shadow-lg),
+  'padding': var(--space-6),
+);
+
+// Form theming
+$form-config: (
+  'input-height': 2.75rem,
+  'input-padding-x': var(--space-4),
+  'input-padding-y': var(--space-3),
+  'input-font-size': var(--font-size-base),
+  'input-border-color': var(--color-neutral-300),
+  'input-focus-border-color': var(--color-primary),
+  'input-border-radius': var(--border-radius-base),
+  'label-font-size': var(--font-size-sm),
+  'label-font-weight': var(--font-weight-medium),
+);
+
+// Section theming
+$section-config: (
+  'padding-y': var(--space-16),
+  'padding-y-mobile': var(--space-12),
+  'background': var(--color-white),
+  'background-alt': var(--color-neutral-50),
+  'max-width': var(--container-max-width-xl),
+);
+
+// Link theming
+$link-config: (
+  'color': var(--color-primary),
+  'color-hover': var(--color-primary-700),
+  'color-visited': var(--color-primary-800),
+  'decoration': none,
+  'decoration-hover': underline,
+  'transition': var(--transition-fast),
+);
+
+// Navigation theming
+$nav-config: (
+  'link-color': var(--color-neutral-700),
+  'link-color-hover': var(--color-primary),
+  'link-color-active': var(--color-primary),
+  'link-font-size': var(--font-size-base),
+  'link-font-weight': var(--font-weight-medium),
+  'link-padding-x': var(--space-4),
+  'link-padding-y': var(--space-2),
+  'dropdown-background': var(--color-white),
+  'dropdown-shadow': var(--shadow-lg),
+  'dropdown-border-radius': var(--border-radius-lg),
+);
+
+// Mobile navigation theming
+$mobile-nav-config: (
+  'toggle-size': 2.5rem,
+  'toggle-color': var(--color-white),
+  'toggle-bar-height': 2px,
+  'toggle-bar-gap': 6px,
+  'drawer-background': var(--color-black),
+  'drawer-color': var(--color-white),
+  'drawer-width': 100%,
+  'drawer-max-width': 400px,
+  'drawer-padding': var(--space-6),
+  'link-font-size': var(--font-size-lg),
+  'link-padding-y': var(--space-4),
+  'transition': var(--transition-base),
+);
+
+// Badge/Tag theming
+$badge-config: (
+  'padding-x': var(--space-2),
+  'padding-y': var(--space-1),
+  'font-size': var(--font-size-xs),
+  'font-weight': var(--font-weight-semibold),
+  'border-radius': var(--border-radius-full),
+  'background': var(--color-primary-100),
+  'color': var(--color-primary-700),
+);
+
+// Tooltip theming
+$tooltip-config: (
+  'background': var(--color-neutral-900),
+  'color': var(--color-white),
+  'padding-x': var(--space-3),
+  'padding-y': var(--space-2),
+  'font-size': var(--font-size-sm),
+  'border-radius': var(--border-radius-base),
+  'max-width': 200px,
+);
+
+// ===================================
+// Generate CSS Custom Properties
+// ===================================
+
+@mixin generate-component-properties() {
+  // Header
+  @each $name, $value in $header-config {
+    --header-#{$name}: #{$value};
+  }
+
+  // Footer
+  @each $name, $value in $footer-config {
+    --footer-#{$name}: #{$value};
+  }
+
+  // Hero
+  @each $name, $value in $hero-config {
+    --hero-#{$name}: #{$value};
+  }
+
+  // Button
+  @each $name, $value in $button-config {
+    --button-#{$name}: #{$value};
+  }
+
+  // Card
+  @each $name, $value in $card-config {
+    --card-#{$name}: #{$value};
+  }
+
+  // Form
+  @each $name, $value in $form-config {
+    --form-#{$name}: #{$value};
+  }
+
+  // Section
+  @each $name, $value in $section-config {
+    --section-#{$name}: #{$value};
+  }
+
+  // Link
+  @each $name, $value in $link-config {
+    --link-#{$name}: #{$value};
+  }
+
+  // Navigation
+  @each $name, $value in $nav-config {
+    --nav-#{$name}: #{$value};
+  }
+
+  // Mobile Navigation
+  @each $name, $value in $mobile-nav-config {
+    --mobile-nav-#{$name}: #{$value};
+  }
+
+  // Badge
+  @each $name, $value in $badge-config {
+    --badge-#{$name}: #{$value};
+  }
+
+  // Tooltip
+  @each $name, $value in $tooltip-config {
+    --tooltip-#{$name}: #{$value};
+  }
+}
+
+// ===================================
+// Access Functions
+// ===================================
+
+/// Get header config value
+/// @param {String} $key - Config key
+/// @return {*} - Config value
+@function header($key) {
+  @if map.has-key($header-config, $key) {
+    @return map.get($header-config, $key);
+  }
+  @error "Header config '#{$key}' not found. Available: #{map.keys($header-config)}";
+}
+
+/// Get footer config value
+/// @param {String} $key - Config key
+/// @return {*} - Config value
+@function footer($key) {
+  @if map.has-key($footer-config, $key) {
+    @return map.get($footer-config, $key);
+  }
+  @error "Footer config '#{$key}' not found. Available: #{map.keys($footer-config)}";
+}
+
+/// Get hero config value
+/// @param {String} $key - Config key
+/// @return {*} - Config value
+@function hero($key) {
+  @if map.has-key($hero-config, $key) {
+    @return map.get($hero-config, $key);
+  }
+  @error "Hero config '#{$key}' not found. Available: #{map.keys($hero-config)}";
+}
+
+/// Get button config value
+/// @param {String} $key - Config key
+/// @return {*} - Config value
+@function button($key) {
+  @if map.has-key($button-config, $key) {
+    @return map.get($button-config, $key);
+  }
+  @error "Button config '#{$key}' not found. Available: #{map.keys($button-config)}";
+}
+
+/// Get card config value
+/// @param {String} $key - Config key
+/// @return {*} - Config value
+@function card($key) {
+  @if map.has-key($card-config, $key) {
+    @return map.get($card-config, $key);
+  }
+  @error "Card config '#{$key}' not found. Available: #{map.keys($card-config)}";
+}
+
+/// Get form config value
+/// @param {String} $key - Config key
+/// @return {*} - Config value
+@function form($key) {
+  @if map.has-key($form-config, $key) {
+    @return map.get($form-config, $key);
+  }
+  @error "Form config '#{$key}' not found. Available: #{map.keys($form-config)}";
+}
+
+/// Get section config value
+/// @param {String} $key - Config key
+/// @return {*} - Config value
+@function section($key) {
+  @if map.has-key($section-config, $key) {
+    @return map.get($section-config, $key);
+  }
+  @error "Section config '#{$key}' not found. Available: #{map.keys($section-config)}";
+}
+
+/// Get link config value
+/// @param {String} $key - Config key
+/// @return {*} - Config value
+@function link($key) {
+  @if map.has-key($link-config, $key) {
+    @return map.get($link-config, $key);
+  }
+  @error "Link config '#{$key}' not found. Available: #{map.keys($link-config)}";
+}
+
+/// Get nav config value
+/// @param {String} $key - Config key
+/// @return {*} - Config value
+@function nav($key) {
+  @if map.has-key($nav-config, $key) {
+    @return map.get($nav-config, $key);
+  }
+  @error "Nav config '#{$key}' not found. Available: #{map.keys($nav-config)}";
+}
+
+/// Get mobile-nav config value
+/// @param {String} $key - Config key
+/// @return {*} - Config value
+@function mobile-nav($key) {
+  @if map.has-key($mobile-nav-config, $key) {
+    @return map.get($mobile-nav-config, $key);
+  }
+  @error "Mobile nav config '#{$key}' not found. Available: #{map.keys($mobile-nav-config)}";
+}
+
+/// Get badge config value
+/// @param {String} $key - Config key
+/// @return {*} - Config value
+@function badge($key) {
+  @if map.has-key($badge-config, $key) {
+    @return map.get($badge-config, $key);
+  }
+  @error "Badge config '#{$key}' not found. Available: #{map.keys($badge-config)}";
+}
+
+/// Get tooltip config value
+/// @param {String} $key - Config key
+/// @return {*} - Config value
+@function tooltip($key) {
+  @if map.has-key($tooltip-config, $key) {
+    @return map.get($tooltip-config, $key);
+  }
+  @error "Tooltip config '#{$key}' not found. Available: #{map.keys($tooltip-config)}";
+}

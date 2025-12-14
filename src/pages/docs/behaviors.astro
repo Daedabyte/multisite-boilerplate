@@ -1,0 +1,763 @@
+---
+/**
+ * JavaScript Behaviors Demo
+ *
+ * Demonstrates all data-attribute driven JavaScript behaviors.
+ * No JS changes needed per-project - just add the data attributes.
+ */
+
+import DefaultLayout from '@layouts/DefaultLayout.astro';
+import HeroMinimal from '@components/sections/heroes/HeroMinimal.astro';
+import Section from '@components/ui/Section.astro';
+import Button from '@components/ui/Button.astro';
+---
+
+<DefaultLayout
+  title="JavaScript Behaviors - Documentation"
+  description="Interactive demos of all data-attribute driven JavaScript behaviors."
+>
+  <!-- Page Header -->
+  <HeroMinimal
+    title="JavaScript Behaviors"
+    subtitle="Data-attribute driven interactions that work out of the box"
+    id="page-header"
+  />
+
+  <!-- Modal Demo -->
+  <Section id="modal-demo">
+    <h2>Modal / Dialog</h2>
+    <p class="section-subtitle">
+      Focus trapping, escape key handling, and body scroll lock included.
+    </p>
+
+    <div class="demo-box">
+      <Button variant="primary" data-modal-trigger="demo-modal">
+        Open Modal
+      </Button>
+
+      <dialog data-modal="demo-modal" data-modal-close-on-overlay="true" class="modal">
+        <div class="modal__content">
+          <button class="modal__close" data-modal-close aria-label="Close modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <h3>Modal Example</h3>
+          <p>This modal has focus trapping, closes on Escape key, and prevents body scroll while open.</p>
+          <p>Click the overlay or press Escape to close.</p>
+          <div class="modal__actions">
+            <Button variant="primary" data-modal-close>Got it</Button>
+            <Button variant="secondary" outline data-modal-close>Cancel</Button>
+          </div>
+        </div>
+      </dialog>
+
+      <div class="code-snippet">
+        <h4>Usage</h4>
+        <pre><code>{`<button data-modal-trigger="my-modal">Open</button>
+
+<dialog data-modal="my-modal" data-modal-close-on-overlay="true">
+  <button data-modal-close>×</button>
+  <p>Modal content here</p>
+</dialog>`}</code></pre>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Accordion Demo -->
+  <Section id="accordion-demo" classList="section--alt">
+    <h2>Accordion</h2>
+    <p class="section-subtitle">
+      Supports single or multiple open items. ARIA attributes and keyboard navigation included.
+    </p>
+
+    <div class="demo-box">
+      <h3>Single Mode (default)</h3>
+      <div data-accordion data-accordion-multiple="false">
+        <div data-accordion-item>
+          <button data-accordion-trigger aria-expanded="true">
+            What is this boilerplate?
+          </button>
+          <div data-accordion-content data-accordion-open>
+            <p>A flexible, variant-based Astro boilerplate for rapid website development. It features configuration-driven component selection and data-attribute driven JavaScript behaviors.</p>
+          </div>
+        </div>
+        <div data-accordion-item>
+          <button data-accordion-trigger aria-expanded="false">
+            How do I customize it?
+          </button>
+          <div data-accordion-content>
+            <p>Edit the configuration in <code>src/data/config.ts</code>, customize SCSS variables in <code>src/styles/abstracts/</code>, and create content data files in <code>src/data/content/</code>.</p>
+          </div>
+        </div>
+        <div data-accordion-item>
+          <button data-accordion-trigger aria-expanded="false">
+            Is it accessible?
+          </button>
+          <div data-accordion-content>
+            <p>Yes! All interactive components include proper ARIA attributes, focus management, and keyboard navigation support.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: var(--space-8)">Multiple Mode</h3>
+      <div data-accordion data-accordion-multiple="true">
+        <div data-accordion-item>
+          <button data-accordion-trigger aria-expanded="false">
+            First item (multiple allowed)
+          </button>
+          <div data-accordion-content>
+            <p>Multiple items can be open at the same time when <code>data-accordion-multiple="true"</code> is set.</p>
+          </div>
+        </div>
+        <div data-accordion-item>
+          <button data-accordion-trigger aria-expanded="false">
+            Second item (multiple allowed)
+          </button>
+          <div data-accordion-content>
+            <p>Open this alongside other items!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-snippet">
+        <h4>Usage</h4>
+        <pre><code>{`<div data-accordion data-accordion-multiple="false">
+  <div data-accordion-item>
+    <button data-accordion-trigger aria-expanded="false">
+      Question
+    </button>
+    <div data-accordion-content>
+      Answer
+    </div>
+  </div>
+</div>`}</code></pre>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Tabs Demo -->
+  <Section id="tabs-demo">
+    <h2>Tabs</h2>
+    <p class="section-subtitle">
+      Accessible tabbed interface with keyboard navigation.
+    </p>
+
+    <div class="demo-box">
+      <div class="tabs" data-tabs>
+        <div class="tabs__list" role="tablist">
+          <button class="tabs__trigger" data-tab-trigger="tab-1" data-tab-active role="tab">
+            Overview
+          </button>
+          <button class="tabs__trigger" data-tab-trigger="tab-2" role="tab">
+            Features
+          </button>
+          <button class="tabs__trigger" data-tab-trigger="tab-3" role="tab">
+            Pricing
+          </button>
+        </div>
+        <div class="tabs__content" data-tab-content="tab-1" data-tab-active role="tabpanel">
+          <h3>Overview</h3>
+          <p>This is the overview tab content. The tabs component handles active states, ARIA attributes, and keyboard navigation automatically.</p>
+        </div>
+        <div class="tabs__content" data-tab-content="tab-2" role="tabpanel">
+          <h3>Features</h3>
+          <p>The features tab shows different content. Use arrow keys to navigate between tabs when focused.</p>
+        </div>
+        <div class="tabs__content" data-tab-content="tab-3" role="tabpanel">
+          <h3>Pricing</h3>
+          <p>Pricing information would go here. Each tab panel is properly associated with its trigger via ARIA.</p>
+        </div>
+      </div>
+
+      <div class="code-snippet">
+        <h4>Usage</h4>
+        <pre><code>{`<div data-tabs>
+  <div role="tablist">
+    <button data-tab-trigger="tab1" data-tab-active>Tab 1</button>
+    <button data-tab-trigger="tab2">Tab 2</button>
+  </div>
+  <div data-tab-content="tab1" data-tab-active>Content 1</div>
+  <div data-tab-content="tab2">Content 2</div>
+</div>`}</code></pre>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Dropdown Demo -->
+  <Section id="dropdown-demo" classList="section--alt">
+    <h2>Dropdown</h2>
+    <p class="section-subtitle">
+      Dropdown menus with click-outside detection and keyboard support.
+    </p>
+
+    <div class="demo-box">
+      <div class="dropdown-demo-container">
+        <div class="dropdown" data-dropdown>
+          <button class="dropdown__trigger" data-dropdown-trigger>
+            Select Option <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="dropdown__content" data-dropdown-content>
+            <a href="#" class="dropdown__item" data-dropdown-item>Option 1</a>
+            <a href="#" class="dropdown__item" data-dropdown-item>Option 2</a>
+            <a href="#" class="dropdown__item" data-dropdown-item>Option 3</a>
+            <hr class="dropdown__divider" />
+            <a href="#" class="dropdown__item" data-dropdown-item>More Options</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-snippet">
+        <h4>Usage</h4>
+        <pre><code>{`<div data-dropdown>
+  <button data-dropdown-trigger>Menu</button>
+  <div data-dropdown-content>
+    <a href="#" data-dropdown-item>Item 1</a>
+    <a href="#" data-dropdown-item>Item 2</a>
+  </div>
+</div>`}</code></pre>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Scroll Reveal Demo -->
+  <Section id="reveal-demo">
+    <h2>Scroll Reveal Animations</h2>
+    <p class="section-subtitle">
+      Elements animate into view as you scroll. Multiple reveal types available.
+    </p>
+
+    <div class="reveal-grid">
+      <div class="reveal-card" data-reveal="fade">
+        <code>fade</code>
+        <p>Simple opacity fade</p>
+      </div>
+      <div class="reveal-card" data-reveal="fade-up">
+        <code>fade-up</code>
+        <p>Fade + slide up</p>
+      </div>
+      <div class="reveal-card" data-reveal="fade-down">
+        <code>fade-down</code>
+        <p>Fade + slide down</p>
+      </div>
+      <div class="reveal-card" data-reveal="fade-left">
+        <code>fade-left</code>
+        <p>Fade + slide left</p>
+      </div>
+      <div class="reveal-card" data-reveal="fade-right">
+        <code>fade-right</code>
+        <p>Fade + slide right</p>
+      </div>
+      <div class="reveal-card" data-reveal="zoom">
+        <code>zoom</code>
+        <p>Scale up fade</p>
+      </div>
+    </div>
+
+    <div class="code-snippet" style="max-width: 48rem; margin: var(--space-8) auto 0;">
+      <h4>Usage</h4>
+      <pre><code>{`<!-- Basic reveal -->
+<div data-reveal="fade-up">Content</div>
+
+<!-- With delay -->
+<div data-reveal="fade-up" data-reveal-delay="200">Content</div>
+
+<!-- Custom duration -->
+<div data-reveal="zoom" data-reveal-duration="800">Content</div>`}</code></pre>
+    </div>
+  </Section>
+
+  <!-- Stagger Demo -->
+  <Section id="stagger-demo" classList="section--alt">
+    <h2>Stagger Animation</h2>
+    <p class="section-subtitle">
+      Children animate in sequence with configurable delay.
+    </p>
+
+    <div class="stagger-demo" data-stagger data-stagger-delay="100">
+      <div class="stagger-item">Item 1</div>
+      <div class="stagger-item">Item 2</div>
+      <div class="stagger-item">Item 3</div>
+      <div class="stagger-item">Item 4</div>
+      <div class="stagger-item">Item 5</div>
+    </div>
+
+    <div class="code-snippet" style="max-width: 48rem; margin: var(--space-8) auto 0;">
+      <h4>Usage</h4>
+      <pre><code>{`<div data-stagger data-stagger-delay="100">
+  <div>Child 1</div>
+  <div>Child 2</div>
+  <div>Child 3</div>
+</div>`}</code></pre>
+    </div>
+  </Section>
+
+  <!-- Counter Demo -->
+  <Section id="counter-demo">
+    <h2>Counter Animation</h2>
+    <p class="section-subtitle">
+      Animated number counting when element enters viewport.
+    </p>
+
+    <div class="counter-grid">
+      <div class="counter-item">
+        <span class="counter-value" data-counter data-counter-target="1500">0</span>
+        <span class="counter-label">Projects</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-value" data-counter data-counter-target="99" data-counter-suffix="%">0</span>
+        <span class="counter-label">Satisfaction</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-value" data-counter data-counter-target="50" data-counter-prefix="$" data-counter-suffix="M">0</span>
+        <span class="counter-label">Revenue</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-value" data-counter data-counter-target="24" data-counter-suffix="/7">0</span>
+        <span class="counter-label">Support</span>
+      </div>
+    </div>
+
+    <div class="code-snippet" style="max-width: 48rem; margin: var(--space-8) auto 0;">
+      <h4>Usage</h4>
+      <pre><code>{`<!-- Basic counter -->
+<span data-counter data-counter-target="1500">0</span>
+
+<!-- With prefix/suffix -->
+<span data-counter data-counter-target="99" data-counter-suffix="%">0</span>
+<span data-counter data-counter-target="50" data-counter-prefix="$">0</span>
+
+<!-- Custom duration (ms) -->
+<span data-counter data-counter-target="100" data-counter-duration="3000">0</span>`}</code></pre>
+    </div>
+  </Section>
+
+  <!-- Form Validation Demo -->
+  <Section id="form-demo" classList="section--alt">
+    <h2>Form Validation</h2>
+    <p class="section-subtitle">
+      Client-side validation with custom error messages.
+    </p>
+
+    <div class="demo-box">
+      <form class="demo-form" data-validate>
+        <div class="form-field" data-field>
+          <label for="name">Name *</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            data-validate-required
+            data-validate-message-required="Please enter your name"
+          />
+          <span class="form-error" data-field-error></span>
+        </div>
+
+        <div class="form-field" data-field>
+          <label for="email">Email *</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            data-validate-required
+            data-validate-email
+            data-validate-message-required="Email is required"
+            data-validate-message-email="Please enter a valid email"
+          />
+          <span class="form-error" data-field-error></span>
+        </div>
+
+        <div class="form-field" data-field>
+          <label for="phone">Phone (optional)</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            data-validate-pattern="^[\d\s\-\+\(\)]+$"
+            data-validate-message-pattern="Please enter a valid phone number"
+          />
+          <span class="form-error" data-field-error></span>
+        </div>
+
+        <div class="form-field" data-field>
+          <label for="message">Message * (min 10 characters)</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="4"
+            data-validate-required
+            data-validate-minlength="10"
+            data-validate-message-required="Please enter a message"
+            data-validate-message-minlength="Message must be at least 10 characters"
+          ></textarea>
+          <span class="form-error" data-field-error></span>
+        </div>
+
+        <Button type="submit" variant="primary">Submit Form</Button>
+      </form>
+
+      <div class="code-snippet">
+        <h4>Usage</h4>
+        <pre><code>{`<form data-validate>
+  <div data-field>
+    <input
+      data-validate-required
+      data-validate-email
+      data-validate-message-required="Email is required"
+      data-validate-message-email="Invalid email"
+    />
+    <span data-field-error></span>
+  </div>
+</form>`}</code></pre>
+      </div>
+    </div>
+  </Section>
+</DefaultLayout>
+
+<style lang="scss" is:global>
+  @use '../../styles/abstracts' as *;
+
+  .section--alt {
+    background-color: var(--color-neutral-100);
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-neutral-600);
+    max-width: 40rem;
+    margin-inline: auto;
+    margin-bottom: var(--space-8);
+  }
+
+  .demo-box {
+    max-width: 48rem;
+    margin-inline: auto;
+    text-align: left;
+  }
+
+  .code-snippet {
+    margin-top: var(--space-6);
+    background: var(--color-neutral-900);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+
+    h4 {
+      padding: var(--space-3) var(--space-4);
+      margin: 0;
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-400);
+      border-bottom: 1px solid var(--color-neutral-800);
+    }
+
+    pre {
+      margin: 0;
+      padding: var(--space-4);
+      overflow-x: auto;
+    }
+
+    code {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-200);
+      background: none;
+    }
+  }
+
+  // Modal styles
+  .modal {
+    padding: 0;
+    border: none;
+    border-radius: var(--border-radius-lg);
+    max-width: 32rem;
+    width: 90%;
+
+    &::backdrop {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    &__content {
+      padding: var(--space-8);
+      text-align: left;
+    }
+
+    &__close {
+      position: absolute;
+      top: var(--space-4);
+      right: var(--space-4);
+      background: none;
+      border: none;
+      font-size: var(--font-size-xl);
+      cursor: pointer;
+      color: var(--color-neutral-500);
+      transition: var(--transition-fast);
+
+      &:hover {
+        color: var(--color-black);
+      }
+    }
+
+    h3 {
+      margin-bottom: var(--space-4);
+    }
+
+    p {
+      color: var(--color-neutral-600);
+      margin-bottom: var(--space-4);
+    }
+
+    &__actions {
+      display: flex;
+      gap: var(--space-3);
+      margin-top: var(--space-6);
+    }
+  }
+
+  // Tabs styles
+  .tabs {
+    text-align: left;
+
+    &__list {
+      display: flex;
+      gap: var(--space-1);
+      border-bottom: 2px solid var(--color-neutral-200);
+      margin-bottom: var(--space-6);
+    }
+
+    &__trigger {
+      padding: var(--space-3) var(--space-4);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-neutral-600);
+      transition: var(--transition-fast);
+
+      &:hover {
+        color: var(--color-primary);
+      }
+
+      &[data-tab-active] {
+        color: var(--color-primary);
+        border-bottom-color: var(--color-primary);
+      }
+    }
+
+    &__content {
+      display: none;
+
+      &[data-tab-active] {
+        display: block;
+      }
+    }
+  }
+
+  // Dropdown styles
+  .dropdown-demo-container {
+    margin-bottom: var(--space-6);
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+
+    &__trigger {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-white);
+      border: 1px solid var(--color-neutral-300);
+      border-radius: var(--border-radius-base);
+      cursor: pointer;
+      transition: var(--transition-fast);
+
+      &:hover {
+        border-color: var(--color-primary);
+      }
+
+      i {
+        font-size: var(--font-size-sm);
+        transition: transform var(--transition-fast);
+      }
+    }
+
+    &[data-dropdown-open] .dropdown__trigger i {
+      transform: rotate(180deg);
+    }
+
+    &__content {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 12rem;
+      margin-top: var(--space-1);
+      background: var(--color-white);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--border-radius-base);
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-0.5rem);
+      transition: var(--transition-fast);
+      z-index: 100;
+    }
+
+    &[data-dropdown-open] .dropdown__content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    &__item {
+      display: block;
+      padding: var(--space-2) var(--space-4);
+      color: var(--color-neutral-700);
+      text-decoration: none;
+      transition: var(--transition-fast);
+
+      &:hover {
+        background: var(--color-neutral-100);
+        color: var(--color-primary);
+      }
+    }
+
+    &__divider {
+      margin: var(--space-2) 0;
+      border: none;
+      border-top: 1px solid var(--color-neutral-200);
+    }
+  }
+
+  // Reveal grid
+  .reveal-grid {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+
+    @include media-up('sm') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media-up('lg') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .reveal-card {
+    background: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-neutral-200);
+    text-align: center;
+
+    code {
+      display: block;
+      font-size: var(--font-size-lg);
+      color: var(--color-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    p {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+      margin: 0;
+    }
+  }
+
+  // Stagger demo
+  .stagger-demo {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    margin-top: var(--space-8);
+  }
+
+  .stagger-item {
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  // Counter grid
+  .counter-grid {
+    display: grid;
+    gap: var(--space-8);
+    margin-top: var(--space-8);
+
+    @include media-up('sm') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media-up('lg') {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .counter-item {
+    text-align: center;
+  }
+
+  .counter-value {
+    display: block;
+    font-size: var(--font-size-xxxl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+  }
+
+  .counter-label {
+    display: block;
+    font-size: var(--font-size-base);
+    color: var(--color-neutral-600);
+    margin-top: var(--space-2);
+  }
+
+  // Form styles
+  .demo-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+
+    label {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+    }
+
+    input,
+    textarea {
+      padding: var(--space-3);
+      border: 1px solid var(--color-neutral-300);
+      border-radius: var(--border-radius-base);
+      font-size: var(--font-size-base);
+      transition: var(--transition-fast);
+
+      &:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb, 59, 130, 246), 0.1);
+      }
+
+      &[data-invalid] {
+        border-color: var(--color-danger);
+      }
+    }
+  }
+
+  .form-error {
+    font-size: var(--font-size-sm);
+    color: var(--color-danger);
+    min-height: 1.25rem;
+  }
+</style>

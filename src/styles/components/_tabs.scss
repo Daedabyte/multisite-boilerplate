@@ -1,0 +1,199 @@
+/**
+ * Tabs Component Styles
+ *
+ * Styles for data-attribute driven tabs.
+ * Works with src/scripts/behaviors/tabs.ts
+ */
+
+@use '../abstracts' as *;
+
+// ===================================
+// CSS Custom Properties (Theming Hooks)
+// ===================================
+
+:root {
+  --tabs-border-color: var(--color-neutral-200);
+  --tabs-background: transparent;
+  --tabs-tab-padding: var(--space-3) var(--space-4);
+  --tabs-tab-color: var(--color-neutral-600);
+  --tabs-tab-hover-color: var(--color-neutral-900);
+  --tabs-tab-active-color: var(--color-primary);
+  --tabs-tab-active-border-color: var(--color-primary);
+  --tabs-content-padding: var(--space-4);
+  --tabs-transition: var(--transition-fast);
+}
+
+// ===================================
+// Base Tabs Styles
+// ===================================
+
+[data-tabs] {
+  width: 100%;
+}
+
+// ===================================
+// Tab List
+// ===================================
+
+[role="tablist"] {
+  display: flex;
+  gap: var(--space-1);
+  border-bottom: 1px solid var(--tabs-border-color);
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ===================================
+// Tab Triggers
+// ===================================
+
+[data-tab-trigger] {
+  @include reset-button;
+  position: relative;
+  padding: var(--tabs-tab-padding);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-base);
+  color: var(--tabs-tab-color);
+  white-space: nowrap;
+  transition: var(--tabs-transition);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+
+  &:hover {
+    color: var(--tabs-tab-hover-color);
+  }
+
+  &:focus-visible {
+    @include focus-visible;
+    outline-offset: -2px;
+  }
+
+  &[aria-selected="true"],
+  &[data-tab-active] {
+    color: var(--tabs-tab-active-color);
+    border-bottom-color: var(--tabs-tab-active-border-color);
+  }
+}
+
+// ===================================
+// Tab Content
+// ===================================
+
+[data-tab-content] {
+  padding: var(--tabs-content-padding);
+
+  &[hidden] {
+    display: none;
+  }
+
+  // Fade in animation
+  &[data-tab-active] {
+    animation: tab-fade-in 0.2s ease;
+  }
+}
+
+@keyframes tab-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ===================================
+// Variant: Pills
+// ===================================
+
+[data-tabs][data-tabs-pills] {
+  [role="tablist"] {
+    border-bottom: none;
+    gap: var(--space-2);
+  }
+
+  [data-tab-trigger] {
+    border-bottom: none;
+    border-radius: var(--border-radius-full);
+    margin-bottom: 0;
+
+    &[aria-selected="true"],
+    &[data-tab-active] {
+      background: var(--color-primary);
+      color: var(--color-white);
+    }
+  }
+}
+
+// ===================================
+// Variant: Boxed
+// ===================================
+
+[data-tabs][data-tabs-boxed] {
+  [role="tablist"] {
+    border: 1px solid var(--tabs-border-color);
+    border-radius: var(--border-radius-base);
+    padding: var(--space-1);
+    background: var(--color-neutral-100);
+  }
+
+  [data-tab-trigger] {
+    border-bottom: none;
+    border-radius: var(--border-radius-base);
+    margin-bottom: 0;
+
+    &[aria-selected="true"],
+    &[data-tab-active] {
+      background: var(--color-white);
+      box-shadow: var(--shadow-sm);
+    }
+  }
+}
+
+// ===================================
+// Variant: Vertical
+// ===================================
+
+[data-tabs][data-tabs-vertical] {
+  display: flex;
+  gap: var(--space-4);
+
+  [role="tablist"] {
+    flex-direction: column;
+    border-bottom: none;
+    border-right: 1px solid var(--tabs-border-color);
+    min-width: 12rem;
+  }
+
+  [data-tab-trigger] {
+    border-bottom: none;
+    border-right: 2px solid transparent;
+    margin-bottom: 0;
+    margin-right: -1px;
+    text-align: left;
+
+    &[aria-selected="true"],
+    &[data-tab-active] {
+      border-right-color: var(--tabs-tab-active-border-color);
+    }
+  }
+
+  [data-tab-content] {
+    flex: 1;
+  }
+}
+
+// ===================================
+// Reduced Motion
+// ===================================
+
+@media (prefers-reduced-motion: reduce) {
+  [data-tab-content][data-tab-active] {
+    animation: none;
+  }
+}

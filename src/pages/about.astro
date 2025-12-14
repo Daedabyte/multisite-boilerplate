@@ -1,0 +1,260 @@
+---
+/**
+ * About Page
+ *
+ * Explains the purpose of the boilerplate, the philosophy behind it,
+ * and the roadmap for future development.
+ */
+
+import DefaultLayout from '@layouts/DefaultLayout.astro';
+import { about } from '@data/content';
+
+// Hero variants
+import HeroMinimal from '@components/sections/heroes/HeroMinimal.astro';
+
+// Features variants
+import FeaturesGrid from '@components/sections/features/FeaturesGrid.astro';
+
+// CTA variants
+import CTASimple from '@components/sections/cta/CTASimple.astro';
+
+// UI components
+import Section from '@components/ui/Section.astro';
+---
+
+<DefaultLayout
+  title="About - Multisite Boilerplate"
+  description="Learn about the purpose, philosophy, and future of the Astro boilerplate."
+>
+  <!-- Hero Section -->
+  <HeroMinimal
+    title={about.hero.title}
+    subtitle={about.hero.subtitle}
+    alignment={about.hero.alignment}
+  />
+
+  <!-- Purpose Section -->
+  <Section id="purpose">
+    <div class="content-block" data-reveal="fade-up">
+      <h2>{about.story?.heading}</h2>
+      <div class="prose">
+        <p>{about.story?.content}</p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Philosophy Section -->
+  <Section id="philosophy" classList="section--alt">
+    <div class="content-block" data-reveal="fade-up">
+      <h2>{about.mission?.heading}</h2>
+      <div class="prose" set:html={about.mission?.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n\n/g, '</p><p>')} />
+    </div>
+  </Section>
+
+  <!-- Core Features Section -->
+  <FeaturesGrid
+    heading={about.values?.heading}
+    subheading={about.values?.subheading}
+    features={about.values?.items.map(item => ({
+      title: item.title,
+      description: item.description,
+      icon: item.icon,
+    })) ?? []}
+    columns={about.values?.columns ?? 3}
+  />
+
+  <!-- Tech Stack Section -->
+  <Section id="tech-stack" classList="section--alt">
+    <h2>{about.team?.heading}</h2>
+    {about.team?.subheading && <p class="section-subtitle">{about.team.subheading}</p>}
+
+    <div class="tech-grid" data-stagger data-stagger-delay="100">
+      {about.team?.members.map((tech) => (
+        <div class="tech-card">
+          <h3 class="tech-name">{tech.name}</h3>
+          <span class="tech-role">{tech.role}</span>
+          <p class="tech-bio">{tech.bio}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Roadmap Section -->
+  <Section id="roadmap">
+    <h2>Future Roadmap</h2>
+    <p class="section-subtitle">Where we're headed next. These features are planned to make the boilerplate even more powerful and easier to use.</p>
+
+    <div class="roadmap-grid" data-stagger data-stagger-delay="100">
+      {about.timeline?.map((item) => (
+        <div class="roadmap-card">
+          <span class="roadmap-tag">{item.year}</span>
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- CTA Section -->
+  <CTASimple
+    heading={about.cta?.heading ?? 'Ready to Build?'}
+    description={about.cta?.description}
+    actions={about.cta?.actions}
+  />
+</DefaultLayout>
+
+<style lang="scss" is:global>
+  @use '../styles/abstracts' as *;
+
+  .section--alt {
+    background-color: var(--color-neutral-100);
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-neutral-600);
+    max-width: 40rem;
+    margin-inline: auto;
+    margin-bottom: var(--space-12);
+  }
+
+  // Content Block
+  .content-block {
+    max-width: 48rem;
+    margin-inline: auto;
+    text-align: center;
+
+    h2 {
+      font-size: var(--font-size-xxl);
+      margin-bottom: var(--space-6);
+    }
+  }
+
+  .prose {
+    font-size: var(--font-size-lg);
+    color: var(--color-neutral-700);
+    line-height: 1.8;
+    text-align: left;
+
+    p {
+      margin-bottom: var(--space-4);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    strong {
+      color: var(--color-neutral-900);
+      font-weight: var(--font-weight-semibold);
+    }
+  }
+
+  // Tech Stack Grid
+  .tech-grid {
+    display: grid;
+    gap: var(--space-6);
+    margin-top: var(--space-8);
+
+    @include media-up('sm') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media-up('lg') {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .tech-card {
+    background: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-neutral-200);
+    text-align: center;
+    transition: box-shadow var(--transition-base), transform var(--transition-base);
+
+    &:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+  }
+
+  .tech-name {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-1);
+    color: var(--color-primary);
+  }
+
+  .tech-role {
+    display: inline-block;
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-500);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-3);
+  }
+
+  .tech-bio {
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-600);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  // Roadmap Grid
+  .roadmap-grid {
+    display: grid;
+    gap: var(--space-6);
+    margin-top: var(--space-8);
+
+    @include media-up('sm') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media-up('xl') {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .roadmap-card {
+    background: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-neutral-200);
+    transition: box-shadow var(--transition-base), transform var(--transition-base), border-color var(--transition-base);
+
+    &:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+      border-color: var(--color-primary-200);
+    }
+
+    h3 {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-2);
+      color: var(--color-neutral-900);
+    }
+
+    p {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+      line-height: 1.6;
+      margin: 0;
+    }
+  }
+
+  .roadmap-tag {
+    display: inline-block;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    background: var(--color-primary-50);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--border-radius-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-3);
+  }
+</style>

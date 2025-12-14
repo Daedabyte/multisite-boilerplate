@@ -1,0 +1,93 @@
+---
+/**
+ * FooterSimple
+ *
+ * Single-row minimal footer with logo, links, and copyright.
+ * Clean, compact footer for minimal sites.
+ *
+ * @variant simple
+ * @since 1.0.0
+ *
+ * Best for: Landing pages, portfolios, minimal sites
+ * Avoid when: Need extensive footer navigation
+ *
+ * @example
+ * <FooterSimple
+ *   logo={{ src: logoImg, alt: 'Company' }}
+ *   links={[{ href: '/privacy', label: 'Privacy' }]}
+ * />
+ */
+
+import type { FooterSimpleProps } from './types';
+import Container from '@components/ui/Container.astro';
+import { Image } from 'astro:assets';
+import { config } from '@data/config';
+import logoIcon from '@assets/images/logo_icon.png';
+
+interface Props extends FooterSimpleProps {}
+
+const {
+  logo,
+  description,
+  copyright,
+  links = [],
+  container,
+  class: className,
+  classList,
+  ...attrs
+} = Astro.props;
+
+const currentYear = new Date().getFullYear();
+const copyrightText = copyright ?? `© ${currentYear} ${config.siteName}`;
+---
+
+<footer class={`footer footer--simple ${className ?? ''} ${classList ?? ''}`} role="contentinfo" {...attrs}>
+  <Container {...container}>
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <a href={logo?.href ?? '/'} class="footer__logo-link" aria-label="Home">
+          {logo?.src ? (
+            <Image
+              src={logo.src}
+              alt={logo.alt}
+              width={logo.width ?? 80}
+              height={logo.height ?? 30}
+              class="footer__logo"
+              loading="lazy"
+            />
+          ) : (
+            <Image
+              src={logoIcon}
+              alt="Site Logo"
+              width={30}
+              height={30}
+              class="footer__logo"
+              loading="lazy"
+            />
+          )}
+        </a>
+        <p class="footer__copyright">{copyrightText}</p>
+      </div>
+
+      {links.length > 0 && (
+        <ul class="footer__links">
+          {links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="footer__link"
+                {...link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </Container>
+</footer>
+
+<style lang="scss" is:global>
+  @use './footers.scss';
+</style>

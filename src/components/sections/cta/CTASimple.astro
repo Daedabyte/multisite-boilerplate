@@ -1,0 +1,81 @@
+---
+/**
+ * CTASimple
+ *
+ * Simple centered call-to-action section.
+ * Clean, focused layout with heading, description, and action buttons.
+ *
+ * @variant simple
+ * @since 1.0.0
+ *
+ * Best for: Newsletter signups, general CTAs, contact prompts
+ * Avoid when: Need visual imagery or complex layouts
+ *
+ * @example
+ * <CTASimple
+ *   heading="Ready to Get Started?"
+ *   description="Join thousands of satisfied customers."
+ *   actions={[{ label: 'Contact Us', href: '/contact', variant: 'primary' }]}
+ * />
+ */
+
+import type { CTASimpleProps } from './types';
+import Container from '@components/ui/Container.astro';
+
+interface Props extends CTASimpleProps {}
+
+const {
+  heading,
+  description,
+  actions = [],
+  background,
+  class: className,
+  classList,
+  id = 'cta',
+  ...attrs
+} = Astro.props;
+
+const sectionClasses = [
+  'cta',
+  'cta--simple',
+  background?.variant === 'dark' && 'cta--dark',
+  background?.variant === 'primary' && 'cta--primary',
+  className,
+  classList,
+].filter(Boolean).join(' ');
+---
+
+<section
+  id={id}
+  class={sectionClasses}
+  {...attrs}
+>
+  <Container size="large">
+    <div class="cta__inner">
+      <div class="cta__content">
+        <h2 class="cta__heading">{heading}</h2>
+        {description && <p class="cta__description">{description}</p>}
+
+        {actions.length > 0 && (
+          <div class="cta__actions">
+            {actions.map((action, index) => (
+              <a
+                href={action.href}
+                class={`btn btn--${action.variant ?? (index === 0 ? 'primary' : 'outline')}`}
+                {...action.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+              >
+                {action.label}
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <slot />
+    </div>
+  </Container>
+</section>
+
+<style lang="scss">
+  @use './cta.scss';
+</style>

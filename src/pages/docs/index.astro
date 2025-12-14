@@ -1,0 +1,355 @@
+---
+/**
+ * Documentation Index
+ *
+ * Central hub for all boilerplate documentation pages.
+ */
+
+import DefaultLayout from '@layouts/DefaultLayout.astro';
+import HeroMinimal from '@components/sections/heroes/HeroMinimal.astro';
+import Section from '@components/ui/Section.astro';
+---
+
+<DefaultLayout
+  title="Documentation - Multisite Boilerplate"
+  description="Complete documentation for the multisite boilerplate architecture, components, and customization."
+>
+  <HeroMinimal
+    title="Documentation"
+    subtitle="Learn how to use and customize the boilerplate"
+    id="page-header"
+  />
+
+  <Section id="docs-overview">
+    <div class="docs-grid">
+      <a href="/docs/components" class="docs-card">
+        <div class="docs-card__icon">
+          <i class="fa-solid fa-cubes"></i>
+        </div>
+        <h2>Components</h2>
+        <p>Explore all available component variants including heroes, features, CTAs, and UI primitives.</p>
+        <span class="docs-card__link">View Components �</span>
+      </a>
+
+      <a href="/docs/behaviors" class="docs-card">
+        <div class="docs-card__icon">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
+        <h2>JavaScript Behaviors</h2>
+        <p>Interactive demos of modals, accordions, tabs, dropdowns, scroll animations, and form validation.</p>
+        <span class="docs-card__link">View Behaviors �</span>
+      </a>
+
+      <a href="/docs/styling" class="docs-card">
+        <div class="docs-card__icon">
+          <i class="fa-solid fa-palette"></i>
+        </div>
+        <h2>Styling & Theming</h2>
+        <p>Color system, typography, spacing, breakpoints, and CSS custom properties for theming.</p>
+        <span class="docs-card__link">View Styling �</span>
+      </a>
+
+      <a href="/docs/colors" class="docs-card">
+        <div class="docs-card__icon">
+          <i class="fa-solid fa-droplet"></i>
+        </div>
+        <h2>Color Palette</h2>
+        <p>Full color palette reference with all shades and semantic colors.</p>
+        <span class="docs-card__link">View Colors �</span>
+      </a>
+    </div>
+  </Section>
+
+  <Section id="quick-start" classList="section--alt">
+    <h2>Quick Start</h2>
+    <p class="section-subtitle">Get up and running in minutes</p>
+
+    <div class="quick-start-steps">
+      <div class="step">
+        <span class="step__number">1</span>
+        <div class="step__content">
+          <h3>Configure Your Site</h3>
+          <p>Edit <code>src/data/config.ts</code> to set your site name, select component variants, and configure global settings.</p>
+          <pre><code>{`// src/data/config.ts
+export const config = {
+  siteName: 'Your Site',
+  components: {
+    header: 'standard',  // or 'centered', 'minimal'
+    footer: 'standard',  // or 'simple', 'centered'
+  },
+};`}</code></pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step__number">2</span>
+        <div class="step__content">
+          <h3>Add Your Content</h3>
+          <p>Create typed content files in <code>src/data/content/</code> for each page. The type system ensures consistency.</p>
+          <pre><code>{`// src/data/content/homepage.ts
+export const homepage = {
+  hero: {
+    title: 'Your Headline',
+    subtitle: 'Your subheadline',
+    actions: [{ label: 'CTA', href: '/contact' }],
+  },
+  features: { /* ... */ },
+};`}</code></pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step__number">3</span>
+        <div class="step__content">
+          <h3>Build Your Pages</h3>
+          <p>Import component variants and spread your content data. Switch variants without restructuring content.</p>
+          <pre><code>{`// src/pages/index.astro
+import { HeroStandard } from '@components/sections/heroes';
+import { homepage } from '@data/content';
+
+<HeroStandard {...homepage.hero} />`}</code></pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step__number">4</span>
+        <div class="step__content">
+          <h3>Customize Styling</h3>
+          <p>Override CSS custom properties or SCSS variables to match your brand.</p>
+          <pre><code>{`:root {
+  --color-primary-500: #your-brand-color;
+  --header-background: var(--color-white);
+  --button-border-radius: var(--border-radius-full);
+}`}</code></pre>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="architecture">
+    <h2>Architecture Overview</h2>
+    <p class="section-subtitle">Understanding the boilerplate structure</p>
+
+    <div class="arch-overview">
+      <div class="arch-item">
+        <h3>Component Variants</h3>
+        <p>Each component category (headers, heroes, features) has multiple variants that share TypeScript interfaces. Switch layouts without changing content.</p>
+      </div>
+
+      <div class="arch-item">
+        <h3>Configuration-Driven</h3>
+        <p>Site settings in <code>config.ts</code> control component selection. Change header/footer variants site-wide with one config change.</p>
+      </div>
+
+      <div class="arch-item">
+        <h3>Data-Attribute Behaviors</h3>
+        <p>All JavaScript behaviors are opt-in via <code>data-*</code> attributes. No JS changes needed per-project.</p>
+      </div>
+
+      <div class="arch-item">
+        <h3>CSS Custom Properties</h3>
+        <p>Component theming via CSS variables. Override colors, spacing, and layout without touching SCSS source.</p>
+      </div>
+
+      <div class="arch-item">
+        <h3>Typed Content</h3>
+        <p>Content data files with TypeScript interfaces enable AI-assisted content population and ensure consistency.</p>
+      </div>
+
+      <div class="arch-item">
+        <h3>Path Aliases</h3>
+        <p>Clean imports with <code>@components</code>, <code>@data</code>, <code>@types</code> aliases. No relative path gymnastics.</p>
+      </div>
+    </div>
+  </Section>
+</DefaultLayout>
+
+<style lang="scss" is:global>
+  @use '../../styles/abstracts' as *;
+
+  .section--alt {
+    background-color: var(--color-neutral-100);
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-neutral-600);
+    max-width: 40rem;
+    margin-inline: auto;
+    margin-bottom: var(--space-8);
+  }
+
+  // Docs grid
+  .docs-grid {
+    display: grid;
+    gap: var(--space-6);
+
+    @include media-up('md') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .docs-card {
+    display: block;
+    background: var(--color-white);
+    padding: var(--space-8);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-neutral-200);
+    text-decoration: none;
+    text-align: left;
+    transition: var(--transition-base);
+
+    &:hover {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+
+      .docs-card__link {
+        color: var(--color-primary-700);
+      }
+    }
+
+    &__icon {
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-primary-100);
+      border-radius: var(--border-radius-base);
+      margin-bottom: var(--space-4);
+
+      i {
+        font-size: var(--font-size-xl);
+        color: var(--color-primary);
+      }
+    }
+
+    h2 {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-2);
+      color: var(--color-black);
+    }
+
+    p {
+      font-size: var(--font-size-base);
+      color: var(--color-neutral-600);
+      margin-bottom: var(--space-4);
+    }
+
+    &__link {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-primary);
+      transition: var(--transition-fast);
+    }
+  }
+
+  // Quick start steps
+  .quick-start-steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    max-width: 48rem;
+    margin-inline: auto;
+    text-align: left;
+  }
+
+  .step {
+    display: flex;
+    gap: var(--space-6);
+
+    @include media-down('sm') {
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    &__number {
+      flex-shrink: 0;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-primary);
+      color: var(--color-white);
+      border-radius: var(--border-radius-full);
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+    }
+
+    &__content {
+      flex: 1;
+
+      h3 {
+        font-size: var(--font-size-lg);
+        margin-bottom: var(--space-2);
+      }
+
+      p {
+        font-size: var(--font-size-base);
+        color: var(--color-neutral-600);
+        margin-bottom: var(--space-4);
+
+        code {
+          background: var(--color-white);
+          border: 1px solid var(--color-neutral-200);
+        }
+      }
+
+      pre {
+        background: var(--color-neutral-900);
+        padding: var(--space-4);
+        border-radius: var(--border-radius-base);
+        overflow-x: auto;
+        margin: 0;
+
+        code {
+          font-size: var(--font-size-sm);
+          color: var(--color-neutral-200);
+          background: none;
+          border: none;
+          padding: 0;
+        }
+      }
+    }
+  }
+
+  // Architecture overview
+  .arch-overview {
+    display: grid;
+    gap: var(--space-6);
+    text-align: left;
+
+    @include media-up('md') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media-up('lg') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .arch-item {
+    background: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-neutral-200);
+
+    h3 {
+      font-size: var(--font-size-base);
+      margin-bottom: var(--space-2);
+      color: var(--color-primary);
+    }
+
+    p {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+      margin: 0;
+
+      code {
+        font-size: var(--font-size-xs);
+      }
+    }
+  }
+</style>

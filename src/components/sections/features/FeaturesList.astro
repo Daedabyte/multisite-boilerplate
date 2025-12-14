@@ -1,0 +1,91 @@
+---
+/**
+ * FeaturesList
+ *
+ * Vertical list layout with optional dividers between items.
+ * Clean, minimal design ideal for scannable content.
+ *
+ * @variant list
+ * @since 1.0.0
+ *
+ * Best for: FAQ-style features, service listings, simple benefit lists
+ * Avoid when: Need visual impact with images
+ *
+ * @example
+ * <FeaturesList
+ *   heading="What We Offer"
+ *   features={[
+ *     { title: 'Consulting', description: 'Expert guidance' }
+ *   ]}
+ *   dividers={true}
+ * />
+ */
+
+import type { FeaturesListProps } from './types';
+import Container from '@components/ui/Container.astro';
+
+interface Props extends FeaturesListProps {}
+
+const {
+  heading,
+  subheading,
+  features,
+  dividers = true,
+  background,
+  class: className,
+  classList,
+  id = 'features',
+  ...attrs
+} = Astro.props;
+
+const sectionClasses = [
+  'features',
+  'features--list',
+  dividers && 'features--dividers',
+  background?.variant === 'alt' && 'features--alt',
+  className,
+  classList,
+].filter(Boolean).join(' ');
+---
+
+<section
+  id={id}
+  class={sectionClasses}
+  {...attrs}
+>
+  <Container size="large">
+    {(heading || subheading) && (
+      <div class="features__header">
+        {heading && <h2 class="features__heading">{heading}</h2>}
+        {subheading && <p class="features__subheading">{subheading}</p>}
+      </div>
+    )}
+
+    <ul class="features__list" role="list">
+      {features.map((feature) => (
+        <li class="features__list-item">
+          {feature.icon && (
+            <div class="features__icon">
+              <i class={feature.icon} aria-hidden="true"></i>
+            </div>
+          )}
+          <div class="features__list-content">
+            <h3 class="features__title">{feature.title}</h3>
+            <p class="features__description">{feature.description}</p>
+            {feature.link && (
+              <a href={feature.link.href} class="features__link">
+                {feature.link.label || 'Learn more'} →
+              </a>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <slot />
+  </Container>
+</section>
+
+<style lang="scss">
+  @use './features.scss';
+</style>

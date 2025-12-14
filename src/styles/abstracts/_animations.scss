@@ -1,3 +1,68 @@
+@use 'sass:map';
+
+// ===================================
+// Reveal Animation Configuration
+// ===================================
+
+// Data-attribute driven reveal animation types
+// These work with the JavaScript scroll-reveal module
+$reveal-types: (
+  'fade': (opacity: 0),
+  'fade-up': (opacity: 0, transform: translateY(30px)),
+  'fade-down': (opacity: 0, transform: translateY(-30px)),
+  'fade-left': (opacity: 0, transform: translateX(30px)),
+  'fade-right': (opacity: 0, transform: translateX(-30px)),
+  'zoom': (opacity: 0, transform: scale(0.95)),
+  'flip': (opacity: 0, transform: perspective(1000px) rotateX(10deg)),
+);
+
+// Generate reveal utility classes for CSS-based reveals
+// These provide progressive enhancement when JS is disabled
+@each $name, $props in $reveal-types {
+  [data-reveal="#{$name}"] {
+    @each $prop, $value in $props {
+      #{$prop}: #{$value};
+    }
+    transition:
+      opacity var(--reveal-duration, 600ms) var(--reveal-easing, ease),
+      transform var(--reveal-duration, 600ms) var(--reveal-easing, ease);
+    transition-delay: var(--reveal-delay, 0ms);
+
+    &.is-revealed {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+// Stagger animation container
+[data-stagger] {
+  > * {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+      opacity var(--stagger-duration, 600ms) var(--stagger-easing, ease),
+      transform var(--stagger-duration, 600ms) var(--stagger-easing, ease);
+
+    &.is-revealed {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+// Counter animation
+[data-counter] {
+  &.is-counted {
+    // Hook for post-animation styling
+  }
+}
+
+// Parallax base styles
+[data-parallax] {
+  will-change: transform;
+}
+
 // ===================================
 // Keyframe Animations
 // ===================================
