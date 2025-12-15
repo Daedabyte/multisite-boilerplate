@@ -42,6 +42,8 @@ export type ContainerSize = 'small' | 'medium' | 'large' | 'xl' | 'full';
 export interface ContainerProps extends PolymorphicProps {
   /** Container max-width size */
   size?: ContainerSize;
+  /** Enable horizontal padding (default: true) */
+  padding?: boolean;
 }
 
 /**

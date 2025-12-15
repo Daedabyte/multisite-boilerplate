@@ -85,7 +85,7 @@ const alternatingFeatures = [
   />
 
   <!-- Hero Variants Section -->
-  <Section id="heroes" container={{ size: 'large' }}>
+  <Section id="heroes" container={{ size: 'xl' }}>
     <h2>Hero Variants</h2>
     <p class="section-subtitle">
       Heroes support multiple layouts. All variants share the same props interface.
@@ -133,6 +133,7 @@ const alternatingFeatures = [
   </div>
   <HeroSplit
     title="Split Hero Example"
+    container={{ size: "full" }}
     subtitle="This variant places content and imagery side by side, great for product showcases and SaaS landing pages."
     image={{ src: placeholderImg.src, alt: 'Product showcase' }}
     imagePosition="right"
@@ -150,6 +151,7 @@ const alternatingFeatures = [
   </div>
   <HeroSplit
     title="Split Hero - Left Image"
+    container={{ size: "full" }}
     subtitle="The same Split Hero variant but with the image positioned on the left side. Use imagePosition='left' to achieve this layout."
     image={{ src: placeholderImg.src, alt: 'App screenshot' }}
     imagePosition="left"
@@ -176,7 +178,7 @@ const alternatingFeatures = [
   />
 
   <!-- Features Variants Section -->
-  <Section id="features" classList="section--alt" container={{ size: 'large' }}>
+  <Section id="features" classList="section--alt" container={{ size: 'full' }}>
     <h2>Features Variants</h2>
     <p class="section-subtitle">
       Display feature lists, benefits, or services with different layouts.
@@ -232,6 +234,7 @@ const alternatingFeatures = [
   </div>
   <FeaturesList
     heading="Features List Example"
+    container={{ size: "medium" }}
     subheading="Vertical list with dividers. Clean and scannable."
     features={sampleFeatures}
     dividers={true}
@@ -250,7 +253,7 @@ const alternatingFeatures = [
   />
 
   <!-- CTA Variants Section -->
-  <Section id="cta-variants" classList="section--alt" container={{ size: 'large' }}>
+  <Section id="cta-variants" classList="section--alt" container={{ size: 'xl' }}>
     <h2>CTA Variants</h2>
     <p class="section-subtitle">
       Call-to-action sections for converting visitors.
@@ -312,7 +315,7 @@ const alternatingFeatures = [
     heading="Banner CTA Example"
     description="Full-width banner with high visual impact. Great for promotional messages."
     actions={[
-      { label: 'Contact Us', href: '/contact', variant: 'white' },
+      { label: 'Contact Us', href: '/contact', variant: 'light' },
     ]}
     id="cta-banner-demo"
   />

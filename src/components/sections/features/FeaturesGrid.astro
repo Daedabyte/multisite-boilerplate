@@ -33,6 +33,7 @@ const {
   features,
   columns = 3,
   background,
+  container,
   class: className,
   classList,
   id = 'features',
@@ -54,7 +55,7 @@ const sectionClasses = [
   class={sectionClasses}
   {...attrs}
 >
-  <Container>
+  <Container {...container}>
     {(heading || subheading) && (
       <div class="features__header">
         {heading && <h2 class="features__heading">{heading}</h2>}

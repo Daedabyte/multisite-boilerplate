@@ -32,6 +32,7 @@ const {
   features,
   dividers = true,
   background,
+  container,
   class: className,
   classList,
   id = 'features',
@@ -53,7 +54,7 @@ const sectionClasses = [
   class={sectionClasses}
   {...attrs}
 >
-  <Container size="large">
+  <Container size="large" {...container}>
     {(heading || subheading) && (
       <div class="features__header">
         {heading && <h2 class="features__heading">{heading}</h2>}

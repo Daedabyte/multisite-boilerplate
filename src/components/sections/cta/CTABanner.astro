@@ -31,6 +31,7 @@ const {
   actions = [],
   compact = false,
   background,
+  container,
   class: className,
   classList,
   id = 'cta',
@@ -56,7 +57,7 @@ const sectionClasses = [
   style={bgImage ? `--cta-bg-image: url(${bgImage})` : undefined}
   {...attrs}
 >
-  <Container>
+  <Container {...container}>
     <div class="cta__inner">
       <div class="cta__content">
         <h2 class="cta__heading">{heading}</h2>

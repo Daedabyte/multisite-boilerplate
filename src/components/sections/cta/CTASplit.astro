@@ -33,6 +33,7 @@ const {
   image,
   imagePosition = 'right',
   background,
+  container,
   class: className,
   classList,
   id = 'cta',
@@ -54,7 +55,7 @@ const sectionClasses = [
   class={sectionClasses}
   {...attrs}
 >
-  <Container>
+  <Container {...container}>
     <div class="cta__inner">
       <div class="cta__content">
         <h2 class="cta__heading">{heading}</h2>

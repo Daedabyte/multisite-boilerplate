@@ -13,6 +13,7 @@
  * @example
  * <Container size="large">Content here</Container>
  * <Container as="article" size="medium">Article content</Container>
+ * <Container padding={false}>Full-bleed content</Container>
  */
 
 import type { ContainerProps } from '@types';
@@ -21,6 +22,7 @@ interface Props extends ContainerProps {}
 
 const {
   size = 'large',
+  padding = true,
   as: Tag = 'div',
   class: className,
   classList,
@@ -30,6 +32,7 @@ const {
 const classes = [
   'container',
   `container--${size}`,
+  !padding && 'container--no-padding',
   className,
   classList,
 ].filter(Boolean).join(' ');
@@ -62,5 +65,9 @@ const classes = [
     .container--#{$size} {
       @include container($size);
     }
+  }
+
+  .container--no-padding {
+    padding-inline: 0;
   }
 </style>

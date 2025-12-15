@@ -65,7 +65,7 @@ export interface CTASimpleProps extends CTABaseProps {
  * Split CTA with image
  */
 export interface CTASplitProps extends CTABaseProps {
-  variant: 'split';
+  variant?: 'split';
   /** Featured image */
   image: {
     src: string;
@@ -79,7 +79,7 @@ export interface CTASplitProps extends CTABaseProps {
  * Full-width banner CTA
  */
 export interface CTABannerProps extends CTABaseProps {
-  variant: 'banner';
+  variant?: 'banner';
   /** Compact styling */
   compact?: boolean;
 }

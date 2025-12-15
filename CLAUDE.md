@@ -107,13 +107,70 @@ export * from './types';
 // Note: Import .astro files directly, not through barrel exports
 ```
 
+4. **Add to documentation** - Update `src/pages/docs/components.astro` with component examples:
+
+```astro
+<!-- In the appropriate section of docs/components.astro -->
+<Section id="pricing" container={{ size: "large" }}>
+  <h2>Pricing</h2>
+  <p>Display pricing tiers with the PricingCards component.</p>
+
+  <h3>Cards Variant</h3>
+  <PricingCards
+    heading="Choose Your Plan"
+    tiers={[
+      { name: 'Basic', price: '$9', features: ['Feature 1', 'Feature 2'] },
+      { name: 'Pro', price: '$29', features: ['All Basic', 'Feature 3'], highlighted: true },
+    ]}
+  />
+
+  <CodeBlock code={`<PricingCards heading="..." tiers={[...]} />`} />
+</Section>
+```
+
 #### Component Patterns
 
 - **Extend BaseProps** - All components should extend `BaseProps` for consistent `class`, `classList`, and `id` support.
 - **Default IDs** - Provide sensible default IDs (e.g., `id = 'hero'`) for anchor linking.
 - **Spread remaining attrs** - Use `{...attrs}` to pass through additional HTML attributes.
-- **Optional container** - Section components should accept a `container` prop for layout control.
+- **Accept container props** - All section components using `Container` must accept a `container?: ContainerProps` prop and spread it: `<Container {...container}>`. This allows consumers to configure size, padding, and other container options.
+- **Accept section props** - Components using `Section` should pass through section configuration (background, spacing) via props.
 - **Use slots** - Provide `<slot />` and named slots for content customization.
+
+#### Container Configuration
+
+The `ContainerProps` interface supports:
+- `size` - Container max-width: `'small' | 'medium' | 'large' | 'xl' | 'full'`
+- `padding` - Enable/disable horizontal padding (default: `true`)
+- `as` - Polymorphic element type
+
+Example implementation:
+```astro
+const { container, ...attrs } = Astro.props;
+---
+<section {...attrs}>
+  <Container {...container}>
+    <slot />
+  </Container>
+</section>
+```
+
+Usage:
+```astro
+<FeaturesGrid container={{ size: 'xl', padding: false }} ... />
+```
+
+#### Documentation Requirements
+
+When creating new components, you must also add them to the project documentation:
+
+1. **Add to docs page** - Update `src/pages/docs/components.astro` with examples of the new component and its variants.
+
+2. **Include all variants** - Show each variant with realistic content and explain when to use each.
+
+3. **Document props** - List available props with their types and defaults.
+
+4. **Show code examples** - Provide copy-paste ready usage examples.
 
 ---
 
@@ -731,6 +788,9 @@ $font-sizes: (
 | Add UI component | `src/components/ui/*` |
 | Add behavior | `src/scripts/behaviors/*` |
 | Images | `src/assets/images/*` |
+| Component docs | `src/pages/docs/components.astro` |
+| Styling docs | `src/pages/docs/styling.astro` |
+| Behavior docs | `src/pages/docs/behaviors.astro` |
 
 ---
 

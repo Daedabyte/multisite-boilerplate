@@ -93,7 +93,7 @@ export interface FeaturesGridProps extends FeaturesBaseProps {
  * Vertical list layout
  */
 export interface FeaturesListProps extends FeaturesBaseProps {
-  variant: 'list';
+  variant?: 'list';
   /** Show dividers between items */
   dividers?: boolean;
 }
@@ -102,7 +102,7 @@ export interface FeaturesListProps extends FeaturesBaseProps {
  * Card-style features
  */
 export interface FeaturesCardsProps extends FeaturesBaseProps {
-  variant: 'cards';
+  variant?: 'cards';
   /** Number of columns */
   columns?: FeaturesColumns;
   /** Enable hover effect */
@@ -113,7 +113,7 @@ export interface FeaturesCardsProps extends FeaturesBaseProps {
  * Alternating left/right layout
  */
 export interface FeaturesAlternatingProps extends FeaturesBaseProps {
-  variant: 'alternating';
+  variant?: 'alternating';
   /** Features must include images for this variant */
   features: Array<FeatureItem & { image: ImageProps }>;
 }

@@ -345,6 +345,30 @@ $colors: map.merge($colors, ('neutral': (50: #fefefe,
     ),
 ));
 
+// Add Light, Dark, Black, and White for Component Variants
+$colors: map.merge($colors, (
+    'light': (
+        500: #f8f9fa,
+        600: #e9ecef,
+        700: #dee2e6,
+    ),
+    'dark': (
+        500: #343a40,
+        600: #212529,
+        700: #1a1d20,
+    ),
+    'black': (
+        500: #000000,
+        600: #000000,
+        700: #000000,
+    ),
+    'white': (
+        500: #ffffff,
+        600: #f8f9fa,
+        700: #e9ecef,
+    ),
+));
+
 // ===================================
 // Color Harmony Palettes (Optional)
 // ===================================

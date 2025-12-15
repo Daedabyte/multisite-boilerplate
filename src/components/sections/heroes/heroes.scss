@@ -169,14 +169,11 @@ $hero-overlay-color: rgba(0, 0, 0, 0.5);
 
   .hero__inner {
     display: grid;
-    gap: var(--space-8);
+    gap: 0;
     align-items: center;
-    padding-block: var(--space-12);
 
     @include media-up('lg') {
       grid-template-columns: 1fr 1fr;
-      gap: var(--space-12);
-      padding-block: var(--space-16);
     }
   }
 
@@ -190,6 +187,22 @@ $hero-overlay-color: rgba(0, 0, 0, 0.5);
 
   .hero__content {
     max-width: none;
+    padding: var(--space-12) var(--space-6);
+
+    @include media-up('lg') {
+      padding: var(--space-16) var(--space-12);
+    }
+  }
+
+  .hero__image {
+    height: 100%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0;
+    }
   }
 }
 
