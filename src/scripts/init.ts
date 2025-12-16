@@ -28,10 +28,13 @@ import * as tabs from './behaviors/tabs';
 import * as dropdown from './behaviors/dropdown';
 import * as mobileNav from './behaviors/mobile-nav';
 import * as formValidation from './behaviors/form-validation';
+import * as gallery from './behaviors/gallery';
+import * as carousel from './behaviors/carousel';
 import * as scrollReveal from './animations/scroll-reveal';
 import * as stagger from './animations/stagger';
 import * as counter from './animations/counter';
 import * as parallax from './animations/parallax';
+import { toast } from './behaviors/toast';
 
 /**
  * Initializes all behaviors and animations
@@ -62,6 +65,14 @@ export function initAll(): void {
         formValidation.init();
     }
 
+    if (document.querySelector('[data-gallery]')) {
+        gallery.init();
+    }
+
+    if (document.querySelector('[data-carousel]')) {
+        carousel.init();
+    }
+
     // Animations
     if (document.querySelector('[data-reveal]')) {
         scrollReveal.init();
@@ -88,5 +99,5 @@ if (document.readyState === 'loading') {
 }
 
 // Re-export modules for manual access
-export { modal, accordion, tabs, dropdown, mobileNav, formValidation };
+export { modal, accordion, tabs, dropdown, mobileNav, formValidation, gallery, carousel, toast };
 export { scrollReveal, stagger, counter, parallax };

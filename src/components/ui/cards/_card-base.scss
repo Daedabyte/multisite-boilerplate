@@ -1,0 +1,147 @@
+/**
+ * Card Base Styles
+ *
+ * Shared styles, hover animations, and utilities for all card components.
+ */
+
+@use 'sass:math';
+@use '../../../styles/abstracts' as *;
+
+// ===================================
+// Card Base Mixin
+// ===================================
+
+@mixin card-base {
+  // Base styles first
+  position: relative;
+  display: block;
+  background: var(--color-white);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+@mixin card-variants {
+  // Radius variants
+  &--radius-none { border-radius: 0; }
+  &--radius-small { border-radius: var(--border-radius-sm); }
+  &--radius-medium { border-radius: var(--border-radius-base); }
+  &--radius-large { border-radius: var(--border-radius-lg); }
+
+  // Shadow
+  &--shadow {
+    box-shadow: var(--shadow-md);
+  }
+
+  // Border
+  &--bordered {
+    border: 1px solid var(--color-neutral-200);
+  }
+
+  // Clickable card
+  &--clickable {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+  }
+}
+
+// ===================================
+// Hover Animations
+// ===================================
+
+@mixin card-hover-lift {
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+@mixin card-hover-scale {
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+@mixin card-hover-glow {
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    box-shadow: 0 0 20px rgba(var(--color-primary-rgb, 59, 130, 246), 0.4);
+    pointer-events: none;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+@mixin card-hover-border {
+  border: 1px solid var(--color-neutral-200);
+
+  &:hover {
+    border-color: var(--color-primary);
+  }
+}
+
+@mixin card-hover-tilt {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+
+  &:hover {
+    transform: rotateX(-10deg) rotateY(0deg);
+  }
+}
+
+// Apply hover based on data attribute
+@mixin card-hover-variants {
+  &--hover-lift {
+    @include card-hover-lift;
+  }
+
+  &--hover-scale {
+    @include card-hover-scale;
+  }
+
+  &--hover-glow {
+    @include card-hover-glow;
+  }
+
+  &--hover-border {
+    @include card-hover-border;
+  }
+
+  &--hover-tilt {
+    @include card-hover-tilt;
+  }
+}
+
+// ===================================
+// Aspect Ratio Utilities
+// ===================================
+
+@mixin aspect-ratio($ratio) {
+  aspect-ratio: $ratio;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.aspect-square { @include aspect-ratio(1); }
+.aspect-video { @include aspect-ratio(math.div(16, 9)); }
+.aspect-portrait { @include aspect-ratio(math.div(3, 4)); }
+.aspect-wide { @include aspect-ratio(math.div(21, 9)); }

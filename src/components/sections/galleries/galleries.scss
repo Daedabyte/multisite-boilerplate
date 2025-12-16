@@ -1,0 +1,727 @@
+/**
+ * Gallery Section Component Styles
+ * Shared styles for all gallery variants
+ */
+
+@use 'sass:map';
+@use '../../../styles/abstracts' as *;
+
+// ===================================
+// Variables
+// ===================================
+
+$gallery-gap-small: var(--space-2);
+$gallery-gap-medium: var(--space-4);
+$gallery-gap-large: var(--space-6);
+
+// ===================================
+// Base Gallery Styles
+// ===================================
+
+.gallery {
+  padding-block: var(--space-16);
+
+  @include media-up('md') {
+    padding-block: var(--space-20);
+  }
+
+  &--alt {
+    background-color: var(--color-neutral-50);
+  }
+
+  &--dark {
+    background-color: var(--color-neutral-900);
+    color: var(--color-white);
+
+    .gallery__heading,
+    .gallery__subheading {
+      color: var(--color-white);
+    }
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: var(--space-10);
+  }
+
+  &__heading {
+    font-size: var(--font-size-xxl);
+    margin-bottom: var(--space-3);
+    color: var(--color-neutral-900);
+  }
+
+  &__subheading {
+    font-size: var(--font-size-lg);
+    color: var(--color-neutral-600);
+    max-width: 40rem;
+    margin-inline: auto;
+  }
+
+  &__grid {
+    display: grid;
+    gap: $gallery-gap-medium;
+  }
+
+  &__item {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius-md);
+    margin: 0;
+  }
+
+  &__trigger,
+  &__link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    position: relative;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--transition-base);
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--color-white);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    padding: var(--space-4);
+    text-align: center;
+
+    i {
+      font-size: var(--font-size-xl);
+    }
+  }
+
+  &__title {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &__description {
+    font-size: var(--font-size-sm);
+    opacity: 0.9;
+  }
+
+  &__caption {
+    padding: var(--space-3);
+    background: var(--color-white);
+    text-align: center;
+  }
+
+  // Hover effects
+  &--overlay {
+    .gallery__item:hover,
+    .gallery__item:focus-within {
+      .gallery__overlay {
+        opacity: 1;
+      }
+
+      .gallery__image {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .gallery__trigger:hover,
+  .gallery__trigger:focus,
+  .gallery__link:hover,
+  .gallery__link:focus {
+    .gallery__overlay {
+      opacity: 1;
+    }
+
+    .gallery__image {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// ===================================
+// Grid Layout Columns
+// ===================================
+
+@for $i from 2 through 6 {
+  .gallery--cols-#{$i} {
+    .gallery__grid {
+      grid-template-columns: repeat(2, 1fr);
+
+      @include media-up('md') {
+        grid-template-columns: repeat(min($i, 3), 1fr);
+      }
+
+      @include media-up('lg') {
+        grid-template-columns: repeat($i, 1fr);
+      }
+    }
+  }
+}
+
+// ===================================
+// Aspect Ratios
+// ===================================
+
+.gallery--aspect-square {
+  .gallery__item {
+    aspect-ratio: 1;
+  }
+}
+
+.gallery--aspect-landscape {
+  .gallery__item {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+.gallery--aspect-portrait {
+  .gallery__item {
+    aspect-ratio: 3 / 4;
+  }
+}
+
+.gallery--aspect-auto {
+  .gallery__item {
+    aspect-ratio: auto;
+  }
+
+  .gallery__image {
+    height: auto;
+  }
+}
+
+// ===================================
+// Gap Variants
+// ===================================
+
+.gallery--gap-none {
+  .gallery__grid {
+    gap: 0;
+  }
+
+  .gallery__item {
+    border-radius: 0;
+  }
+}
+
+.gallery--gap-small {
+  .gallery__grid {
+    gap: $gallery-gap-small;
+  }
+}
+
+.gallery--gap-medium {
+  .gallery__grid {
+    gap: $gallery-gap-medium;
+  }
+}
+
+.gallery--gap-large {
+  .gallery__grid {
+    gap: $gallery-gap-large;
+  }
+}
+
+// ===================================
+// Carousel Styles
+// ===================================
+
+// Carousel has two modes controlled by data-carousel-mode:
+// - "single": Uses enter/exit CSS animations (slidesPerView = 1)
+// - "multi": Uses translateX on track (slidesPerView > 1)
+
+.carousel {
+  position: relative;
+
+  &__viewport {
+    overflow: hidden;
+    border-radius: var(--border-radius-md);
+  }
+
+  &__track {
+    display: flex;
+    gap: var(--space-4);
+    position: relative;
+  }
+
+  &__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
+  // ===================================
+  // Multi-slide mode (slidesPerView > 1)
+  // Uses translateX on track
+  // ===================================
+  &[data-carousel-mode="multi"] {
+    .carousel__track {
+      transition: transform 0.4s ease-out;
+    }
+
+    .carousel__slide {
+      // All slides visible in multi mode
+      display: block;
+      opacity: 1;
+    }
+  }
+
+  // ===================================
+  // Single-slide mode (slidesPerView = 1)
+  // Uses enter/exit animations
+  // ===================================
+  &[data-carousel-mode="single"] {
+    .carousel__slide {
+      // Hidden by default
+      display: none;
+      opacity: 0;
+
+      // Active slide is visible
+      &--active {
+        display: block;
+        opacity: 1;
+      }
+
+      // Entering slide - positioned for animation
+      &--entering {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      // Exiting slide - visible during exit animation
+      &--exiting {
+        display: block;
+        opacity: 1;
+      }
+    }
+
+    // Direction-based animations (single mode only)
+    // Navigating forward (next) - direction="left"
+    &[data-carousel-direction="left"] {
+      .carousel__slide--entering {
+        animation: slideInFromRight 0.4s ease-out forwards;
+      }
+
+      .carousel__slide--exiting {
+        animation: slideOutToLeft 0.4s ease-out forwards;
+      }
+    }
+
+    // Navigating backward (prev) - direction="right"
+    &[data-carousel-direction="right"] {
+      .carousel__slide--entering {
+        animation: slideInFromLeft 0.4s ease-out forwards;
+      }
+
+      .carousel__slide--exiting {
+        animation: slideOutToRight 0.4s ease-out forwards;
+      }
+    }
+  }
+
+  // ===================================
+  // Slides per view variants (for multi mode)
+  // ===================================
+
+  // 2 slides per view
+  &[data-carousel-slides-per-view="2"] {
+    .carousel__slide {
+      @include media-up('md') {
+        flex: 0 0 calc(50% - var(--space-2));
+      }
+    }
+  }
+
+  // 3 slides per view
+  &[data-carousel-slides-per-view="3"] {
+    .carousel__slide {
+      @include media-up('md') {
+        flex: 0 0 calc(50% - var(--space-2));
+      }
+
+      @include media-up('lg') {
+        flex: 0 0 calc(33.333% - var(--space-3));
+      }
+    }
+  }
+
+  // 4 slides per view
+  &[data-carousel-slides-per-view="4"] {
+    .carousel__slide {
+      @include media-up('md') {
+        flex: 0 0 calc(50% - var(--space-2));
+      }
+
+      @include media-up('lg') {
+        flex: 0 0 calc(25% - var(--space-3));
+      }
+    }
+  }
+
+  &__nav {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+
+    @include media-up('md') {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      justify-content: space-between;
+      margin-top: 0;
+      pointer-events: none;
+      padding-inline: var(--space-2);
+    }
+  }
+
+  &__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: none;
+    border-radius: var(--border-radius-full);
+    background: var(--color-white);
+    color: var(--color-neutral-900);
+    cursor: pointer;
+    transition: var(--transition-base);
+    box-shadow: var(--shadow-md);
+    pointer-events: auto;
+
+    &:hover,
+    &:focus {
+      background: var(--color-primary);
+      color: var(--color-white);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+
+      &:hover,
+      &:focus {
+        background: var(--color-white);
+        color: var(--color-neutral-900);
+      }
+    }
+
+    @include media-up('md') {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+
+  &__dots {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    border: none;
+  }
+
+  &__dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    padding: 0;
+    border: 2px solid var(--color-neutral-300);
+    border-radius: var(--border-radius-full);
+    background: transparent;
+    cursor: pointer;
+    transition: var(--transition-fast);
+
+    &:hover,
+    &:focus {
+      border-color: var(--color-primary);
+    }
+
+    &--active {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+  }
+}
+
+// ===================================
+// Carousel Animations (single mode)
+// ===================================
+
+// Slide in from the right (for next navigation)
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Slide in from the left (for prev navigation)
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Slide out to the left (for next navigation)
+@keyframes slideOutToLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+// Slide out to the right (for prev navigation)
+@keyframes slideOutToRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+// ===================================
+// Lightbox Styles
+// ===================================
+
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &[hidden] {
+    display: none;
+  }
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    cursor: pointer;
+  }
+
+  &__content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+
+    @include media-up('md') {
+      padding: var(--space-8);
+    }
+  }
+
+  &__close {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: none;
+    border-radius: var(--border-radius-full);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-white);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    z-index: 10;
+
+    &:hover,
+    &:focus {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    i {
+      font-size: var(--font-size-lg);
+    }
+  }
+
+  &__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border: none;
+    border-radius: var(--border-radius-full);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-white);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    z-index: 10;
+
+    &:hover,
+    &:focus {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    &--prev {
+      left: var(--space-4);
+    }
+
+    &--next {
+      right: var(--space-4);
+    }
+
+    i {
+      font-size: var(--font-size-lg);
+    }
+
+    @include media-up('md') {
+      width: 3.5rem;
+      height: 3.5rem;
+    }
+  }
+
+  &__stage {
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__image {
+    max-width: 100%;
+    max-height: calc(100vh - 10rem);
+    object-fit: contain;
+    border-radius: var(--border-radius-sm);
+
+    @include media-up('md') {
+      max-height: calc(100vh - 12rem);
+    }
+  }
+
+  &__caption {
+    margin-top: var(--space-4);
+    color: var(--color-white);
+    text-align: center;
+    font-size: var(--font-size-base);
+    max-width: 40rem;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  &__counter {
+    position: absolute;
+    bottom: var(--space-4);
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-white);
+    font-size: var(--font-size-sm);
+    opacity: 0.7;
+  }
+
+  &__thumbnails {
+    position: absolute;
+    bottom: var(--space-4);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--space-2);
+    max-width: calc(100% - var(--space-8));
+    overflow-x: auto;
+    padding: var(--space-2);
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: var(--border-radius-md);
+
+    // Hide scrollbar
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__thumb {
+    flex: 0 0 auto;
+    width: 3.5rem;
+    height: 3.5rem;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: var(--border-radius-sm);
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+    opacity: 0.6;
+    transition: var(--transition-fast);
+
+    &:hover,
+    &:focus {
+      opacity: 1;
+    }
+
+    &--active {
+      border-color: var(--color-white);
+      opacity: 1;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @include media-up('md') {
+      width: 4.5rem;
+      height: 4.5rem;
+    }
+  }
+}
+
+// Body scroll lock when lightbox is open
+body.gallery-lightbox-open {
+  overflow: hidden;
+}

@@ -1,0 +1,207 @@
+---
+/**
+ * BulletList
+ *
+ * Styled list with customizable bullet styles.
+ * Supports various bullet types including icons.
+ *
+ * @since 1.0.0
+ *
+ * Best for: Content lists, requirements, simple enumerations
+ * Avoid when: Lists need individual icons (use IconList instead)
+ */
+
+import type { BulletListProps } from '@types';
+
+interface Props extends BulletListProps {}
+
+const {
+  items,
+  bullet = 'disc',
+  bulletColor = 'primary',
+  spacing = 'normal',
+  nested = false,
+  class: className,
+  classList,
+  id,
+  ...attrs
+} = Astro.props;
+
+const isNumbered = bullet === 'number';
+const Tag = isNumbered ? 'ol' : 'ul';
+
+const classes = [
+  'bullet-list',
+  `bullet-list--${bullet}`,
+  `bullet-list--color-${bulletColor}`,
+  `bullet-list--spacing-${spacing}`,
+  nested && 'bullet-list--nested',
+  className,
+  classList,
+].filter(Boolean).join(' ');
+---
+
+<Tag id={id} class={classes} role="list" {...attrs}>
+  {items ? (
+    items.map((item) => (
+      <li class="bullet-list__item">{item}</li>
+    ))
+  ) : (
+    <slot />
+  )}
+</Tag>
+
+<style lang="scss">
+  @use '../../styles/abstracts' as *;
+
+  .bullet-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    // Color variants
+    &--color-primary {
+      --bullet-color: var(--color-primary);
+    }
+
+    &--color-secondary {
+      --bullet-color: var(--color-secondary);
+    }
+
+    &--color-success {
+      --bullet-color: var(--color-success);
+    }
+
+    &--color-danger {
+      --bullet-color: var(--color-danger);
+    }
+
+    &--color-warning {
+      --bullet-color: color('warning', 600);
+    }
+
+    &--color-info {
+      --bullet-color: var(--color-info);
+    }
+
+    &--color-neutral {
+      --bullet-color: var(--color-neutral-500);
+    }
+
+    // Spacing variants
+    &--spacing-compact {
+      --item-gap: var(--space-1);
+    }
+
+    &--spacing-normal {
+      --item-gap: var(--space-2);
+    }
+
+    &--spacing-relaxed {
+      --item-gap: var(--space-3);
+    }
+
+    // Bullet style variants
+    &--disc &__item::before {
+      content: '';
+      width: 0.5em;
+      height: 0.5em;
+      background: var(--bullet-color);
+      border-radius: 50%;
+    }
+
+    &--circle &__item::before {
+      content: '';
+      width: 0.5em;
+      height: 0.5em;
+      border: 2px solid var(--bullet-color);
+      border-radius: 50%;
+      background: transparent;
+    }
+
+    &--square &__item::before {
+      content: '';
+      width: 0.45em;
+      height: 0.45em;
+      background: var(--bullet-color);
+      border-radius: 2px;
+    }
+
+    &--check &__item::before {
+      content: '\f00c'; // fa-check
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      font-size: 0.75em;
+      color: var(--bullet-color);
+      width: auto;
+      height: auto;
+    }
+
+    &--arrow &__item::before {
+      content: '\f054'; // fa-chevron-right
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      font-size: 0.65em;
+      color: var(--bullet-color);
+      width: auto;
+      height: auto;
+    }
+
+    &--dash &__item::before {
+      content: '';
+      width: 0.75em;
+      height: 2px;
+      background: var(--bullet-color);
+      border-radius: 1px;
+    }
+
+    &--number {
+      counter-reset: list-counter;
+
+      .bullet-list__item {
+        counter-increment: list-counter;
+
+        &::before {
+          content: counter(list-counter) '.';
+          font-weight: var(--font-weight-semibold);
+          color: var(--bullet-color);
+          min-width: 1.5em;
+          width: auto;
+          height: auto;
+          background: none;
+        }
+      }
+    }
+
+    // Nested lists
+    &--nested {
+      padding-left: var(--space-6);
+    }
+
+    // Item styles
+    &__item {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-3);
+      color: var(--color-neutral-700);
+      line-height: 1.6;
+
+      & + & {
+        margin-top: var(--item-gap);
+      }
+
+      &::before {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    // Support for nested lists via slot
+    :global(.bullet-list) & {
+      margin-top: var(--item-gap);
+      padding-left: var(--space-6);
+    }
+  }
+</style>

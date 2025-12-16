@@ -23,10 +23,24 @@ import CTASimple from '@components/sections/cta/CTASimple.astro';
 import CTABanner from '@components/sections/cta/CTABanner.astro';
 import CTASplit from '@components/sections/cta/CTASplit.astro';
 
+// Gallery variants (import directly from .astro files)
+import GalleryGrid from '@components/sections/galleries/GalleryGrid.astro';
+import GalleryCarousel from '@components/sections/galleries/GalleryCarousel.astro';
+
 // UI components
 import Section from '@components/ui/Section.astro';
 import Container from '@components/ui/Container.astro';
 import Button from '@components/ui/Button.astro';
+import SplitContainer from '@components/ui/SplitContainer.astro';
+import Breadcrumb from '@components/ui/Breadcrumb.astro';
+import PageLoader from '@components/ui/PageLoader.astro';
+import IconList from '@components/ui/IconList.astro';
+import BulletList from '@components/ui/BulletList.astro';
+import SimpleCard from '@components/ui/cards/SimpleCard.astro';
+import SlimCard from '@components/ui/cards/SlimCard.astro';
+import ImageCard from '@components/ui/cards/ImageCard.astro';
+import MediaCard from '@components/ui/cards/MediaCard.astro';
+import SideNav from '@components/ui/SideNav.astro';
 
 // Images
 import backgroundImg from '@assets/images/background.png';
@@ -71,6 +85,52 @@ const alternatingFeatures = [
     icon: 'fa-solid fa-sliders',
   },
 ];
+
+const sampleGalleryItems = [
+  { image: { src: 'https://picsum.photos/seed/gallery1/800/600', alt: 'Gallery image 1' }, title: 'Mountain Vista', description: 'Scenic mountain landscape' },
+  { image: { src: 'https://picsum.photos/seed/gallery2/800/600', alt: 'Gallery image 2' }, title: 'Ocean Sunset', description: 'Beautiful coastal view' },
+  { image: { src: 'https://picsum.photos/seed/gallery3/800/600', alt: 'Gallery image 3' }, title: 'Forest Path', description: 'Peaceful woodland trail' },
+  { image: { src: 'https://picsum.photos/seed/gallery4/800/600', alt: 'Gallery image 4' }, title: 'City Lights', description: 'Urban nightscape' },
+  { image: { src: 'https://picsum.photos/seed/gallery5/800/600', alt: 'Gallery image 5' }, title: 'Desert Dunes', description: 'Golden sand formations' },
+  { image: { src: 'https://picsum.photos/seed/gallery6/800/600', alt: 'Gallery image 6' }, title: 'Waterfall', description: 'Cascading natural beauty' },
+];
+
+// Side navigation items
+const sideNavItems = [
+  {
+    label: 'Section Components',
+    children: [
+      { label: 'Heroes', href: '#heroes' },
+      { label: 'Features', href: '#features' },
+      { label: 'CTA', href: '#cta-variants' },
+      { label: 'Galleries', href: '#gallery-variants' },
+    ],
+  },
+  {
+    label: 'UI Components',
+    children: [
+      { label: 'Buttons & Containers', href: '#ui-components' },
+      { label: 'SplitContainer', href: '#split-demo' },
+      { label: 'Breadcrumb', href: '#breadcrumbs' },
+      { label: 'Page Loader', href: '#page-loader' },
+      { label: 'Lists', href: '#lists' },
+      {
+        label: 'Cards',
+        href: '#cards',
+        children: [
+          { label: 'SimpleCard', href: '#cards' },
+          { label: 'SlimCard', href: '#cards' },
+          { label: 'ImageCard', href: '#cards' },
+          { label: 'MediaCard', href: '#cards' },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Usage',
+    href: '#usage',
+  },
+];
 ---
 
 <DefaultLayout
@@ -84,8 +144,22 @@ const alternatingFeatures = [
     id="page-header"
   />
 
-  <!-- Hero Variants Section -->
-  <Section id="heroes" container={{ size: 'xl' }}>
+  <!-- Two-column layout with SideNav -->
+  <div class="docs-layout">
+    <aside class="docs-layout__sidebar">
+      <SideNav
+        items={sideNavItems}
+        title="On this page"
+        position="sticky"
+        topOffset="var(--space-24)"
+        collapsible={true}
+        defaultExpanded={true}
+      />
+    </aside>
+
+    <main class="docs-layout__content">
+      <!-- Hero Variants Section -->
+      <Section id="heroes" container={{ size: 'xl' }}>
     <h2>Hero Variants</h2>
     <p class="section-subtitle">
       Heroes support multiple layouts. All variants share the same props interface.
@@ -366,8 +440,125 @@ const alternatingFeatures = [
     id="cta-split-left-demo"
   />
 
+  <!-- Gallery Variants Section -->
+  <Section id="gallery-variants" container={{ size: 'full' }}>
+    <h2>Gallery Variants</h2>
+    <p class="section-subtitle">
+      Display image collections with grid or carousel layouts. Both support optional lightbox feature.
+    </p>
+
+    <div class="variant-grid">
+      <div class="variant-card">
+        <h3>GalleryGrid</h3>
+        <p>Responsive grid with optional overlay captions and lightbox. Best for portfolios.</p>
+        <code>import GalleryGrid from '@components/sections/galleries/GalleryGrid.astro';</code>
+      </div>
+      <div class="variant-card">
+        <h3>GalleryCarousel</h3>
+        <p>Sliding carousel with autoplay, navigation, and optional lightbox. Great for featured work.</p>
+        <code>import GalleryCarousel from '@components/sections/galleries/GalleryCarousel.astro';</code>
+      </div>
+      <div class="variant-card">
+        <h3>Lightbox Feature</h3>
+        <p>Add <code>lightbox={'{true}'}</code> to either variant for full-screen image viewing with keyboard navigation.</p>
+        <code>{'<GalleryGrid items={items} lightbox={true} />'}</code>
+      </div>
+    </div>
+  </Section>
+
+  <!-- GalleryGrid Demo -->
+  <div class="demo-section">
+    <div class="demo-label">GalleryGrid</div>
+  </div>
+  <GalleryGrid
+    heading="Grid Gallery"
+    subheading="Responsive grid layout with hover overlays"
+    items={sampleGalleryItems}
+    columns={3}
+    aspectRatio="landscape"
+    showOverlay={true}
+    id="gallery-grid-demo"
+  />
+
+  <!-- GalleryGrid Demo (Square, 4 columns) -->
+  <div class="demo-section">
+    <div class="demo-label">GalleryGrid (Square, 4 columns)</div>
+  </div>
+  <GalleryGrid
+    items={sampleGalleryItems}
+    columns={4}
+    aspectRatio="square"
+    gap="small"
+    showOverlay={true}
+    background={{ variant: 'alt' }}
+    id="gallery-grid-square-demo"
+  />
+
+  <!-- GalleryCarousel Demo -->
+  <div class="demo-section">
+    <div class="demo-label">GalleryCarousel</div>
+  </div>
+  <GalleryCarousel
+    heading="Carousel Gallery"
+    subheading="Swipeable slides with navigation arrows and dots"
+    items={sampleGalleryItems}
+    slidesPerView={3}
+    showArrows={true}
+    showDots={true}
+    aspectRatio="landscape"
+    id="gallery-carousel-demo"
+  />
+
+  <!-- GalleryCarousel Demo (Autoplay with Loop) -->
+  <div class="demo-section">
+    <div class="demo-label">GalleryCarousel (Autoplay, Loop)</div>
+  </div>
+  <GalleryCarousel
+    items={sampleGalleryItems}
+    slidesPerView={1}
+    autoplay={true}
+    autoplayInterval={4000}
+    loop={true}
+    showArrows={true}
+    showDots={true}
+    aspectRatio="landscape"
+    background={{ variant: 'dark' }}
+    id="gallery-carousel-autoplay-demo"
+  />
+
+  <!-- GalleryGrid with Lightbox Demo -->
+  <div class="demo-section">
+    <div class="demo-label">GalleryGrid (with Lightbox)</div>
+  </div>
+  <GalleryGrid
+    heading="Grid with Lightbox"
+    subheading="Click any image to open full-screen viewer with keyboard navigation"
+    items={sampleGalleryItems}
+    columns={3}
+    aspectRatio="square"
+    showOverlay={true}
+    lightbox={true}
+    id="gallery-grid-lightbox-demo"
+  />
+
+  <!-- GalleryCarousel with Lightbox Demo -->
+  <div class="demo-section">
+    <div class="demo-label">GalleryCarousel (with Lightbox)</div>
+  </div>
+  <GalleryCarousel
+    heading="Carousel with Lightbox"
+    subheading="Click any slide to open full-screen viewer"
+    items={sampleGalleryItems}
+    slidesPerView={3}
+    showArrows={true}
+    showDots={true}
+    lightbox={true}
+    background={{ variant: 'alt' }}
+    id="gallery-carousel-lightbox-demo"
+  />
+
   <!-- UI Components Section -->
-  <Section id="ui-components" container={{ size: 'medium' }}>
+  <Section id="ui-components" container={{ size: 'xl' }}>
     <h2>UI Components</h2>
     <p class="section-subtitle">
       Reusable primitives for building custom sections.
@@ -400,8 +591,689 @@ const alternatingFeatures = [
     </div>
   </Section>
 
+  <!-- SplitContainer Demo -->
+  <div class="demo-section">
+    <div class="demo-label">SplitContainer (Image Right)</div>
+  </div>
+  <Section id="split-demo" container={{ size: 'xl' }}>
+    <SplitContainer
+      image={{ src: placeholderImg.src, alt: 'Feature showcase' }}
+      imagePosition="right"
+      ratio="50-50"
+      verticalAlign="center"
+      imageRounded={true}
+      imageShadow={true}
+    >
+      <h2 class="split-demo__title">Split Container Component</h2>
+      <p class="split-demo__text">
+        A flexible split layout for side-by-side content. Perfect for feature showcases,
+        about sections, testimonials, and any content that benefits from image/text pairings.
+      </p>
+      <p class="split-demo__text">
+        Supports configurable ratios (50-50, 40-60, 60-40, 33-67, 67-33), image positioning,
+        and vertical alignment options.
+      </p>
+      <div class="split-demo__actions">
+        <Button variant="primary">Learn More</Button>
+        <Button variant="secondary" outline>View Code</Button>
+      </div>
+    </SplitContainer>
+  </Section>
+
+  <!-- SplitContainer Demo (Image Left, Different Ratio) -->
+  <div class="demo-section">
+    <div class="demo-label">SplitContainer (Image Left, 40-60 Ratio)</div>
+  </div>
+  <Section id="split-demo-2" classList="section--alt" container={{ size: 'xl' }}>
+    <SplitContainer
+      image={{ src: 'https://picsum.photos/seed/split1/600/500', alt: 'App preview' }}
+      imagePosition="left"
+      ratio="40-60"
+      verticalAlign="center"
+      imageRounded={true}
+    >
+      <h2 class="split-demo__title">Flexible Layouts</h2>
+      <p class="split-demo__text">
+        Use different ratios to emphasize content or imagery. The 40-60 ratio gives more
+        space to the content side, perfect for detailed descriptions.
+      </p>
+      <ul class="split-demo__list">
+        <li><strong>Responsive:</strong> Stacks on mobile, side-by-side on desktop</li>
+        <li><strong>Customizable:</strong> Gap sizes, alignment, and border radius options</li>
+        <li><strong>Flexible:</strong> Use image prop or named slots for custom content</li>
+      </ul>
+    </SplitContainer>
+  </Section>
+
+  <!-- SplitContainer Demo (With Slots) -->
+  <div class="demo-section">
+    <div class="demo-label">SplitContainer (Using Slots)</div>
+  </div>
+  <Section id="split-demo-3" container={{ size: 'xl' }}>
+    <SplitContainer ratio="50-50" verticalAlign="center" gap="large">
+      <div slot="start" class="split-slot-demo">
+        <h3>Custom Start Slot</h3>
+        <p>Use named slots for complete control over both columns. Perfect for non-image content like stats, forms, or custom layouts.</p>
+      </div>
+      <div slot="end" class="split-slot-demo split-slot-demo--alt">
+        <h3>Custom End Slot</h3>
+        <p>Each slot can contain any content you need - cards, lists, forms, or nested components.</p>
+      </div>
+    </SplitContainer>
+  </Section>
+
+  <!-- Breadcrumb Demos -->
+  <Section id="breadcrumbs" container={{ size: 'large' }}>
+    <h2>Breadcrumb</h2>
+    <p class="section-subtitle">
+      Navigation breadcrumbs with URL-based or property-based modes.
+    </p>
+
+    <div class="breadcrumb-demos">
+      <div class="breadcrumb-demo">
+        <h3>Property-based (Manual Items)</h3>
+        <p>Specify breadcrumb items manually via the <code>items</code> prop.</p>
+        <div class="breadcrumb-demo__preview">
+          <Breadcrumb
+            items={[
+              { label: 'Products', href: '/products' },
+              { label: 'Electronics', href: '/products/electronics' },
+              { label: 'Laptops' }
+            ]}
+          />
+        </div>
+        <pre><code>{`<Breadcrumb
+  items={[
+    { label: 'Products', href: '/products' },
+    { label: 'Electronics', href: '/products/electronics' },
+    { label: 'Laptops' }
+  ]}
+/>`}</code></pre>
+      </div>
+
+      <div class="breadcrumb-demo">
+        <h3>URL-based (Auto)</h3>
+        <p>Automatically generate breadcrumbs from the current URL path.</p>
+        <div class="breadcrumb-demo__preview">
+          <Breadcrumb auto />
+        </div>
+        <pre><code>{`<Breadcrumb auto />`}</code></pre>
+      </div>
+
+      <div class="breadcrumb-demo">
+        <h3>Custom Separator</h3>
+        <p>Use different separators: <code>chevron</code>, <code>slash</code>, <code>arrow</code>, or custom text.</p>
+        <div class="breadcrumb-demo__preview">
+          <Breadcrumb
+            items={[
+              { label: 'Blog', href: '/blog' },
+              { label: '2024', href: '/blog/2024' },
+              { label: 'Getting Started' }
+            ]}
+            separator="slash"
+          />
+        </div>
+        <pre><code>{`<Breadcrumb
+  items={[...]}
+  separator="slash"
+/>`}</code></pre>
+      </div>
+
+      <div class="breadcrumb-demo">
+        <h3>Arrow Separator</h3>
+        <div class="breadcrumb-demo__preview">
+          <Breadcrumb
+            items={[
+              { label: 'Services', href: '/services' },
+              { label: 'Web Development' }
+            ]}
+            separator="arrow"
+          />
+        </div>
+        <pre><code>{`<Breadcrumb
+  items={[...]}
+  separator="arrow"
+/>`}</code></pre>
+      </div>
+
+      <div class="breadcrumb-demo">
+        <h3>Custom Home Label</h3>
+        <p>Customize the home link with your own label and icon.</p>
+        <div class="breadcrumb-demo__preview">
+          <Breadcrumb
+            items={[
+              { label: 'Documentation', href: '/docs' },
+              { label: 'Components' }
+            ]}
+            home={{ label: 'Docs Home', href: '/docs', icon: 'fa-solid fa-book' }}
+          />
+        </div>
+        <pre><code>{`<Breadcrumb
+  items={[...]}
+  home={{ label: 'Docs Home', href: '/docs', icon: 'fa-solid fa-book' }}
+/>`}</code></pre>
+      </div>
+    </div>
+  </Section>
+
+  <!-- PageLoader Demos -->
+  <Section id="page-loader" classList="section--alt" container={{ size: 'large' }}>
+    <h2>Page Loader</h2>
+    <p class="section-subtitle">
+      Full-page loading overlay with multiple spinner animations. Auto-hides when the page finishes loading.
+    </p>
+
+    <div class="loader-demos">
+      <div class="loader-demo">
+        <h3>Spinner Variants</h3>
+        <div class="loader-preview-grid">
+          <div class="loader-preview loader-preview--dark">
+            <div class="page-loader page-loader--size-small page-loader--color-white" style="position: relative; width: 100%; height: 120px;">
+              <div class="page-loader__content">
+                <div class="page-loader__spinner page-loader__spinner--circle">
+                  <svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="none" stroke-width="4" /></svg>
+                </div>
+                <p class="page-loader__text">spinner</p>
+              </div>
+            </div>
+          </div>
+          <div class="loader-preview loader-preview--dark">
+            <div class="page-loader page-loader--size-small page-loader--color-white" style="position: relative; width: 100%; height: 120px;">
+              <div class="page-loader__content">
+                <div class="page-loader__spinner page-loader__spinner--dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <p class="page-loader__text">dots</p>
+              </div>
+            </div>
+          </div>
+          <div class="loader-preview loader-preview--dark">
+            <div class="page-loader page-loader--size-small page-loader--color-white" style="position: relative; width: 100%; height: 120px;">
+              <div class="page-loader__content">
+                <div class="page-loader__spinner page-loader__spinner--bars">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+                <p class="page-loader__text">bars</p>
+              </div>
+            </div>
+          </div>
+          <div class="loader-preview loader-preview--dark">
+            <div class="page-loader page-loader--size-small page-loader--color-white" style="position: relative; width: 100%; height: 120px;">
+              <div class="page-loader__content">
+                <div class="page-loader__spinner page-loader__spinner--pulse">
+                  <span></span>
+                </div>
+                <p class="page-loader__text">pulse</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="loader-demo">
+        <h3>Usage</h3>
+        <pre><code>{`---
+import PageLoader from '@components/ui/PageLoader.astro';
+---
+
+<!-- Basic usage - add to your layout before </body> -->
+<PageLoader />
+
+<!-- With loading text -->
+<PageLoader text="Loading..." />
+
+<!-- Custom spinner type -->
+<PageLoader spinner="dots" />
+<PageLoader spinner="bars" />
+<PageLoader spinner="pulse" />
+
+<!-- Dark background with white spinner -->
+<PageLoader background="dark" color="white" />
+
+<!-- Primary background -->
+<PageLoader background="primary" color="white" text="Please wait..." />
+
+<!-- Custom timing options -->
+<PageLoader
+  minDisplayTime={500}    <!-- Minimum ms to show loader -->
+  fadeOutDuration={400}   <!-- Fade out animation duration -->
+/>
+
+<!-- Disable auto-hide (control manually) -->
+<PageLoader autoHide={false} id="my-loader" />
+
+<script>
+  // Manually hide when ready
+  const loader = document.getElementById('my-loader');
+  loader.classList.add('page-loader--hiding');
+  setTimeout(() => loader.classList.add('page-loader--hidden'), 300);
+</script>`}</code></pre>
+      </div>
+
+      <div class="loader-demo">
+        <h3>Props</h3>
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>spinner</code></td><td><code>'spinner' | 'dots' | 'bars' | 'pulse'</code></td><td><code>'spinner'</code></td><td>Animation type</td></tr>
+            <tr><td><code>text</code></td><td><code>string</code></td><td>-</td><td>Loading text</td></tr>
+            <tr><td><code>background</code></td><td><code>'white' | 'dark' | 'primary' | 'transparent'</code></td><td><code>'white'</code></td><td>Background color</td></tr>
+            <tr><td><code>color</code></td><td><code>'primary' | 'white' | 'dark'</code></td><td><code>'primary'</code></td><td>Spinner/text color</td></tr>
+            <tr><td><code>size</code></td><td><code>'small' | 'medium' | 'large'</code></td><td><code>'medium'</code></td><td>Spinner size</td></tr>
+            <tr><td><code>autoHide</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Hide when page loads</td></tr>
+            <tr><td><code>minDisplayTime</code></td><td><code>number</code></td><td><code>0</code></td><td>Minimum display time (ms)</td></tr>
+            <tr><td><code>fadeOutDuration</code></td><td><code>number</code></td><td><code>300</code></td><td>Fade out duration (ms)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </Section>
+
+  <!-- List Components Section -->
+  <Section id="lists" container={{ size: 'large' }}>
+    <h2>List Components</h2>
+    <p class="section-subtitle">
+      Styled lists with icons or custom bullets for content presentation.
+    </p>
+
+    <div class="list-demos">
+      <!-- IconList Demo -->
+      <div class="list-demo">
+        <h3>IconList</h3>
+        <p>Lists with customizable icons per item. Great for feature lists and benefits.</p>
+
+        <div class="list-demo__grid">
+          <div class="list-demo__preview">
+            <h4>Default (checkmarks)</h4>
+            <IconList
+              items={[
+                { text: 'Free shipping on orders over $50' },
+                { text: '30-day money-back guarantee' },
+                { text: '24/7 customer support' },
+              ]}
+            />
+          </div>
+
+          <div class="list-demo__preview">
+            <h4>Mixed Icons</h4>
+            <IconList
+              items={[
+                { text: 'Lightning fast performance', icon: 'fa-solid fa-bolt' },
+                { text: 'Secure by default', icon: 'fa-solid fa-shield' },
+                { text: 'Cloud synced', icon: 'fa-solid fa-cloud' },
+                { text: 'Mobile friendly', icon: 'fa-solid fa-mobile' },
+              ]}
+              iconColor="secondary"
+            />
+          </div>
+
+          <div class="list-demo__preview">
+            <h4>With Descriptions</h4>
+            <IconList
+              items={[
+                { text: 'Easy Setup', description: 'Get started in under 5 minutes', icon: 'fa-solid fa-rocket' },
+                { text: 'Fully Customizable', description: 'Adjust every aspect to your needs', icon: 'fa-solid fa-sliders' },
+                { text: 'Great Support', description: 'Our team is here to help', icon: 'fa-solid fa-headset' },
+              ]}
+              iconColor="success"
+              iconSize="large"
+              spacing="relaxed"
+            />
+          </div>
+        </div>
+
+        <pre><code>{`<IconList
+  items={[
+    { text: 'Feature one', icon: 'fa-solid fa-check' },
+    { text: 'Feature two', icon: 'fa-solid fa-star' },
+    { text: 'With description', description: 'Extra details here', icon: 'fa-solid fa-bolt' },
+  ]}
+  iconColor="primary"   // primary, secondary, success, danger, warning, info, neutral
+  iconSize="medium"     // small, medium, large
+  spacing="normal"      // compact, normal, relaxed
+  defaultIcon="fa-solid fa-check"  // fallback icon
+/>`}</code></pre>
+      </div>
+
+      <!-- BulletList Demo -->
+      <div class="list-demo">
+        <h3>BulletList</h3>
+        <p>Styled bullet lists with various bullet styles.</p>
+
+        <div class="list-demo__grid list-demo__grid--bullets">
+          <div class="list-demo__preview">
+            <h4>Disc (default)</h4>
+            <BulletList
+              items={['First item', 'Second item', 'Third item']}
+            />
+          </div>
+
+          <div class="list-demo__preview">
+            <h4>Circle</h4>
+            <BulletList
+              items={['First item', 'Second item', 'Third item']}
+              bullet="circle"
+              bulletColor="secondary"
+            />
+          </div>
+
+          <div class="list-demo__preview">
+            <h4>Square</h4>
+            <BulletList
+              items={['First item', 'Second item', 'Third item']}
+              bullet="square"
+              bulletColor="info"
+            />
+          </div>
+
+          <div class="list-demo__preview">
+            <h4>Check</h4>
+            <BulletList
+              items={['Completed task', 'Another done', 'All finished']}
+              bullet="check"
+              bulletColor="success"
+            />
+          </div>
+
+          <div class="list-demo__preview">
+            <h4>Arrow</h4>
+            <BulletList
+              items={['Step one', 'Step two', 'Step three']}
+              bullet="arrow"
+              bulletColor="primary"
+            />
+          </div>
+
+          <div class="list-demo__preview">
+            <h4>Dash</h4>
+            <BulletList
+              items={['Option A', 'Option B', 'Option C']}
+              bullet="dash"
+              bulletColor="neutral"
+            />
+          </div>
+
+          <div class="list-demo__preview">
+            <h4>Numbered</h4>
+            <BulletList
+              items={['First step', 'Second step', 'Third step']}
+              bullet="number"
+              bulletColor="primary"
+            />
+          </div>
+
+          <div class="list-demo__preview">
+            <h4>Relaxed Spacing</h4>
+            <BulletList
+              items={['More space', 'Between items', 'For readability']}
+              bullet="check"
+              bulletColor="success"
+              spacing="relaxed"
+            />
+          </div>
+        </div>
+
+        <pre><code>{`<BulletList
+  items={['Item one', 'Item two', 'Item three']}
+  bullet="disc"         // disc, circle, square, check, arrow, dash, number
+  bulletColor="primary" // primary, secondary, success, danger, warning, info, neutral
+  spacing="normal"      // compact, normal, relaxed
+/>
+
+<!-- Or use slot for complex content -->
+<BulletList bullet="check" bulletColor="success">
+  <li class="bullet-list__item">Item with <strong>rich</strong> content</li>
+  <li class="bullet-list__item">Another item with <a href="#">a link</a></li>
+</BulletList>`}</code></pre>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Card Components Section -->
+  <Section id="cards" classList="section--alt" container={{ size: 'xl' }}>
+    <h2>Card Components</h2>
+    <p class="section-subtitle">
+      Multiple card variants with configurable hover animations.
+    </p>
+
+    <!-- SimpleCard Demo -->
+    <div class="card-demo">
+      <h3>SimpleCard</h3>
+      <p>Basic cards with optional icon, title, and description. Great for features and services.</p>
+
+      <div class="card-grid card-grid--3">
+        <SimpleCard
+          title="Icon Top"
+          description="Default layout with centered icon above content."
+          icon="fa-solid fa-star"
+          hover="lift"
+        />
+        <SimpleCard
+          title="Icon Left"
+          description="Horizontal layout with icon on the left side."
+          icon="fa-solid fa-rocket"
+          iconPosition="left"
+          hover="border"
+        />
+        <SimpleCard
+          title="No Icon"
+          description="Simple card without an icon, just title and description."
+          hover="scale"
+        />
+      </div>
+
+      <h4>Hover Animations</h4>
+      <div class="card-grid card-grid--5">
+        <SimpleCard title="Lift" description="translateY + shadow" icon="fa-solid fa-arrow-up" hover="lift" padding="compact" />
+        <SimpleCard title="Scale" description="Scale up slightly" icon="fa-solid fa-expand" hover="scale" padding="compact" />
+        <SimpleCard title="Glow" description="Primary color glow" icon="fa-solid fa-sun" hover="glow" padding="compact" />
+        <SimpleCard title="Border" description="Border color change" icon="fa-solid fa-border-all" hover="border" padding="compact" />
+        <SimpleCard title="Tilt" description="3D tilt effect" icon="fa-solid fa-cube" hover="tilt" padding="compact" />
+      </div>
+    </div>
+
+    <!-- SlimCard Demo -->
+    <div class="card-demo">
+      <h3>SlimCard</h3>
+      <p>Compact horizontal cards, perfect for navigation lists and menu items.</p>
+
+      <div class="card-grid card-grid--2">
+        <SlimCard
+          title="Dashboard"
+          description="View your analytics and reports"
+          icon="fa-solid fa-chart-line"
+          href="#"
+          hover="lift"
+        />
+        <SlimCard
+          title="Settings"
+          description="Configure your preferences"
+          icon="fa-solid fa-gear"
+          href="#"
+          hover="lift"
+        />
+        <SlimCard
+          title="With Badge"
+          description="Shows a custom suffix"
+          icon="fa-solid fa-bell"
+          suffix="3 new"
+          hover="border"
+        />
+        <SlimCard
+          title="External Link"
+          description="Opens in new tab"
+          icon="fa-solid fa-arrow-up-right-from-square"
+          href="https://example.com"
+          external
+          hover="lift"
+        />
+      </div>
+    </div>
+
+    <!-- ImageCard Demo -->
+    <div class="card-demo">
+      <h3>ImageCard</h3>
+      <p>Cards with background images and text overlays. Great for portfolios and galleries.</p>
+
+      <div class="card-grid card-grid--3">
+        <ImageCard
+          title="Bottom Overlay"
+          description="Gradient from bottom"
+          image="https://picsum.photos/seed/card1/600/400"
+          overlay="bottom"
+          hover="scale"
+          href="#"
+        />
+        <ImageCard
+          title="Center Overlay"
+          description="Centered text with uniform overlay"
+          image="https://picsum.photos/seed/card2/600/400"
+          overlay="center"
+          hover="lift"
+          href="#"
+        />
+        <ImageCard
+          title="With Badge"
+          badge="Featured"
+          description="Badge positioned at top-left"
+          image="https://picsum.photos/seed/card3/600/400"
+          overlay="bottom"
+          hover="glow"
+          href="#"
+        />
+      </div>
+
+      <h4>Aspect Ratios</h4>
+      <div class="card-grid card-grid--4">
+        <ImageCard title="Square" image="https://picsum.photos/seed/ar1/400/400" aspectRatio="square" hover="scale" />
+        <ImageCard title="Video (16:9)" image="https://picsum.photos/seed/ar2/640/360" aspectRatio="video" hover="scale" />
+        <ImageCard title="Portrait" image="https://picsum.photos/seed/ar3/300/400" aspectRatio="portrait" hover="scale" />
+        <ImageCard title="Wide (21:9)" image="https://picsum.photos/seed/ar4/630/270" aspectRatio="wide" hover="scale" />
+      </div>
+    </div>
+
+    <!-- MediaCard Demo -->
+    <div class="card-demo">
+      <h3>MediaCard</h3>
+      <p>Image + content cards with flexible layouts. Perfect for blog posts and articles.</p>
+
+      <div class="card-grid card-grid--3">
+        <MediaCard
+          title="Image on Top"
+          description="Default layout with image above content. Great for blog posts and articles."
+          image="https://picsum.photos/seed/media1/600/400"
+          meta="Category"
+          ctaText="Read More"
+          href="#"
+          hover="lift"
+        />
+        <MediaCard
+          title="Image on Top"
+          description="Another example showing the vertical layout with meta text."
+          image="https://picsum.photos/seed/media2/600/400"
+          meta="Tutorial"
+          ctaText="Learn More"
+          href="#"
+          hover="scale"
+        />
+        <MediaCard
+          title="No CTA"
+          description="Card without call-to-action link, just displaying content."
+          image="https://picsum.photos/seed/media3/600/400"
+          meta="News"
+          hover="border"
+        />
+      </div>
+
+      <h4>Horizontal Layouts</h4>
+      <div class="card-grid card-grid--1">
+        <MediaCard
+          title="Image Left Layout"
+          description="Horizontal layout with image on the left side. Works great for featured content or when you need more space for text. The image takes 40% width on desktop and stacks vertically on mobile."
+          image="https://picsum.photos/seed/media4/400/300"
+          layout="left"
+          meta="Featured"
+          ctaText="View Details"
+          href="#"
+          hover="lift"
+        />
+        <MediaCard
+          title="Image Right Layout"
+          description="Horizontal layout with image on the right side. Offers visual variety when alternating between cards. Same responsive behavior as left layout."
+          image="https://picsum.photos/seed/media5/400/300"
+          layout="right"
+          meta="Spotlight"
+          ctaText="Explore"
+          href="#"
+          hover="lift"
+        />
+      </div>
+    </div>
+
+    <!-- Code Example -->
+    <div class="card-demo">
+      <h3>Usage</h3>
+      <pre><code>{`import SimpleCard from '@components/ui/cards/SimpleCard.astro';
+import SlimCard from '@components/ui/cards/SlimCard.astro';
+import ImageCard from '@components/ui/cards/ImageCard.astro';
+import MediaCard from '@components/ui/cards/MediaCard.astro';
+
+<!-- SimpleCard -->
+<SimpleCard
+  title="Feature Title"
+  description="Feature description"
+  icon="fa-solid fa-star"
+  iconPosition="top"    // top, left
+  padding="normal"      // compact, normal, relaxed
+  hover="lift"          // none, lift, scale, glow, border, tilt
+  radius="medium"       // none, small, medium, large
+  href="/link"          // optional - makes card clickable
+  shadow={true}         // add shadow
+  bordered={true}       // add border
+/>
+
+<!-- SlimCard -->
+<SlimCard
+  title="Menu Item"
+  description="Optional description"
+  icon="fa-solid fa-home"
+  suffix="Badge"        // or leave empty for arrow
+  href="/link"
+  hover="lift"
+/>
+
+<!-- ImageCard -->
+<ImageCard
+  title="Portfolio Item"
+  description="Optional description"
+  image="/path/to/image.jpg"
+  imageAlt="Description"
+  overlay="bottom"      // bottom, center, full
+  aspectRatio="video"   // square, video, portrait, wide
+  badge="Featured"      // optional badge
+  href="/link"
+  hover="scale"
+/>
+
+<!-- MediaCard -->
+<MediaCard
+  title="Blog Post"
+  description="Post excerpt..."
+  image="/path/to/image.jpg"
+  layout="top"          // top, left, right
+  aspectRatio="video"   // square, video, portrait, auto
+  meta="Category"
+  ctaText="Read More"
+  href="/link"
+  hover="lift"
+/>`}</code></pre>
+    </div>
+  </Section>
+
   <!-- Code Examples Section -->
-  <Section id="usage" classList="section--alt" container={{ size: 'large' }}>
+  <Section id="usage" container={{ size: 'large' }}>
     <h2>Usage Examples</h2>
     <p class="section-subtitle">
       How to use components in your pages.
@@ -443,10 +1315,48 @@ export const homepage = {
       </div>
     </div>
   </Section>
+    </main>
+  </div>
 </DefaultLayout>
 
 <style lang="scss" is:global>
   @use '../../styles/abstracts' as *;
+
+  // Docs layout with sidebar
+  .docs-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    max-width: var(--container-max-width-full);
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-4);
+
+    @include media-up('lg') {
+      grid-template-columns: 240px 1fr;
+      padding: var(--space-8) var(--space-6);
+    }
+
+    @include media-up('xl') {
+      grid-template-columns: 280px 1fr;
+    }
+
+    &__sidebar {
+      display: none;
+
+      @include media-up('lg') {
+        display: block;
+      }
+    }
+
+    &__content {
+      min-width: 0;
+
+      // Reset section margins inside docs content
+      > :first-child {
+        margin-top: 0;
+      }
+    }
+  }
 
   .section--alt {
     background-color: var(--color-neutral-100);
@@ -585,6 +1495,378 @@ export const homepage = {
       font-size: var(--font-size-sm);
       background: none;
       padding: 0;
+    }
+  }
+
+  // SplitContainer demo styles
+  .split-demo__title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-4);
+    color: var(--color-neutral-900);
+  }
+
+  .split-demo__text {
+    font-size: var(--font-size-base);
+    color: var(--color-neutral-600);
+    margin-bottom: var(--space-4);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .split-demo__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .split-demo__list {
+    margin: var(--space-4) 0;
+    padding-left: var(--space-5);
+    color: var(--color-neutral-700);
+
+    li {
+      margin-bottom: var(--space-2);
+      line-height: var(--line-height-relaxed);
+    }
+
+    strong {
+      color: var(--color-neutral-900);
+    }
+  }
+
+  .split-slot-demo {
+    background: var(--color-primary-50);
+    border: 2px dashed var(--color-primary-300);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-8);
+    text-align: center;
+
+    h3 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-3);
+      color: var(--color-primary-700);
+    }
+
+    p {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+      margin: 0;
+    }
+
+    &--alt {
+      background: var(--color-secondary-50);
+      border-color: var(--color-secondary-300);
+
+      h3 {
+        color: var(--color-secondary-700);
+      }
+    }
+  }
+
+  // Breadcrumb demo styles
+  .breadcrumb-demos {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .breadcrumb-demo {
+    background: var(--color-white);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-6);
+
+    h3 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-2);
+      color: var(--color-neutral-900);
+    }
+
+    > p {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+      margin-bottom: var(--space-4);
+
+      code {
+        background: var(--color-neutral-100);
+        padding: 0.125rem 0.375rem;
+        border-radius: var(--border-radius-sm);
+        font-size: 0.875em;
+      }
+    }
+
+    &__preview {
+      background: var(--color-neutral-50);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--border-radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+
+    pre {
+      margin: 0;
+      background: var(--color-neutral-900);
+      color: var(--color-neutral-100);
+      padding: var(--space-4);
+      border-radius: var(--border-radius-md);
+      overflow-x: auto;
+      font-size: var(--font-size-sm);
+
+      code {
+        background: none;
+        padding: 0;
+      }
+    }
+  }
+
+  // Page Loader demo styles
+  .loader-demos {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .loader-demo {
+    h3 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-4);
+      color: var(--color-neutral-900);
+    }
+
+    pre {
+      margin: 0;
+      background: var(--color-neutral-900);
+      color: var(--color-neutral-100);
+      padding: var(--space-4);
+      border-radius: var(--border-radius-lg);
+      overflow-x: auto;
+      font-size: var(--font-size-sm);
+
+      code {
+        background: none;
+        padding: 0;
+      }
+    }
+  }
+
+  .loader-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+
+    @include media-up('md') {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .loader-preview {
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+
+    &--dark {
+      background: var(--color-neutral-900);
+    }
+
+    &--light {
+      background: var(--color-white);
+      border: 1px solid var(--color-neutral-200);
+    }
+  }
+
+  .props-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    font-size: var(--font-size-sm);
+
+    th, td {
+      padding: var(--space-3) var(--space-4);
+      text-align: left;
+      border-bottom: 1px solid var(--color-neutral-200);
+    }
+
+    th {
+      background: var(--color-neutral-100);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-neutral-700);
+    }
+
+    td {
+      color: var(--color-neutral-600);
+
+      code {
+        background: var(--color-neutral-100);
+        padding: 0.125rem 0.375rem;
+        border-radius: var(--border-radius-sm);
+        font-size: 0.875em;
+        color: var(--color-neutral-800);
+      }
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+  }
+
+  // List demo styles
+  .list-demos {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .list-demo {
+    > h3 {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-2);
+      color: var(--color-neutral-900);
+    }
+
+    > p {
+      font-size: var(--font-size-base);
+      color: var(--color-neutral-600);
+      margin-bottom: var(--space-6);
+    }
+
+    pre {
+      margin-top: var(--space-6);
+      background: var(--color-neutral-900);
+      color: var(--color-neutral-100);
+      padding: var(--space-4);
+      border-radius: var(--border-radius-lg);
+      overflow-x: auto;
+      font-size: var(--font-size-sm);
+
+      code {
+        background: none;
+        padding: 0;
+      }
+    }
+
+    &__grid {
+      display: grid;
+      gap: var(--space-6);
+
+      @include media-up('md') {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @include media-up('lg') {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      &--bullets {
+        @include media-up('md') {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include media-up('lg') {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+    }
+
+    &__preview {
+      background: var(--color-white);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-5);
+
+      h4 {
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-neutral-500);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: var(--space-4);
+      }
+    }
+  }
+
+  // Card demo styles
+  .card-demo {
+    margin-bottom: var(--space-12);
+
+    > h3 {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-2);
+      color: var(--color-neutral-900);
+    }
+
+    > p {
+      font-size: var(--font-size-base);
+      color: var(--color-neutral-600);
+      margin-bottom: var(--space-6);
+    }
+
+    > h4 {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-neutral-700);
+      margin-top: var(--space-8);
+      margin-bottom: var(--space-4);
+    }
+
+    pre {
+      background: var(--color-neutral-900);
+      color: var(--color-neutral-100);
+      padding: var(--space-4);
+      border-radius: var(--border-radius-lg);
+      overflow-x: auto;
+      font-size: var(--font-size-sm);
+
+      code {
+        background: none;
+        padding: 0;
+      }
+    }
+  }
+
+  .card-grid {
+    display: grid;
+    gap: var(--space-6);
+
+    &--1 {
+      grid-template-columns: 1fr;
+    }
+
+    &--2 {
+      @include media-up('sm') {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    &--3 {
+      @include media-up('sm') {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @include media-up('lg') {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    &--4 {
+      grid-template-columns: repeat(2, 1fr);
+
+      @include media-up('md') {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    &--5 {
+      grid-template-columns: repeat(2, 1fr);
+
+      @include media-up('sm') {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      @include media-up('lg') {
+        grid-template-columns: repeat(5, 1fr);
+      }
     }
   }
 </style>

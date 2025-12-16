@@ -1,0 +1,352 @@
+---
+/**
+ * PageLoader
+ *
+ * Full-page loading overlay with customizable spinner animations.
+ * Automatically hides when the page finishes loading.
+ *
+ * @since 1.0.0
+ *
+ * Best for: Initial page loads, route transitions
+ * Avoid when: Loading individual components (use inline loaders instead)
+ */
+
+import type { PageLoaderProps } from '@types';
+
+interface Props extends PageLoaderProps {}
+
+const {
+  spinner = 'spinner',
+  text,
+  background = 'white',
+  color = 'primary',
+  size = 'medium',
+  autoHide = true,
+  minDisplayTime = 0,
+  fadeOutDuration = 300,
+  class: className,
+  classList,
+  id = 'page-loader',
+  ...attrs
+} = Astro.props;
+
+const classes = [
+  'page-loader',
+  `page-loader--bg-${background}`,
+  `page-loader--color-${color}`,
+  `page-loader--size-${size}`,
+  className,
+  classList,
+].filter(Boolean).join(' ');
+---
+
+<div
+  id={id}
+  class={classes}
+  data-page-loader
+  data-page-loader-auto-hide={autoHide}
+  data-page-loader-min-display={minDisplayTime}
+  data-page-loader-fade-duration={fadeOutDuration}
+  aria-live="polite"
+  aria-busy="true"
+  {...attrs}
+>
+  <div class="page-loader__content">
+    {spinner === 'spinner' && (
+      <div class="page-loader__spinner page-loader__spinner--circle">
+        <svg viewBox="0 0 50 50">
+          <circle cx="25" cy="25" r="20" fill="none" stroke-width="4" />
+        </svg>
+      </div>
+    )}
+
+    {spinner === 'dots' && (
+      <div class="page-loader__spinner page-loader__spinner--dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    )}
+
+    {spinner === 'bars' && (
+      <div class="page-loader__spinner page-loader__spinner--bars">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    )}
+
+    {spinner === 'pulse' && (
+      <div class="page-loader__spinner page-loader__spinner--pulse">
+        <span></span>
+      </div>
+    )}
+
+    {text && <p class="page-loader__text">{text}</p>}
+  </div>
+</div>
+
+<script>
+  function initPageLoader() {
+    const loader = document.querySelector('[data-page-loader]') as HTMLElement;
+    if (!loader) return;
+
+    const autoHide = loader.dataset.pageLoaderAutoHide !== 'false';
+    const minDisplayTime = parseInt(loader.dataset.pageLoaderMinDisplay || '0', 10);
+    const fadeDuration = parseInt(loader.dataset.pageLoaderFadeDuration || '300', 10);
+
+    if (!autoHide) return;
+
+    const startTime = Date.now();
+
+    function hideLoader() {
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, minDisplayTime - elapsed);
+
+      setTimeout(() => {
+        loader.classList.add('page-loader--hiding');
+        loader.setAttribute('aria-busy', 'false');
+
+        setTimeout(() => {
+          loader.classList.add('page-loader--hidden');
+        }, fadeDuration);
+      }, remaining);
+    }
+
+    // Hide when page is fully loaded
+    if (document.readyState === 'complete') {
+      hideLoader();
+    } else {
+      window.addEventListener('load', hideLoader);
+    }
+  }
+
+  // Initialize immediately (loader should be in <head> or early in <body>)
+  initPageLoader();
+</script>
+
+<style lang="scss" is:global>
+  @use '../../styles/abstracts' as *;
+
+  .page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: z-index('tooltip') + 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+
+    // Background variants
+    &--bg-white {
+      background: var(--color-white);
+    }
+
+    &--bg-dark {
+      background: var(--color-neutral-900);
+    }
+
+    &--bg-primary {
+      background: var(--color-primary);
+    }
+
+    &--bg-transparent {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(4px);
+    }
+
+    // Color variants
+    &--color-primary {
+      --loader-color: var(--color-primary);
+    }
+
+    &--color-white {
+      --loader-color: var(--color-white);
+    }
+
+    &--color-dark {
+      --loader-color: var(--color-neutral-900);
+    }
+
+    // Size variants
+    &--size-small {
+      --loader-size: 2rem;
+      --loader-text-size: var(--font-size-sm);
+    }
+
+    &--size-medium {
+      --loader-size: 3rem;
+      --loader-text-size: var(--font-size-base);
+    }
+
+    &--size-large {
+      --loader-size: 4rem;
+      --loader-text-size: var(--font-size-lg);
+    }
+
+    // States
+    &--hiding {
+      opacity: 0;
+    }
+
+    &--hidden {
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    // Content wrapper
+    &__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    // Loading text
+    &__text {
+      margin: 0;
+      font-size: var(--loader-text-size);
+      color: var(--loader-color);
+      font-weight: var(--font-weight-medium);
+    }
+
+    // Spinner base
+    &__spinner {
+      width: var(--loader-size);
+      height: var(--loader-size);
+    }
+
+    // Circle spinner
+    &__spinner--circle {
+      svg {
+        width: 100%;
+        height: 100%;
+        animation: loader-rotate 1.4s linear infinite;
+
+        circle {
+          stroke: var(--loader-color);
+          stroke-linecap: round;
+          stroke-dasharray: 80, 200;
+          stroke-dashoffset: 0;
+          animation: loader-dash 1.4s ease-in-out infinite;
+        }
+      }
+    }
+
+    // Dots spinner
+    &__spinner--dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: calc(var(--loader-size) * 0.2);
+
+      span {
+        width: calc(var(--loader-size) * 0.25);
+        height: calc(var(--loader-size) * 0.25);
+        background: var(--loader-color);
+        border-radius: 50%;
+        animation: loader-bounce 1.4s ease-in-out infinite;
+
+        &:nth-child(1) { animation-delay: 0s; }
+        &:nth-child(2) { animation-delay: 0.16s; }
+        &:nth-child(3) { animation-delay: 0.32s; }
+      }
+    }
+
+    // Bars spinner
+    &__spinner--bars {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: calc(var(--loader-size) * 0.1);
+
+      span {
+        width: calc(var(--loader-size) * 0.15);
+        height: var(--loader-size);
+        background: var(--loader-color);
+        border-radius: 2px;
+        animation: loader-bars 1s ease-in-out infinite;
+
+        &:nth-child(1) { animation-delay: 0s; }
+        &:nth-child(2) { animation-delay: 0.1s; }
+        &:nth-child(3) { animation-delay: 0.2s; }
+        &:nth-child(4) { animation-delay: 0.3s; }
+      }
+    }
+
+    // Pulse spinner
+    &__spinner--pulse {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      span {
+        width: var(--loader-size);
+        height: var(--loader-size);
+        background: var(--loader-color);
+        border-radius: 50%;
+        animation: loader-pulse 1.2s ease-in-out infinite;
+      }
+    }
+  }
+
+  // Animations
+  @keyframes loader-rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes loader-dash {
+    0% {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 90, 200;
+      stroke-dashoffset: -35px;
+    }
+    100% {
+      stroke-dasharray: 90, 200;
+      stroke-dashoffset: -124px;
+    }
+  }
+
+  @keyframes loader-bounce {
+    0%, 80%, 100% {
+      transform: scale(0.6);
+      opacity: 0.5;
+    }
+    40% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes loader-bars {
+    0%, 40%, 100% {
+      transform: scaleY(0.4);
+      opacity: 0.5;
+    }
+    20% {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes loader-pulse {
+    0% {
+      transform: scale(0.8);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.8);
+      opacity: 0.5;
+    }
+  }
+</style>

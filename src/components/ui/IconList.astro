@@ -1,0 +1,176 @@
+---
+/**
+ * IconList
+ *
+ * A list with customizable icons for each item.
+ * Icons can be different per row or use a consistent default.
+ *
+ * @since 1.0.0
+ *
+ * Best for: Feature lists, benefits, specifications
+ * Avoid when: Simple text lists (use BulletList instead)
+ */
+
+import type { IconListProps } from '@types';
+
+interface Props extends IconListProps {}
+
+const {
+  items,
+  defaultIcon = 'fa-solid fa-check',
+  iconColor = 'primary',
+  iconSize = 'medium',
+  spacing = 'normal',
+  class: className,
+  classList,
+  id,
+  ...attrs
+} = Astro.props;
+
+const classes = [
+  'icon-list',
+  `icon-list--color-${iconColor}`,
+  `icon-list--size-${iconSize}`,
+  `icon-list--spacing-${spacing}`,
+  className,
+  classList,
+].filter(Boolean).join(' ');
+---
+
+<ul id={id} class={classes} role="list" {...attrs}>
+  {items.map((item) => (
+    <li class="icon-list__item">
+      <span class="icon-list__icon" aria-hidden="true">
+        <i class={item.icon || defaultIcon}></i>
+      </span>
+      <span class="icon-list__content">
+        <span class="icon-list__text">{item.text}</span>
+        {item.description && (
+          <span class="icon-list__description">{item.description}</span>
+        )}
+      </span>
+    </li>
+  ))}
+</ul>
+
+<style lang="scss">
+  @use '../../styles/abstracts' as *;
+
+  .icon-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    // Color variants
+    &--color-primary {
+      --icon-color: var(--color-primary);
+      --icon-bg: var(--color-primary-100, rgba(var(--color-primary-rgb), 0.1));
+    }
+
+    &--color-secondary {
+      --icon-color: var(--color-secondary);
+      --icon-bg: var(--color-secondary-100, rgba(var(--color-secondary-rgb), 0.1));
+    }
+
+    &--color-success {
+      --icon-color: var(--color-success);
+      --icon-bg: color('success', 100);
+    }
+
+    &--color-danger {
+      --icon-color: var(--color-danger);
+      --icon-bg: color('danger', 100);
+    }
+
+    &--color-warning {
+      --icon-color: color('warning', 600);
+      --icon-bg: color('warning', 100);
+    }
+
+    &--color-info {
+      --icon-color: var(--color-info);
+      --icon-bg: color('info', 100);
+    }
+
+    &--color-neutral {
+      --icon-color: var(--color-neutral-600);
+      --icon-bg: var(--color-neutral-100);
+    }
+
+    // Size variants
+    &--size-small {
+      --icon-size: 1.25rem;
+      --icon-font-size: 0.625rem;
+    }
+
+    &--size-medium {
+      --icon-size: 1.5rem;
+      --icon-font-size: 0.75rem;
+    }
+
+    &--size-large {
+      --icon-size: 2rem;
+      --icon-font-size: 1rem;
+    }
+
+    // Spacing variants
+    &--spacing-compact {
+      --item-gap: var(--space-2);
+    }
+
+    &--spacing-normal {
+      --item-gap: var(--space-3);
+    }
+
+    &--spacing-relaxed {
+      --item-gap: var(--space-4);
+    }
+
+    // Item
+    &__item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+
+      & + & {
+        margin-top: var(--item-gap);
+      }
+    }
+
+    // Icon
+    &__icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--icon-size);
+      height: var(--icon-size);
+      background: var(--icon-bg);
+      color: var(--icon-color);
+      border-radius: var(--border-radius-full);
+      font-size: var(--icon-font-size);
+    }
+
+    // Content
+    &__content {
+      flex: 1;
+      min-width: 0;
+      padding-top: 0.125rem;
+    }
+
+    &__text {
+      display: block;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-neutral-900);
+      line-height: 1.4;
+    }
+
+    &__description {
+      display: block;
+      margin-top: var(--space-1);
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+      line-height: 1.5;
+    }
+  }
+</style>

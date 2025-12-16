@@ -1,4 +1,5 @@
 @use 'sass:math';
+@use 'sass:map';
 
 // ===================================
 // Utility Variables
@@ -250,7 +251,8 @@ $z-index: (
     'modal-backdrop': 1040,
     'modal': 1050,
     'popover': 1060,
-    'tooltip': 1070
+    'tooltip': 1070,
+    'lightbox': 9999
 );
 
 // ===================================

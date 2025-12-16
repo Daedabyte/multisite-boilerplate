@@ -522,7 +522,23 @@ gap: var(--space-8);              // 2rem
 
 This boilerplate is designed to accelerate website development while remaining flexible. The pre-built components, JavaScript behaviors, and styling system are meant to be **adapted, not treated as immutable**.
 
-#### Initial Setup
+#### Using the Site Blueprint
+
+**Before starting any new site, check for a `site-blueprint.json` file in the project root.** This file contains comprehensive project specifications that should drive all scaffolding and design decisions.
+
+If `site-blueprint.json` exists:
+1. Read the entire blueprint file first
+2. Use the `branding.colors` values to update `src/styles/abstracts/_colors.scss`
+3. Use the `branding.fonts` to configure typography in `src/styles/abstracts/_typography.scss`
+4. Use the `site` and `company` info to populate `src/data/config.ts`
+5. Use the `navigation` structure to set up `src/data/site/navigation.ts`
+6. Create pages based on the `pages` array, using the specified sections and variants
+7. Apply the `theme` preferences (style, animations, border radius) throughout
+8. Follow the `content.tone` guidelines when writing any copy
+
+If no blueprint exists, copy `site-blueprint.example.json` to `site-blueprint.json` and ask the user to fill it out, or proceed with manual configuration below.
+
+#### Initial Setup (Manual)
 
 1. **Configure the site** - Update `src/data/config.ts`:
    ```typescript
@@ -777,6 +793,7 @@ $font-sizes: (
 
 | Task | Location |
 |------|----------|
+| **Site blueprint** | `site-blueprint.json` (check first!) |
 | Site metadata | `src/data/config.ts` |
 | Navigation | `src/data/site/navigation.ts` |
 | Page content | `src/data/content/*.ts` |

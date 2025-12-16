@@ -410,7 +410,86 @@ import Button from '@components/ui/Button.astro';
       </div>
     </div>
   </Section>
+
+  <!-- Toast Demo -->
+  <Section id="toast-demo" container={{ size: 'medium' }}>
+    <h2>Toast Notifications</h2>
+    <p class="section-subtitle">
+      Simple API for creating toast notifications via JavaScript.
+    </p>
+
+    <div class="demo-box">
+      <div class="toast-buttons">
+        <Button variant="success" id="toast-success">
+          <i class="fa-solid fa-check"></i> Success Toast
+        </Button>
+        <Button variant="danger" id="toast-error">
+          <i class="fa-solid fa-xmark"></i> Error Toast
+        </Button>
+        <Button variant="warning" id="toast-warning">
+          <i class="fa-solid fa-exclamation"></i> Warning Toast
+        </Button>
+        <Button variant="info" id="toast-info">
+          <i class="fa-solid fa-info"></i> Info Toast
+        </Button>
+      </div>
+
+      <div class="code-snippet">
+        <h4>Usage</h4>
+        <pre><code>{`import { toast } from '@scripts/init';
+
+// Simple toast
+toast.success('Changes saved!');
+toast.error('Something went wrong');
+toast.warning('Please review your input');
+toast.info('New updates available');
+
+// With message
+toast.success('File uploaded', 'Your file has been uploaded successfully.');
+
+// Full options
+toast.show({
+  title: 'Custom Toast',
+  message: 'With all options specified',
+  status: 'info',
+  duration: 5000,    // ms, 0 = no auto-dismiss
+  dismissible: true, // show close button
+});
+
+// Configure defaults
+toast.configure({
+  position: 'bottom-right', // top-right, top-left, bottom-right, bottom-left, top-center, bottom-center
+  duration: 4000,
+});
+
+// Dismiss programmatically
+const id = toast.success('Hello');
+toast.dismiss(id);
+toast.dismissAll();`}</code></pre>
+      </div>
+    </div>
+  </Section>
 </DefaultLayout>
+
+<script>
+  import { toast } from '@scripts/init';
+
+  document.getElementById('toast-success')?.addEventListener('click', () => {
+    toast.success('Success!', 'Your changes have been saved.');
+  });
+
+  document.getElementById('toast-error')?.addEventListener('click', () => {
+    toast.error('Error', 'Something went wrong. Please try again.');
+  });
+
+  document.getElementById('toast-warning')?.addEventListener('click', () => {
+    toast.warning('Warning', 'Please review your input before continuing.');
+  });
+
+  document.getElementById('toast-info')?.addEventListener('click', () => {
+    toast.info('Info', 'New updates are available for your account.');
+  });
+</script>
 
 <style lang="scss" is:global>
   @use '../../styles/abstracts' as *;
@@ -759,5 +838,13 @@ import Button from '@components/ui/Button.astro';
     font-size: var(--font-size-sm);
     color: var(--color-danger);
     min-height: 1.25rem;
+  }
+
+  // Toast demo buttons
+  .toast-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
   }
 </style>

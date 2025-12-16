@@ -1,0 +1,150 @@
+---
+/**
+ * SimpleCard
+ *
+ * Basic card with optional icon, title, and description.
+ * Supports multiple hover animations.
+ *
+ * @since 1.0.0
+ *
+ * Best for: Feature highlights, service cards, info boxes
+ */
+
+import type { SimpleCardProps } from '@types';
+
+interface Props extends SimpleCardProps {}
+
+const {
+  title,
+  description,
+  icon,
+  iconPosition = 'top',
+  padding = 'normal',
+  hover = 'none',
+  radius = 'medium',
+  href,
+  external,
+  shadow = false,
+  bordered = true,
+  class: className,
+  classList,
+  id,
+  ...attrs
+} = Astro.props;
+
+const Tag = href ? 'a' : 'div';
+const linkProps = href ? {
+  href,
+  target: external ? '_blank' : undefined,
+  rel: external ? 'noopener noreferrer' : undefined,
+} : {};
+
+const classes = [
+  'simple-card',
+  `simple-card--icon-${iconPosition}`,
+  `simple-card--padding-${padding}`,
+  `simple-card--radius-${radius}`,
+  `simple-card--hover-${hover}`,
+  shadow && 'simple-card--shadow',
+  bordered && 'simple-card--bordered',
+  href && 'simple-card--clickable',
+  className,
+  classList,
+].filter(Boolean).join(' ');
+---
+
+<Tag id={id} class={classes} {...linkProps} {...attrs}>
+  {icon && (
+    <span class="simple-card__icon" aria-hidden="true">
+      <i class={icon}></i>
+    </span>
+  )}
+  <div class="simple-card__content">
+    <h3 class="simple-card__title">{title}</h3>
+    {description && <p class="simple-card__description">{description}</p>}
+    <slot />
+  </div>
+</Tag>
+
+<style lang="scss">
+  @use './_card-base.scss' as *;
+
+  .simple-card {
+    @include card-base;
+    @include card-variants;
+    @include card-hover-variants;
+
+    // Icon top (default)
+    &--icon-top {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+      .simple-card__icon {
+        margin-bottom: var(--space-4);
+      }
+    }
+
+    // Icon left
+    &--icon-left {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: var(--space-4);
+      text-align: left;
+    }
+
+    // Padding variants
+    &--padding-compact {
+      padding: var(--space-4);
+    }
+
+    &--padding-normal {
+      padding: var(--space-6);
+    }
+
+    &--padding-relaxed {
+      padding: var(--space-8);
+    }
+
+    // Icon
+    &__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      background: var(--color-primary-100, rgba(var(--color-primary-rgb), 0.1));
+      color: var(--color-primary);
+      border-radius: var(--border-radius-lg);
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    // Content
+    &__content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    &__title {
+      margin: 0;
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-neutral-900);
+      line-height: 1.3;
+    }
+
+    &__description {
+      margin: var(--space-2) 0 0;
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+      line-height: 1.6;
+    }
+
+    // Clickable state
+    &--clickable:hover .simple-card__title {
+      color: var(--color-primary);
+    }
+  }
+</style>

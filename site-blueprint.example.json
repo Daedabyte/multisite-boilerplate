@@ -1,0 +1,460 @@
+{
+  "$schema": "Site blueprint for AI-assisted website generation",
+  "$instructions": "Copy this file to 'site-blueprint.json' and fill in your project details. Claude will use this to scaffold your site.",
+
+  "site": {
+    "name": "Acme Corporation",
+    "tagline": "Building Tomorrow's Solutions Today",
+    "description": "Acme Corporation is a leading provider of innovative business solutions, helping companies streamline operations and achieve growth.",
+    "url": "https://acmecorp.com",
+    "language": "en",
+    "industry": "Technology / SaaS"
+  },
+
+  "company": {
+    "legalName": "Acme Corporation Inc.",
+    "email": "hello@acmecorp.com",
+    "phone": "+1 (555) 123-4567",
+    "address": {
+      "street": "123 Innovation Drive",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "94105",
+      "country": "USA"
+    },
+    "social": {
+      "twitter": "https://twitter.com/acmecorp",
+      "linkedin": "https://linkedin.com/company/acmecorp",
+      "facebook": "https://facebook.com/acmecorp",
+      "instagram": "https://instagram.com/acmecorp"
+    }
+  },
+
+  "branding": {
+    "colors": {
+      "primary": {
+        "hex": "#2563EB",
+        "description": "Main brand color - used for CTAs, links, key accents"
+      },
+      "secondary": {
+        "hex": "#10B981",
+        "description": "Supporting color - used for success states, secondary actions"
+      },
+      "tertiary": {
+        "hex": "#8B5CF6",
+        "description": "Accent color - used for highlights, special elements"
+      },
+      "neutral": {
+        "hex": "#64748B",
+        "description": "Base neutral - text, borders, backgrounds"
+      }
+    },
+    "fonts": {
+      "heading": {
+        "family": "Inter",
+        "weights": ["600", "700", "800"],
+        "source": "google",
+        "fallback": "system-ui, sans-serif"
+      },
+      "body": {
+        "family": "Inter",
+        "weights": ["400", "500", "600"],
+        "source": "google",
+        "fallback": "system-ui, sans-serif"
+      }
+    },
+    "logo": {
+      "hasLogo": true,
+      "format": "svg",
+      "variants": ["light", "dark"],
+      "location": "/images/logo.svg"
+    }
+  },
+
+  "theme": {
+    "style": "modern",
+    "mood": "professional",
+    "characteristics": [
+      "Clean and minimal",
+      "Plenty of whitespace",
+      "Subtle animations",
+      "Card-based layouts",
+      "Rounded corners"
+    ],
+    "avoidStyles": [
+      "Overly playful",
+      "Dark/moody themes",
+      "Heavy gradients"
+    ],
+    "borderRadius": "medium",
+    "shadows": "subtle",
+    "animations": {
+      "enabled": true,
+      "style": "subtle",
+      "scrollReveal": true,
+      "hoverEffects": true
+    }
+  },
+
+  "pages": [
+    {
+      "name": "Home",
+      "path": "/",
+      "purpose": "Primary landing page to introduce the company and convert visitors",
+      "sections": [
+        {
+          "type": "hero",
+          "variant": "standard",
+          "content": {
+            "headline": "Transform Your Business with Smart Solutions",
+            "subheadline": "We help companies of all sizes streamline operations, reduce costs, and accelerate growth.",
+            "primaryCTA": { "text": "Get Started", "url": "/contact" },
+            "secondaryCTA": { "text": "Learn More", "url": "/about" }
+          }
+        },
+        {
+          "type": "features",
+          "variant": "grid",
+          "content": {
+            "heading": "Why Choose Acme",
+            "items": [
+              {
+                "title": "Fast Implementation",
+                "description": "Get up and running in days, not months",
+                "icon": "rocket"
+              },
+              {
+                "title": "24/7 Support",
+                "description": "Our team is always here to help",
+                "icon": "headset"
+              },
+              {
+                "title": "Scalable Solutions",
+                "description": "Grow without limits",
+                "icon": "chart-line"
+              }
+            ]
+          }
+        },
+        {
+          "type": "testimonials",
+          "variant": "cards",
+          "content": {
+            "heading": "Trusted by Industry Leaders"
+          }
+        },
+        {
+          "type": "cta",
+          "variant": "centered",
+          "content": {
+            "heading": "Ready to Get Started?",
+            "text": "Join thousands of companies already using Acme.",
+            "buttonText": "Start Free Trial"
+          }
+        }
+      ],
+      "seo": {
+        "title": "Acme Corporation - Smart Business Solutions",
+        "description": "Transform your business with Acme's innovative solutions. Fast implementation, 24/7 support, and scalable growth."
+      }
+    },
+    {
+      "name": "About",
+      "path": "/about",
+      "purpose": "Tell the company story, build trust, introduce the team",
+      "sections": [
+        {
+          "type": "hero",
+          "variant": "minimal",
+          "content": {
+            "headline": "About Us",
+            "subheadline": "Our mission is to empower businesses with technology that just works."
+          }
+        },
+        {
+          "type": "content",
+          "variant": "split",
+          "content": {
+            "heading": "Our Story",
+            "text": "Founded in 2020, Acme started with a simple idea...",
+            "image": "team-photo.jpg"
+          }
+        },
+        {
+          "type": "stats",
+          "variant": "inline",
+          "content": {
+            "items": [
+              { "value": "500+", "label": "Customers" },
+              { "value": "50M+", "label": "Transactions" },
+              { "value": "99.9%", "label": "Uptime" },
+              { "value": "24/7", "label": "Support" }
+            ]
+          }
+        },
+        {
+          "type": "team",
+          "variant": "grid",
+          "content": {
+            "heading": "Meet Our Team"
+          }
+        }
+      ],
+      "seo": {
+        "title": "About Acme - Our Story and Mission",
+        "description": "Learn about Acme's mission to empower businesses with smart technology solutions."
+      }
+    },
+    {
+      "name": "Services",
+      "path": "/services",
+      "purpose": "Showcase service offerings and drive inquiries",
+      "sections": [
+        {
+          "type": "hero",
+          "variant": "minimal",
+          "content": {
+            "headline": "Our Services",
+            "subheadline": "Comprehensive solutions tailored to your needs"
+          }
+        },
+        {
+          "type": "features",
+          "variant": "detailed",
+          "content": {
+            "items": [
+              {
+                "title": "Consulting",
+                "description": "Strategic guidance to optimize your operations",
+                "link": "/services/consulting"
+              },
+              {
+                "title": "Implementation",
+                "description": "End-to-end deployment of our solutions",
+                "link": "/services/implementation"
+              },
+              {
+                "title": "Support",
+                "description": "Ongoing maintenance and assistance",
+                "link": "/services/support"
+              }
+            ]
+          }
+        },
+        {
+          "type": "cta",
+          "variant": "standard"
+        }
+      ],
+      "seo": {
+        "title": "Services - Acme Corporation",
+        "description": "Explore Acme's consulting, implementation, and support services."
+      }
+    },
+    {
+      "name": "Pricing",
+      "path": "/pricing",
+      "purpose": "Display pricing tiers and convert to sign-ups",
+      "sections": [
+        {
+          "type": "hero",
+          "variant": "minimal",
+          "content": {
+            "headline": "Simple, Transparent Pricing",
+            "subheadline": "Choose the plan that fits your needs"
+          }
+        },
+        {
+          "type": "pricing",
+          "variant": "cards",
+          "content": {
+            "tiers": [
+              {
+                "name": "Starter",
+                "price": "$29",
+                "period": "month",
+                "description": "Perfect for small teams",
+                "features": ["5 users", "Basic analytics", "Email support"],
+                "highlighted": false
+              },
+              {
+                "name": "Professional",
+                "price": "$99",
+                "period": "month",
+                "description": "For growing businesses",
+                "features": ["25 users", "Advanced analytics", "Priority support", "API access"],
+                "highlighted": true
+              },
+              {
+                "name": "Enterprise",
+                "price": "Custom",
+                "period": "",
+                "description": "For large organizations",
+                "features": ["Unlimited users", "Custom integrations", "Dedicated support", "SLA guarantee"],
+                "highlighted": false
+              }
+            ]
+          }
+        },
+        {
+          "type": "faq",
+          "variant": "accordion",
+          "content": {
+            "heading": "Frequently Asked Questions"
+          }
+        }
+      ],
+      "seo": {
+        "title": "Pricing - Acme Corporation",
+        "description": "View Acme's pricing plans. Start free and scale as you grow."
+      }
+    },
+    {
+      "name": "Contact",
+      "path": "/contact",
+      "purpose": "Capture leads and provide contact information",
+      "sections": [
+        {
+          "type": "hero",
+          "variant": "minimal",
+          "content": {
+            "headline": "Get in Touch",
+            "subheadline": "We'd love to hear from you"
+          }
+        },
+        {
+          "type": "contact",
+          "variant": "split",
+          "content": {
+            "showForm": true,
+            "showMap": true,
+            "showInfo": true,
+            "formFields": ["name", "email", "company", "message"]
+          }
+        }
+      ],
+      "seo": {
+        "title": "Contact Us - Acme Corporation",
+        "description": "Get in touch with Acme. We're here to help with your business needs."
+      }
+    }
+  ],
+
+  "navigation": {
+    "header": {
+      "variant": "standard",
+      "sticky": true,
+      "items": [
+        { "label": "Home", "path": "/" },
+        { "label": "About", "path": "/about" },
+        {
+          "label": "Services",
+          "path": "/services",
+          "children": [
+            { "label": "Consulting", "path": "/services/consulting" },
+            { "label": "Implementation", "path": "/services/implementation" },
+            { "label": "Support", "path": "/services/support" }
+          ]
+        },
+        { "label": "Pricing", "path": "/pricing" },
+        { "label": "Contact", "path": "/contact" }
+      ],
+      "cta": {
+        "text": "Get Started",
+        "path": "/contact",
+        "style": "primary"
+      }
+    },
+    "footer": {
+      "variant": "standard",
+      "columns": [
+        {
+          "title": "Company",
+          "links": [
+            { "label": "About", "path": "/about" },
+            { "label": "Careers", "path": "/careers" },
+            { "label": "Press", "path": "/press" }
+          ]
+        },
+        {
+          "title": "Resources",
+          "links": [
+            { "label": "Blog", "path": "/blog" },
+            { "label": "Documentation", "path": "/docs" },
+            { "label": "Help Center", "path": "/help" }
+          ]
+        },
+        {
+          "title": "Legal",
+          "links": [
+            { "label": "Privacy Policy", "path": "/privacy" },
+            { "label": "Terms of Service", "path": "/terms" }
+          ]
+        }
+      ],
+      "showSocial": true,
+      "showNewsletter": true,
+      "copyright": "2024 Acme Corporation. All rights reserved."
+    }
+  },
+
+  "content": {
+    "tone": {
+      "voice": "professional",
+      "personality": ["confident", "helpful", "innovative"],
+      "avoid": ["overly casual", "jargon-heavy", "salesy"]
+    },
+    "messaging": {
+      "valueProposition": "Smart solutions that grow with your business",
+      "targetAudience": "Small to medium businesses looking to modernize operations",
+      "keyBenefits": [
+        "Save time with automation",
+        "Reduce operational costs",
+        "Scale without complexity"
+      ],
+      "differentiators": [
+        "Fastest implementation in the industry",
+        "No-code configuration",
+        "Dedicated success manager"
+      ]
+    }
+  },
+
+  "features": {
+    "blog": false,
+    "newsletter": true,
+    "contactForm": true,
+    "analytics": {
+      "googleAnalytics": "G-XXXXXXXXXX",
+      "plausible": false
+    },
+    "integrations": [],
+    "behaviors": {
+      "smoothScroll": true,
+      "scrollReveal": true,
+      "stickyHeader": true,
+      "mobileMenu": true,
+      "accordions": true,
+      "modals": true
+    }
+  },
+
+  "assets": {
+    "images": {
+      "hero": "Needs: Hero background or illustration showing technology/business theme",
+      "about": "Needs: Team photo or office environment",
+      "services": "Needs: Icons or illustrations for each service",
+      "testimonials": "Needs: Customer headshots"
+    },
+    "placeholders": {
+      "useUnsplash": true,
+      "categories": ["business", "technology", "office"]
+    }
+  },
+
+  "deployment": {
+    "platform": "vercel",
+    "domain": "acmecorp.com",
+    "environment": "production"
+  }
+}

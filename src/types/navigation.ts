@@ -40,6 +40,12 @@ export interface NavItem {
   footerGroupTitle?: string;
   /** Order priority (lower = first, default: 0) */
   order?: number;
+  /**
+   * If true, children are displayed as a side navigation on the parent page
+   * instead of as a dropdown in the header. The parent link navigates to its
+   * page which contains a SideNav with children links.
+   */
+  sideNav?: boolean;
 
   /** @deprecated Use showIn instead */
   global?: boolean;
@@ -160,6 +166,13 @@ export function asNavLink(item: NavItem | NavLink): NavLink | null {
  */
 export function hasChildren(item: NavItem | NavLink): boolean {
   return !!item.children && Object.keys(item.children).length > 0;
+}
+
+/**
+ * Check if item uses side navigation (children shown on page, not dropdown)
+ */
+export function usesSideNav(item: NavItem | NavLink): boolean {
+  return item.sideNav === true && hasChildren(item);
 }
 
 /**
@@ -330,4 +343,126 @@ export function getHeaderSocialLinks(links: SocialLink[]): SocialLink[] {
  */
 export function getFooterSocialLinks(links: SocialLink[]): SocialLink[] {
   return links.filter(showSocialInFooter);
+}
+
+// ===================================
+// Side Navigation Helpers
+// ===================================
+
+/**
+ * SideNav item structure (mirrors SideNavItemL1/L2/L3 from components.ts)
+ */
+export interface SideNavItem {
+  label: string;
+  href?: string;
+  icon?: string;
+  children?: SideNavItem[];
+}
+
+/**
+ * Convert navigation children to SideNav items format
+ * Supports up to 3 levels of depth
+ */
+export function getSideNavItems(item: NavItem | NavLink): SideNavItem[] {
+  if (!item.children) return [];
+
+  const items: SideNavItem[] = [];
+
+  for (const [key, child] of Object.entries(item.children)) {
+    const sideNavItem: SideNavItem = {
+      label: child.label,
+      href: isNavLink(child) ? child.url : undefined,
+      icon: child.icon,
+    };
+
+    // Add L2 children
+    if (child.children) {
+      sideNavItem.children = [];
+      for (const [l2Key, l2Child] of Object.entries(child.children)) {
+        const l2Item: SideNavItem = {
+          label: l2Child.label,
+          href: isNavLink(l2Child) ? l2Child.url : undefined,
+          icon: l2Child.icon,
+        };
+
+        // Add L3 children (max depth)
+        if (l2Child.children) {
+          l2Item.children = [];
+          for (const [l3Key, l3Child] of Object.entries(l2Child.children)) {
+            l2Item.children.push({
+              label: l3Child.label,
+              href: isNavLink(l3Child) ? l3Child.url : undefined,
+              icon: l3Child.icon,
+            });
+          }
+        }
+
+        sideNavItem.children.push(l2Item);
+      }
+    }
+
+    items.push(sideNavItem);
+  }
+
+  return items;
+}
+
+/**
+ * Find a navigation item by URL path
+ */
+export function findNavItemByPath(
+  items: Record<string, NavItem | NavLink>,
+  path: string
+): (NavItem | NavLink) | null {
+  for (const [key, item] of Object.entries(items)) {
+    // Check if this item matches the path
+    if (isNavLink(item) && item.url === path) {
+      return item;
+    }
+
+    // Check children
+    if (item.children) {
+      const found = findNavItemByPath(item.children, path);
+      if (found) return found;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Find the parent navigation item that contains a given path
+ * Useful for finding which sideNav parent owns a child page
+ */
+export function findSideNavParent(
+  items: Record<string, NavItem | NavLink>,
+  path: string
+): (NavItem | NavLink) | null {
+  for (const [key, item] of Object.entries(items)) {
+    if (!usesSideNav(item)) continue;
+
+    // Check if path matches this parent's URL
+    if (isNavLink(item) && item.url === path) {
+      return item;
+    }
+
+    // Check if path matches any child URL
+    if (item.children) {
+      for (const [childKey, child] of Object.entries(item.children)) {
+        if (isNavLink(child) && child.url === path) {
+          return item;
+        }
+        // Check nested children
+        if (child.children) {
+          for (const [nestedKey, nested] of Object.entries(child.children)) {
+            if (isNavLink(nested) && nested.url === path) {
+              return item;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return null;
 }

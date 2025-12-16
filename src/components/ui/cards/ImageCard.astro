@@ -1,0 +1,234 @@
+---
+/**
+ * ImageCard
+ *
+ * Card with background image and text overlay.
+ * Great for portfolio items, categories, or featured content.
+ *
+ * @since 1.0.0
+ *
+ * Best for: Portfolio, galleries, category showcases, featured items
+ */
+
+import type { ImageCardProps } from '@types';
+
+interface Props extends ImageCardProps {}
+
+const {
+  title,
+  description,
+  image,
+  imageAlt = '',
+  overlay = 'bottom',
+  aspectRatio = 'video',
+  badge,
+  hover = 'scale',
+  radius = 'medium',
+  href,
+  external,
+  shadow = false,
+  bordered = false,
+  class: className,
+  classList,
+  id,
+  ...attrs
+} = Astro.props;
+
+const Tag = href ? 'a' : 'div';
+const linkProps = href ? {
+  href,
+  target: external ? '_blank' : undefined,
+  rel: external ? 'noopener noreferrer' : undefined,
+} : {};
+
+const classes = [
+  'image-card',
+  `image-card--overlay-${overlay}`,
+  `image-card--aspect-${aspectRatio}`,
+  `image-card--radius-${radius}`,
+  `image-card--hover-${hover}`,
+  shadow && 'image-card--shadow',
+  bordered && 'image-card--bordered',
+  href && 'image-card--clickable',
+  className,
+  classList,
+].filter(Boolean).join(' ');
+---
+
+<Tag id={id} class={classes} {...linkProps} {...attrs}>
+  <div class="image-card__image-wrapper">
+    <img src={image} alt={imageAlt} class="image-card__image" loading="lazy" />
+  </div>
+  <div class="image-card__overlay"></div>
+  {badge && <span class="image-card__badge">{badge}</span>}
+  <div class="image-card__content">
+    <h3 class="image-card__title">{title}</h3>
+    {description && <p class="image-card__description">{description}</p>}
+    <slot />
+  </div>
+</Tag>
+
+<style lang="scss">
+  @use './_card-base.scss' as *;
+
+  .image-card {
+    @include card-base;
+    @include card-variants;
+
+    position: relative;
+    overflow: hidden;
+    color: var(--color-white);
+
+    // Aspect ratio variants
+    &--aspect-square { aspect-ratio: 1; }
+    &--aspect-video { aspect-ratio: 16 / 9; }
+    &--aspect-portrait { aspect-ratio: 3 / 4; }
+    &--aspect-wide { aspect-ratio: 21 / 9; }
+
+    // Image wrapper
+    &__image-wrapper {
+      position: absolute;
+      inset: 0;
+    }
+
+    &__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    // Overlay
+    &__overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    // Overlay variants
+    &--overlay-bottom .image-card__overlay {
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        transparent 100%
+      );
+    }
+
+    &--overlay-center .image-card__overlay {
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    &--overlay-full .image-card__overlay {
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.5) 100%
+      );
+    }
+
+    // Badge
+    &__badge {
+      position: absolute;
+      top: var(--space-3);
+      left: var(--space-3);
+      padding: var(--space-1) var(--space-3);
+      background: var(--color-primary);
+      color: var(--color-white);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+      border-radius: var(--border-radius-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      z-index: 2;
+    }
+
+    // Content positioning
+    &__content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: var(--space-5);
+      color: var(--color-white);
+    }
+
+    &--overlay-bottom .image-card__content {
+      justify-content: flex-end;
+    }
+
+    &--overlay-center .image-card__content {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    &--overlay-full .image-card__content {
+      justify-content: flex-end;
+    }
+
+    &__title {
+      margin: 0;
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      line-height: 1.2;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      color: var(--color-white);
+    }
+
+    &__description {
+      margin: var(--space-2) 0 0;
+      font-size: var(--font-size-sm);
+      opacity: 0.9;
+      line-height: 1.5;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    // Hover effects
+    &--hover-lift:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    &--hover-scale:hover .image-card__image {
+      transform: scale(1.05);
+    }
+
+    &--hover-glow {
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        box-shadow: 0 0 30px rgba(var(--color-primary-rgb, 59, 130, 246), 0.5);
+        pointer-events: none;
+        z-index: 3;
+      }
+
+      &:hover::before {
+        opacity: 1;
+      }
+    }
+
+    &--hover-border {
+      border: 2px solid transparent;
+
+      &:hover {
+        border-color: var(--color-primary);
+      }
+    }
+
+    // Clickable
+    &--clickable {
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+      }
+    }
+  }
+</style>
