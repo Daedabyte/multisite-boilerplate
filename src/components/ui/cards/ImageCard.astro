@@ -10,9 +10,35 @@
  * Best for: Portfolio, galleries, category showcases, featured items
  */
 
-import type { ImageCardProps } from '@types';
+import type { CardBaseProps } from './types';
 
-interface Props extends ImageCardProps {}
+// ===================================
+// ImageCard Types
+// ===================================
+
+/** Overlay position options */
+export type ImageCardOverlay = 'bottom' | 'center' | 'full';
+
+/** Aspect ratio options */
+export type ImageCardAspectRatio = 'square' | 'video' | 'portrait' | 'wide';
+
+/** Props for ImageCard component */
+interface Props extends CardBaseProps {
+  /** Card title */
+  title: string;
+  /** Card description */
+  description?: string;
+  /** Background image URL */
+  image: string;
+  /** Image alt text */
+  imageAlt?: string;
+  /** Overlay position */
+  overlay?: ImageCardOverlay;
+  /** Image aspect ratio */
+  aspectRatio?: ImageCardAspectRatio;
+  /** Optional badge text */
+  badge?: string;
+}
 
 const {
   title,
@@ -28,7 +54,6 @@ const {
   external,
   shadow = false,
   bordered = false,
-  class: className,
   classList,
   id,
   ...attrs
@@ -40,22 +65,24 @@ const linkProps = href ? {
   target: external ? '_blank' : undefined,
   rel: external ? 'noopener noreferrer' : undefined,
 } : {};
-
-const classes = [
-  'image-card',
-  `image-card--overlay-${overlay}`,
-  `image-card--aspect-${aspectRatio}`,
-  `image-card--radius-${radius}`,
-  `image-card--hover-${hover}`,
-  shadow && 'image-card--shadow',
-  bordered && 'image-card--bordered',
-  href && 'image-card--clickable',
-  className,
-  classList,
-].filter(Boolean).join(' ');
 ---
 
-<Tag id={id} class={classes} {...linkProps} {...attrs}>
+<Tag
+  id={id}
+  class:list={[
+    'image-card',
+    `image-card--overlay-${overlay}`,
+    `image-card--aspect-${aspectRatio}`,
+    `image-card--radius-${radius}`,
+    `image-card--hover-${hover}`,
+    shadow && 'image-card--shadow',
+    bordered && 'image-card--bordered',
+    href && 'image-card--clickable',
+    classList
+  ]}
+  {...linkProps}
+  {...attrs}
+>
   <div class="image-card__image-wrapper">
     <img src={image} alt={imageAlt} class="image-card__image" loading="lazy" />
   </div>
@@ -73,11 +100,11 @@ const classes = [
 
   .image-card {
     @include card-base;
-    @include card-variants;
-
     position: relative;
     overflow: hidden;
     color: var(--color-white);
+
+    @include card-variants;
 
     // Aspect ratio variants
     &--aspect-square { aspect-ratio: 1; }

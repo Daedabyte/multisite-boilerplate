@@ -21,10 +21,21 @@
  * />
  */
 
-import type { CTASplitProps } from './types';
-import Container from '@components/ui/Container.astro';
+import type { CTABaseProps } from './types';
+import Container from '@components/layout/Container.astro';
 
-interface Props extends CTASplitProps {}
+/**
+ * Split CTA variant props
+ */
+interface Props extends CTABaseProps {
+  /** Featured image */
+  image: {
+    src: string;
+    alt: string;
+  };
+  /** Image position */
+  imagePosition?: 'left' | 'right';
+}
 
 const {
   heading,
@@ -34,25 +45,21 @@ const {
   imagePosition = 'right',
   background,
   container,
-  class: className,
   classList,
   id = 'cta',
   ...attrs
 } = Astro.props;
-
-const sectionClasses = [
-  'cta',
-  'cta--split',
-  `cta--image-${imagePosition}`,
-  background?.variant === 'alt' && 'cta--alt',
-  className,
-  classList,
-].filter(Boolean).join(' ');
 ---
 
 <section
   id={id}
-  class={sectionClasses}
+  class:list={[
+    'cta',
+    'cta--split',
+    `cta--image-${imagePosition}`,
+    background?.variant === 'alt' && 'cta--alt',
+    classList
+  ]}
   {...attrs}
 >
   <Container {...container}>
@@ -85,6 +92,51 @@ const sectionClasses = [
   </Container>
 </section>
 
-<style lang="scss">
+<style lang="scss" is:global>
   @use './cta.scss';
+</style>
+
+<style lang="scss">
+  @use '../../../styles/abstracts' as *;
+
+  // Variant: Split
+  .cta--split {
+    .cta__inner {
+      display: grid;
+      gap: var(--space-8);
+      align-items: center;
+
+      @include media-up('lg') {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-12);
+      }
+    }
+
+    &.cta--image-left {
+      @include media-up('lg') {
+        .cta__image {
+          order: -1;
+        }
+      }
+    }
+
+    .cta__content {
+      @include media-down('lg') {
+        text-align: center;
+      }
+    }
+
+    .cta__actions {
+      @include media-down('lg') {
+        justify-content: center;
+      }
+    }
+
+    .cta__image {
+      img {
+        border-radius: var(--border-radius-xl);
+        box-shadow: var(--shadow-lg);
+      }
+    }
+  }
 </style>

@@ -7,10 +7,9 @@
  */
 
 import DefaultLayout from '@layouts/DefaultLayout.astro';
-import { about } from '@data/content';
 
 // Hero variants
-import HeroMinimal from '@components/sections/heroes/HeroMinimal.astro';
+import HeroMinimal from '@components/layout/heroes/HeroMinimal.astro';
 
 // Features variants
 import FeaturesGrid from '@components/sections/features/FeaturesGrid.astro';
@@ -19,7 +18,162 @@ import FeaturesGrid from '@components/sections/features/FeaturesGrid.astro';
 import CTASimple from '@components/sections/cta/CTASimple.astro';
 
 // UI components
-import Section from '@components/ui/Section.astro';
+import Section from '@components/layout/Section.astro';
+
+// ===================================
+// Page Content
+// ===================================
+
+const hero = {
+  title: 'About This Boilerplate',
+  subtitle: 'A modern, AI-friendly foundation for building websites faster and smarter.',
+  alignment: 'center' as const,
+};
+
+const story = {
+  heading: 'The Purpose',
+  content: `This boilerplate was born from a simple observation: most website projects share the same foundational needs, yet developers spend countless hours rebuilding the same patterns from scratch.
+
+We created this Astro-based boilerplate to solve that problem. It provides a pre-configured, variant-based component system that handles the common patterns—headers, footers, heroes, features sections, CTAs—so you can focus on what makes each project unique.
+
+The key insight is that content should be separate from presentation. By defining typed content data structures and flexible component variants, we enable rapid site development without sacrificing quality or customization.`,
+};
+
+const mission = {
+  heading: 'The Philosophy',
+  content: `This boilerplate is built on three core principles:
+
+**Configuration over Code**: Change your site's appearance by selecting component variants and updating content data, not by rewriting templates.
+
+**AI-Friendly Architecture**: Structured content types and clear separation of concerns make it easy for AI assistants to populate and modify content programmatically.
+
+**Developer Experience First**: TypeScript throughout, SCSS with design tokens, path aliases, and comprehensive documentation ensure a smooth development workflow.`,
+};
+
+const values = {
+  heading: 'Core Features',
+  subheading: 'What makes this boilerplate different.',
+  columns: 3 as const,
+  items: [
+    {
+      title: 'Variant-Based Components',
+      description: 'Each component category (heroes, footers, CTAs) offers multiple layouts sharing the same TypeScript interface.',
+      icon: 'fa-solid fa-layer-group',
+    },
+    {
+      title: 'Typed Content Data',
+      description: 'Content lives in TypeScript files with full type safety, making it easy to populate and validate.',
+      icon: 'fa-solid fa-file-code',
+    },
+    {
+      title: 'Design Token System',
+      description: 'CSS custom properties for colors, spacing, and typography ensure consistent, themeable styling.',
+      icon: 'fa-solid fa-palette',
+    },
+    {
+      title: 'Unified Navigation',
+      description: 'Define links once, display them in header, footer, or both with visibility controls.',
+      icon: 'fa-solid fa-sitemap',
+    },
+    {
+      title: 'Responsive & Accessible',
+      description: 'Mobile-first design with WCAG-compliant components and semantic HTML throughout.',
+      icon: 'fa-solid fa-universal-access',
+    },
+    {
+      title: 'Interactive Behaviors',
+      description: 'Data-attribute-driven JavaScript for accordions, counters, reveals, and more—no framework required.',
+      icon: 'fa-solid fa-wand-magic-sparkles',
+    },
+  ],
+};
+
+const techStack = {
+  heading: 'Technology Stack',
+  subheading: 'Built with modern, battle-tested tools.',
+  items: [
+    {
+      name: 'Astro 5.x',
+      role: 'Framework',
+      bio: 'Static-first architecture with island hydration. Zero JavaScript by default, incredibly fast builds.',
+    },
+    {
+      name: 'TypeScript',
+      role: 'Language',
+      bio: 'Full type safety across components, content data, and configuration. Catch errors before they reach production.',
+    },
+    {
+      name: 'SCSS',
+      role: 'Styling',
+      bio: 'Modular stylesheets with design tokens, utility mixins, and automatic color palette generation.',
+    },
+    {
+      name: 'Font Awesome',
+      role: 'Icons',
+      bio: 'Comprehensive icon library integrated via CDN for easy access to thousands of icons.',
+    },
+  ],
+};
+
+const roadmap = [
+  {
+    tag: 'Themes',
+    title: 'Pre-Built Theme Presets',
+    description: 'One-click theme switching with curated color palettes, typography pairings, and component styling for different industries—SaaS, agency, e-commerce, portfolio, and more.',
+  },
+  {
+    tag: 'Components',
+    title: 'Expanded Component Library',
+    description: 'Pricing tables, testimonial carousels, team grids, blog cards, portfolio galleries, contact forms with validation, and newsletter signup sections.',
+  },
+  {
+    tag: 'Config',
+    title: 'Visual Configuration',
+    description: 'A companion web tool for configuring site settings, selecting component variants, and previewing changes in real-time without touching code.',
+  },
+  {
+    tag: 'CMS',
+    title: 'Headless CMS Integration',
+    description: 'First-class support for popular headless CMS platforms like Sanity, Strapi, and Contentful with pre-built content schemas and data fetching utilities.',
+  },
+  {
+    tag: 'Commerce',
+    title: 'E-Commerce Components',
+    description: 'Product cards, shopping cart, checkout flow, and integration patterns for Shopify, Snipcart, and Stripe for building online stores.',
+  },
+  {
+    tag: 'CLI',
+    title: 'Project Scaffolding CLI',
+    description: 'Interactive command-line tool to scaffold new projects, select theme presets, choose component variants, and configure integrations from the start.',
+  },
+  {
+    tag: 'AI',
+    title: 'AI Content Generation',
+    description: 'Built-in prompts and workflows for AI assistants to generate and populate content data, create new pages, and customize components intelligently.',
+  },
+  {
+    tag: 'i18n',
+    title: 'Internationalization',
+    description: 'Multi-language support with locale-aware routing, translated content structures, and RTL layout support for global audiences.',
+  },
+];
+
+const cta = {
+  heading: 'Ready to Build?',
+  description: 'Explore the documentation to see all available components and start building your next project.',
+  actions: [
+    {
+      label: 'View Components',
+      href: '/docs/components',
+      variant: 'primary' as const,
+    },
+    {
+      label: 'Read the Docs',
+      href: '/docs',
+      variant: 'secondary' as const,
+    },
+  ],
+};
 ---
 
 <DefaultLayout
@@ -28,17 +182,17 @@ import Section from '@components/ui/Section.astro';
 >
   <!-- Hero Section -->
   <HeroMinimal
-    title={about.hero.title}
-    subtitle={about.hero.subtitle}
-    alignment={about.hero.alignment}
+    title={hero.title}
+    subtitle={hero.subtitle}
+    alignment={hero.alignment}
   />
 
   <!-- Purpose Section -->
   <Section id="purpose" container={{ size: 'medium' }}>
     <div class="content-block" data-reveal="fade-up">
-      <h2>{about.story?.heading}</h2>
+      <h2>{story.heading}</h2>
       <div class="prose">
-        <p>{about.story?.content}</p>
+        <p>{story.content}</p>
       </div>
     </div>
   </Section>
@@ -46,30 +200,26 @@ import Section from '@components/ui/Section.astro';
   <!-- Philosophy Section -->
   <Section id="philosophy" classList="section--alt" container={{ size: 'medium' }}>
     <div class="content-block" data-reveal="fade-up">
-      <h2>{about.mission?.heading}</h2>
-      <div class="prose" set:html={about.mission?.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n\n/g, '</p><p>')} />
+      <h2>{mission.heading}</h2>
+      <div class="prose" set:html={mission.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n\n/g, '</p><p>')} />
     </div>
   </Section>
 
   <!-- Core Features Section -->
   <FeaturesGrid
-    heading={about.values?.heading}
-    subheading={about.values?.subheading}
-    features={about.values?.items.map(item => ({
-      title: item.title,
-      description: item.description,
-      icon: item.icon,
-    })) ?? []}
-    columns={about.values?.columns ?? 3}
+    heading={values.heading}
+    subheading={values.subheading}
+    features={values.items}
+    columns={values.columns}
   />
 
   <!-- Tech Stack Section -->
   <Section id="tech-stack" classList="section--alt" container={{ size: 'xl' }}>
-    <h2>{about.team?.heading}</h2>
-    {about.team?.subheading && <p class="section-subtitle">{about.team.subheading}</p>}
+    <h2>{techStack.heading}</h2>
+    <p class="section-subtitle">{techStack.subheading}</p>
 
     <div class="tech-grid" data-stagger data-stagger-delay="100">
-      {about.team?.members.map((tech) => (
+      {techStack.items.map((tech) => (
         <div class="tech-card">
           <h3 class="tech-name">{tech.name}</h3>
           <span class="tech-role">{tech.role}</span>
@@ -85,9 +235,9 @@ import Section from '@components/ui/Section.astro';
     <p class="section-subtitle">Where we're headed next. These features are planned to make the boilerplate even more powerful and easier to use.</p>
 
     <div class="roadmap-grid" data-stagger data-stagger-delay="100">
-      {about.timeline?.map((item) => (
+      {roadmap.map((item) => (
         <div class="roadmap-card">
-          <span class="roadmap-tag">{item.year}</span>
+          <span class="roadmap-tag">{item.tag}</span>
           <h3>{item.title}</h3>
           <p>{item.description}</p>
         </div>
@@ -97,9 +247,9 @@ import Section from '@components/ui/Section.astro';
 
   <!-- CTA Section -->
   <CTASimple
-    heading={about.cta?.heading ?? 'Ready to Build?'}
-    description={about.cta?.description}
-    actions={about.cta?.actions}
+    heading={cta.heading}
+    description={cta.description}
+    actions={cta.actions}
   />
 </DefaultLayout>
 

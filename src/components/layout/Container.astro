@@ -1,0 +1,87 @@
+---
+/**
+ * Container
+ *
+ * Responsive container component with configurable max-width.
+ * Provides consistent horizontal padding and centering.
+ *
+ * @since 1.0.0
+ *
+ * Best for: Wrapping page content, sections
+ * Avoid when: Need full-bleed content
+ *
+ * @example
+ * <Container size="large">Content here</Container>
+ * <Container as="article" size="medium">Article content</Container>
+ * <Container padding={false}>Full-bleed content</Container>
+ */
+
+import type { BaseProps } from '@types';
+
+// ===================================
+// Container Types
+// ===================================
+
+/** Container size variants */
+export type ContainerSize = 'small' | 'medium' | 'large' | 'xl' | 'full';
+
+/** Props for Container component */
+interface Props extends BaseProps {
+  /** Container max-width size */
+  size?: ContainerSize;
+  /** Enable horizontal padding (default: true) */
+  padding?: boolean;
+  /** HTML element to render as */
+  as?: keyof HTMLElementTagNameMap;
+}
+
+const {
+  size = 'full',
+  padding = true,
+  as: Tag = 'div',
+  classList,
+  ...attrs
+} = Astro.props;
+---
+
+<Tag
+  class:list={[
+    'container',
+    `container--${size}`,
+    !padding && 'container--no-padding',
+    classList
+  ]}
+  {...attrs}
+>
+  <slot />
+</Tag>
+
+<style lang="scss" is:global>
+  @use "../../styles/abstracts" as *;
+
+  // Containers
+  @mixin container($size: "large") {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: var(--space-4);
+    max-width: var(--container-max-width-#{$size});
+
+    @include media-up("md") {
+      padding-inline: var(--space-6);
+    }
+  }
+
+  .container {
+    @include container();
+  }
+
+  @each $size, $width in $container-max-widths {
+    .container--#{$size} {
+      @include container($size);
+    }
+  }
+
+  .container--no-padding {
+    padding-inline: 0;
+  }
+</style>

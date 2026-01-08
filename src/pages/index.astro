@@ -7,55 +7,218 @@
  */
 
 import DefaultLayout from '@layouts/DefaultLayout.astro';
-import { homepage } from '@data/content';
 
-// Hero variants (import directly from .astro files)
-import HeroStandard from '@components/sections/heroes/HeroStandard.astro';
+// Hero variants
+import HeroStandard from '@components/layout/heroes/HeroStandard.astro';
 
 // Images
 import backgroundImg from '@assets/images/background.png';
 
-// Features variants (import directly from .astro files)
+// Features variants
 import FeaturesGrid from '@components/sections/features/FeaturesGrid.astro';
 
-// CTA variants (import directly from .astro files)
+// CTA variants
 import CTABanner from '@components/sections/cta/CTABanner.astro';
 
 // UI components
-import Section from '@components/ui/Section.astro';
-import Container from '@components/ui/Container.astro';
+import Section from '@components/layout/Section.astro';
+
+// ===================================
+// Page Content
+// ===================================
+
+const hero = {
+  title: 'Build Better Websites, Faster',
+  subtitle: 'A flexible, configuration-driven boilerplate for rapid website development.',
+  size: 'partial' as const,
+  alignment: 'center' as const,
+  actions: [
+    {
+      label: 'Get Started',
+      href: '/contact',
+      variant: 'primary' as const,
+    },
+    {
+      label: 'Learn More',
+      href: '/about',
+      variant: 'secondary' as const,
+      outline: true,
+    },
+  ],
+};
+
+const features = {
+  heading: 'Why Choose Us',
+  subheading: 'Everything you need to launch your website quickly and professionally.',
+  columns: 3 as const,
+  items: [
+    {
+      title: 'Fast Development',
+      description: 'Launch your site in days, not weeks. Our boilerplate handles the heavy lifting.',
+      icon: 'fa-solid fa-rocket',
+    },
+    {
+      title: 'Fully Customizable',
+      description: 'Every component is configurable. Adapt the design to match your brand.',
+      icon: 'fa-solid fa-palette',
+    },
+    {
+      title: 'SEO Optimized',
+      description: 'Built-in best practices for search engine optimization and performance.',
+      icon: 'fa-solid fa-magnifying-glass',
+    },
+    {
+      title: 'Mobile First',
+      description: 'Responsive design that looks great on any device, from phones to desktops.',
+      icon: 'fa-solid fa-mobile-screen',
+    },
+    {
+      title: 'Accessible',
+      description: 'WCAG compliant components ensure your site is usable by everyone.',
+      icon: 'fa-solid fa-universal-access',
+    },
+    {
+      title: 'Modern Stack',
+      description: 'Built with Astro, TypeScript, and SCSS for a robust development experience.',
+      icon: 'fa-solid fa-code',
+    },
+  ],
+};
+
+const about = {
+  heading: 'About Our Company',
+  content: `We're passionate about creating high-quality websites that help businesses succeed online.
+
+With years of experience in web development, we've refined our process to deliver exceptional results efficiently. Our boilerplate represents the culmination of best practices and lessons learned from countless projects.`,
+  cta: {
+    label: 'Learn More About Us',
+    href: '/about',
+    variant: 'primary' as const,
+  },
+};
+
+const testimonials = {
+  heading: 'What Our Clients Say',
+  subheading: "Don't just take our word for it.",
+  items: [
+    {
+      quote: 'Working with this team was an absolute pleasure. They delivered our website on time and exceeded our expectations.',
+      author: 'Jane Smith',
+      title: 'CEO',
+      company: 'Tech Startup Inc.',
+      rating: 5,
+    },
+    {
+      quote: 'The attention to detail and code quality is outstanding. Our site loads faster than ever.',
+      author: 'John Doe',
+      title: 'Marketing Director',
+      company: 'Growth Agency',
+      rating: 5,
+    },
+    {
+      quote: 'Finally, a development team that understands both design and performance. Highly recommended!',
+      author: 'Sarah Johnson',
+      title: 'Founder',
+      company: 'Creative Studio',
+      rating: 5,
+    },
+  ],
+};
+
+const stats = {
+  heading: 'Our Track Record',
+  items: [
+    {
+      value: '100+',
+      label: 'Projects Completed',
+      description: 'Websites launched and maintained',
+    },
+    {
+      value: '50+',
+      label: 'Happy Clients',
+      description: "Businesses we've helped grow",
+    },
+    {
+      value: '99%',
+      label: 'Satisfaction Rate',
+      description: 'Client satisfaction score',
+    },
+    {
+      value: '24/7',
+      label: 'Support',
+      description: "We're always here to help",
+    },
+  ],
+};
+
+const faq = {
+  heading: 'Frequently Asked Questions',
+  subheading: "Got questions? We've got answers.",
+  items: [
+    {
+      question: 'How long does it take to build a website?',
+      answer: 'Depending on the complexity, most websites can be completed within 1-3 weeks. Our boilerplate approach allows us to deliver high-quality sites faster than traditional development.',
+    },
+    {
+      question: 'Do you provide ongoing maintenance?',
+      answer: 'Yes! We offer various maintenance packages to keep your site secure, updated, and performing optimally.',
+    },
+    {
+      question: 'Can I update the content myself?',
+      answer: 'Absolutely. Our sites are built with content management in mind, making it easy for you to update text, images, and other content.',
+    },
+    {
+      question: 'What technologies do you use?',
+      answer: 'We use modern technologies like Astro, TypeScript, and SCSS to build fast, maintainable websites that scale with your business.',
+    },
+  ],
+};
+
+const cta = {
+  heading: 'Ready to Get Started?',
+  description: "Let's build something great together. Contact us today for a free consultation.",
+  actions: [
+    {
+      label: 'Contact Us',
+      href: '/contact',
+      variant: 'primary' as const,
+    },
+    {
+      label: 'View Documentation',
+      href: '/docs',
+      variant: 'secondary' as const,
+      outline: true,
+    },
+  ],
+};
 ---
 
 <DefaultLayout
   title="Home - Multisite Boilerplate"
   description="A flexible, variant-based Astro boilerplate for rapid website development."
 >
-  <!-- Hero Section: Using content data -->
+  <!-- Hero Section -->
   <HeroStandard
-    title={homepage.hero.title}
-    subtitle={homepage.hero.subtitle}
-    actions={homepage.hero.actions}
-    size={homepage.hero.size}
-    alignment={homepage.hero.alignment}
+    title={hero.title}
+    subtitle={hero.subtitle}
+    actions={hero.actions}
+    size={hero.size}
+    alignment={hero.alignment}
     backgroundImage={backgroundImg.src}
   />
 
-  <!-- Features Section: Grid variant -->
+  <!-- Features Section -->
   <FeaturesGrid
-    heading={homepage.features?.heading}
-    subheading={homepage.features?.subheading}
-    features={homepage.features?.items.map(item => ({
-      title: item.title,
-      description: item.description,
-      icon: item.icon,
-    })) ?? []}
-    columns={homepage.features?.columns ?? 3}
+    heading={features.heading}
+    subheading={features.subheading}
+    features={features.items}
+    columns={features.columns}
   />
 
-  <!-- Stats Section: Custom with counter animation -->
+  <!-- Stats Section -->
   <Section id="stats" classList="section--dark" container={{ size: 'xl' }}>
     <div class="stats-grid">
-      {homepage.stats?.items.map((stat) => (
+      {stats.items.map((stat) => (
         <div class="stat-item" data-reveal="fade-up">
           <span
             class="stat-value"
@@ -72,26 +235,24 @@ import Container from '@components/ui/Container.astro';
     </div>
   </Section>
 
-  <!-- About Section: Custom layout -->
+  <!-- About Section -->
   <Section id="about" container={{ size: 'medium' }}>
     <div class="about-content" data-reveal="fade-up">
-      <h2>{homepage.about?.heading}</h2>
-      <p>{homepage.about?.content}</p>
-      {homepage.about?.cta && (
-        <a href={homepage.about.cta.href} class={`btn btn--${homepage.about.cta.variant ?? 'primary'}`}>
-          {homepage.about.cta.label}
-        </a>
-      )}
+      <h2>{about.heading}</h2>
+      <p>{about.content}</p>
+      <a href={about.cta.href} class={`btn btn--${about.cta.variant}`}>
+        {about.cta.label}
+      </a>
     </div>
   </Section>
 
-  <!-- Testimonials Section: Custom grid with stagger -->
+  <!-- Testimonials Section -->
   <Section id="testimonials" classList="section--alt" container={{ size: 'xl' }}>
-    <h2>{homepage.testimonials?.heading}</h2>
-    {homepage.testimonials?.subheading && <p class="section-subtitle">{homepage.testimonials.subheading}</p>}
+    <h2>{testimonials.heading}</h2>
+    <p class="section-subtitle">{testimonials.subheading}</p>
 
     <div class="testimonials-grid" data-stagger data-stagger-delay="100">
-      {homepage.testimonials?.items.map((testimonial) => (
+      {testimonials.items.map((testimonial) => (
         <div class="testimonial-card">
           {testimonial.rating && (
             <div class="testimonial-rating">
@@ -111,13 +272,13 @@ import Container from '@components/ui/Container.astro';
     </div>
   </Section>
 
-  <!-- FAQ Section: Accordion behavior -->
+  <!-- FAQ Section -->
   <Section id="faq" container={{ size: 'medium' }}>
-    <h2>{homepage.faq?.heading}</h2>
-    {homepage.faq?.subheading && <p class="section-subtitle">{homepage.faq.subheading}</p>}
+    <h2>{faq.heading}</h2>
+    <p class="section-subtitle">{faq.subheading}</p>
 
     <div class="faq-container" data-accordion data-accordion-multiple="false">
-      {homepage.faq?.items.map((item, index) => (
+      {faq.items.map((item, index) => (
         <div class="faq-item" data-accordion-item>
           <button
             class="faq-trigger"
@@ -134,11 +295,11 @@ import Container from '@components/ui/Container.astro';
     </div>
   </Section>
 
-  <!-- CTA Section: Banner variant -->
+  <!-- CTA Section -->
   <CTABanner
-    heading={homepage.cta?.heading ?? 'Ready to Get Started?'}
-    description={homepage.cta?.description}
-    actions={homepage.cta?.actions}
+    heading={cta.heading}
+    description={cta.description}
+    actions={cta.actions}
   />
 </DefaultLayout>
 

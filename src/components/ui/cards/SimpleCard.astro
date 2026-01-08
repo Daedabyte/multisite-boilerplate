@@ -10,9 +10,25 @@
  * Best for: Feature highlights, service cards, info boxes
  */
 
-import type { SimpleCardProps } from '@types';
+import type { CardBaseProps } from './types';
 
-interface Props extends SimpleCardProps {}
+// ===================================
+// SimpleCard Types
+// ===================================
+
+/** Props for SimpleCard component */
+interface Props extends CardBaseProps {
+  /** Card title */
+  title: string;
+  /** Card description/content */
+  description?: string;
+  /** Icon class (FontAwesome) */
+  icon?: string;
+  /** Icon position */
+  iconPosition?: 'top' | 'left';
+  /** Card padding size */
+  padding?: 'compact' | 'normal' | 'relaxed';
+}
 
 const {
   title,
@@ -26,7 +42,6 @@ const {
   external,
   shadow = false,
   bordered = true,
-  class: className,
   classList,
   id,
   ...attrs
@@ -38,22 +53,24 @@ const linkProps = href ? {
   target: external ? '_blank' : undefined,
   rel: external ? 'noopener noreferrer' : undefined,
 } : {};
-
-const classes = [
-  'simple-card',
-  `simple-card--icon-${iconPosition}`,
-  `simple-card--padding-${padding}`,
-  `simple-card--radius-${radius}`,
-  `simple-card--hover-${hover}`,
-  shadow && 'simple-card--shadow',
-  bordered && 'simple-card--bordered',
-  href && 'simple-card--clickable',
-  className,
-  classList,
-].filter(Boolean).join(' ');
 ---
 
-<Tag id={id} class={classes} {...linkProps} {...attrs}>
+<Tag
+  id={id}
+  class:list={[
+    'simple-card',
+    `simple-card--icon-${iconPosition}`,
+    `simple-card--padding-${padding}`,
+    `simple-card--radius-${radius}`,
+    `simple-card--hover-${hover}`,
+    shadow && 'simple-card--shadow',
+    bordered && 'simple-card--bordered',
+    href && 'simple-card--clickable',
+    classList
+  ]}
+  {...linkProps}
+  {...attrs}
+>
   {icon && (
     <span class="simple-card__icon" aria-hidden="true">
       <i class={icon}></i>

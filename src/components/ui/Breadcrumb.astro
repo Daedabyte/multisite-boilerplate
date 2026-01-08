@@ -22,9 +22,39 @@
  * />
  */
 
-import type { BreadcrumbProps, BreadcrumbItem } from '@types';
+import type { BaseProps } from '@types';
 
-interface Props extends BreadcrumbProps {}
+// ===================================
+// Breadcrumb Types
+// ===================================
+
+/** Individual breadcrumb item */
+export interface BreadcrumbItem {
+  /** Display label */
+  label: string;
+  /** Link URL (optional for current/last item) */
+  href?: string;
+  /** Icon identifier (optional) */
+  icon?: string;
+}
+
+/** Props for Breadcrumb component */
+interface Props extends BaseProps {
+  /** Manual breadcrumb items (if not using auto mode) */
+  items?: BreadcrumbItem[];
+  /** Auto-generate breadcrumbs from current URL */
+  auto?: boolean;
+  /** Home link configuration */
+  home?: {
+    label?: string;
+    href?: string;
+    icon?: string;
+  };
+  /** Separator between items */
+  separator?: 'chevron' | 'slash' | 'arrow' | string;
+  /** Show home icon only (no label) on mobile */
+  compactHome?: boolean;
+}
 
 const {
   items,
@@ -32,7 +62,6 @@ const {
   home = { label: 'Home', href: '/', icon: 'fa-solid fa-house' },
   separator = 'chevron',
   compactHome = true,
-  class: className,
   classList,
   id,
   ...attrs
@@ -103,16 +132,14 @@ function getSeparator(sep: string): string {
 const separatorIcon = getSeparator(separator);
 const isSlash = separator === 'slash';
 
-const classes = [
-  'breadcrumb',
-  compactHome && 'breadcrumb--compact-home',
-  className,
-  classList,
-].filter(Boolean).join(' ');
 ---
 
 <nav
-  class={classes}
+  class:list={[
+    'breadcrumb',
+    compactHome && 'breadcrumb--compact-home',
+    classList
+  ]}
   aria-label="Breadcrumb"
   id={id}
   {...attrs}

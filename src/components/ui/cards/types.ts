@@ -1,62 +1,34 @@
 /**
- * Card Component Types
- * Props interface for Card component variants
+ * Card Component Base Types
+ * Shared types used across all card component variants
  */
 
-import type { BaseProps, ImageProps } from '@types';
+import type { BaseProps } from '@types';
 
 // ===================================
-// Card Variants
+// Card Shared Types
 // ===================================
+
+/** Card hover animation options */
+export type CardHover = 'none' | 'lift' | 'scale' | 'glow' | 'border' | 'tilt';
+
+/** Card border radius options */
+export type CardRadius = 'none' | 'small' | 'medium' | 'large';
 
 /**
- * Card style variants
+ * Base card props shared across all card variants
  */
-export type CardVariant = 'default' | 'elevated' | 'outlined' | 'filled';
-
-/**
- * Card padding options
- */
-export type CardPadding = 'none' | 'small' | 'medium' | 'large';
-
-// ===================================
-// Card Props
-// ===================================
-
-/**
- * Base card props
- */
-export interface CardProps extends BaseProps {
-  /** Card style variant */
-  variant?: CardVariant;
-  /** Padding size */
-  padding?: CardPadding;
-  /** Hover lift effect */
-  hoverable?: boolean;
-  /** Link URL (makes entire card clickable) */
+export interface CardBaseProps extends BaseProps {
+  /** Hover animation effect */
+  hover?: CardHover;
+  /** Border radius size */
+  radius?: CardRadius;
+  /** Make entire card clickable */
   href?: string;
-  /** External link (opens in new tab) */
+  /** Open link in new tab */
   external?: boolean;
-}
-
-/**
- * Card with image header
- */
-export interface CardWithImageProps extends CardProps {
-  /** Card header image */
-  image: ImageProps;
-  /** Image aspect ratio */
-  aspectRatio?: '16:9' | '4:3' | '1:1' | 'auto';
-}
-
-/**
- * Horizontal card layout
- */
-export interface CardHorizontalProps extends CardProps {
-  /** Card image */
-  image?: ImageProps;
-  /** Image position */
-  imagePosition?: 'left' | 'right';
-  /** Image width percentage */
-  imageWidth?: '33' | '40' | '50';
+  /** Add shadow */
+  shadow?: boolean;
+  /** Add border */
+  bordered?: boolean;
 }

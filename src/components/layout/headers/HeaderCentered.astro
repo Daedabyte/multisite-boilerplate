@@ -1,0 +1,184 @@
+---
+/**
+ * HeaderCentered
+ *
+ * Logo centered with navigation split on either side.
+ * Elegant layout for brand-focused sites.
+ *
+ * @variant centered
+ * @since 1.0.0
+ *
+ * Best for: Brand-focused sites, restaurants, boutiques
+ * Avoid when: Navigation has 7+ items (gets cramped)
+ *
+ * @example
+ * <HeaderCentered
+ *   logo={{ src: logo, alt: 'Company' }}
+ *   navigation={navItems}
+ *   tagline="Established 2020"
+ * />
+ */
+
+import type { HeaderBaseProps } from './types';
+import type { SocialLink } from '@types';
+import Container from '@components/layout/Container.astro';
+import NavLinks from './_NavLinks.astro';
+import MobileNav from './_MobileNav.astro';
+import { Image } from 'astro:assets';
+import { navigation } from '@data/site/navigation';
+import logoIcon from '@assets/images/logo_icon.png';
+
+/**
+ * Centered header variant props
+ */
+interface Props extends HeaderBaseProps {
+  /** Tagline below logo */
+  tagline?: string;
+  /** Utility links positioned at edges */
+  utilities?: {
+    social?: SocialLink[];
+    cart?: boolean;
+    search?: boolean;
+  };
+}
+
+const {
+  logo,
+  navigation: navItems = navigation,
+  transparent = true,
+  sticky = true,
+  tagline,
+  container,
+  classList,
+  ...attrs
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+
+// Split navigation into left and right halves
+const navArray = Object.entries(navItems).filter(([_, item]) => item.global);
+const midPoint = Math.ceil(navArray.length / 2);
+const leftNav = Object.fromEntries(navArray.slice(0, midPoint));
+const rightNav = Object.fromEntries(navArray.slice(midPoint));
+---
+
+<header
+  class:list={['header', 'header--centered', transparent && 'header--transparent', classList]}
+  role="banner"
+  data-transparent={transparent}
+  data-sticky={sticky}
+  {...attrs}
+>
+  <Container {...container}>
+    <div class="header__inner">
+      <nav class="nav header__nav header__nav--left" aria-label="Primary navigation (left)">
+        <NavLinks items={leftNav} currentPath={currentPath} />
+      </nav>
+
+      <a href={logo?.href ?? '/'} class="header__logo" aria-label="Home">
+        {logo?.src && typeof logo.src !== 'string' ? (
+          <Image
+            src={logo.src}
+            alt={logo.alt}
+            width={logo.width ?? 40}
+            height={logo.height ?? 40}
+            loading="eager"
+          />
+        ) : logo?.src && typeof logo.src === 'string' ? (
+          <img
+            src={logo.src}
+            alt={logo.alt}
+            width={logo.width ?? 40}
+            height={logo.height ?? 40}
+            loading="eager"
+          />
+        ) : (
+          <Image
+            src={logoIcon}
+            alt="Site Logo"
+            width={40}
+            height={40}
+            loading="eager"
+          />
+        )}
+      </a>
+
+      <nav class="nav header__nav header__nav--right" aria-label="Primary navigation (right)">
+        <NavLinks items={rightNav} currentPath={currentPath} />
+      </nav>
+
+      <MobileNav items={navItems} currentPath={currentPath} />
+    </div>
+
+    {tagline && (
+      <p class="header__tagline">{tagline}</p>
+    )}
+  </Container>
+</header>
+
+<style lang="scss" is:global>
+  @use './headers.scss';
+</style>
+
+<style lang="scss">
+  @use '../../../styles/abstracts' as *;
+
+  // Variant: Centered (logo center)
+  .header--centered {
+    .header__inner {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .header__logo {
+      @include media-up('lg') {
+        order: 2;
+        margin: 0 var(--space-8);
+      }
+    }
+
+    .header__nav {
+      @include media-up('lg') {
+        &--left {
+          order: 1;
+        }
+        &--right {
+          order: 3;
+        }
+      }
+    }
+
+    .header__tagline {
+      width: 100%;
+      text-align: center;
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-400);
+      margin-top: var(--space-1);
+    }
+  }
+</style>
+
+<script>
+  function initHeaderScroll() {
+    const header = document.querySelector('.header[data-transparent="true"]');
+
+    if (header) {
+      const handleScroll = () => {
+        // Don't change transparency while scroll is locked (modal open)
+        if (document.body.classList.contains('scroll-locked')) return;
+
+        if (window.scrollY > 50) {
+          header.classList.remove('header--transparent');
+        } else {
+          header.classList.add('header--transparent');
+        }
+      };
+
+      handleScroll();
+      window.addEventListener('scroll', handleScroll);
+    }
+  }
+
+  initHeaderScroll();
+  document.addEventListener('astro:page-load', initHeaderScroll);
+</script>

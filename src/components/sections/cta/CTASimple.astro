@@ -19,10 +19,14 @@
  * />
  */
 
-import type { CTASimpleProps } from './types';
-import Container from '@components/ui/Container.astro';
+import type { CTABaseProps } from './types';
+import Container from '@components/layout/Container.astro';
 
-interface Props extends CTASimpleProps {}
+/**
+ * Simple CTA variant props
+ * No additional props beyond base
+ */
+interface Props extends CTABaseProps {}
 
 const {
   heading,
@@ -30,25 +34,21 @@ const {
   actions = [],
   background,
   container,
-  class: className,
   classList,
   id = 'cta',
   ...attrs
 } = Astro.props;
-
-const sectionClasses = [
-  'cta',
-  'cta--simple',
-  background?.variant === 'dark' && 'cta--dark',
-  background?.variant === 'primary' && 'cta--primary',
-  className,
-  classList,
-].filter(Boolean).join(' ');
 ---
 
 <section
   id={id}
-  class={sectionClasses}
+  class:list={[
+    'cta',
+    'cta--simple',
+    background?.variant === 'dark' && 'cta--dark',
+    background?.variant === 'primary' && 'cta--primary',
+    classList
+  ]}
   {...attrs}
 >
   <Container size="large" {...container}>
@@ -77,6 +77,24 @@ const sectionClasses = [
   </Container>
 </section>
 
-<style lang="scss">
+<style lang="scss" is:global>
   @use './cta.scss';
+</style>
+
+<style lang="scss">
+  // Variant: Simple
+  .cta--simple {
+    .cta__inner {
+      text-align: center;
+    }
+
+    .cta__content {
+      max-width: 40rem;
+      margin-inline: auto;
+    }
+
+    .cta__actions {
+      justify-content: center;
+    }
+  }
 </style>

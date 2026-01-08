@@ -109,7 +109,7 @@ The `DefaultLayout.astro` automatically selects the correct component:
 ```astro
 ---
 import { componentConfig } from "@data/config";
-import { HeaderStandard, HeaderCentered, HeaderMinimal } from "@components/common/headers";
+import { HeaderStandard, HeaderCentered, HeaderMinimal } from "@components/layout/headers";
 
 const headers = {
   standard: HeaderStandard,
@@ -128,8 +128,8 @@ const Header = headers[componentConfig.header];
 Import components using path aliases:
 
 ```typescript
-import { HeaderStandard } from '@components/common/headers';
-import { HeroSplit } from '@components/sections/heroes';
+import { HeaderStandard } from '@components/layout/headers';
+import { HeroSplit } from '@components/layout/heroes';
 import type { NavItem } from '@types/navigation';
 import { config } from '@data/config';
 ```
@@ -292,7 +292,7 @@ export const homepage: HomepageContent = {
 ```astro
 ---
 import { homepage } from '@data/content';
-import { HeroStandard } from '@components/sections/heroes';
+import { HeroStandard } from '@components/layout/heroes';
 ---
 
 <HeroStandard {...homepage.hero} />

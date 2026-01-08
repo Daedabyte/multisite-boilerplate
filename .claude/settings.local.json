@@ -4,7 +4,13 @@
       "Bash(dir \"X:\\Daedabyte-Clients\\boilerplate\\src\\components\" /b /s)",
       "Bash(npm run build:*)",
       "Bash(dir \"X:\\Daedabyte-Clients\\boilerplate\\src\\styles\\abstracts\" /b)",
-      "Bash(dir \"X:\\Daedabyte-Clients\\boilerplate\\src\\pages\\docs\" /b)"
+      "Bash(dir \"X:\\Daedabyte-Clients\\boilerplate\\src\\pages\\docs\" /b)",
+      "WebFetch(domain:docs.astro.build)",
+      "Bash(dir:*)",
+      "Bash(find:*)",
+      "Bash(npx astro check:*)",
+      "Bash(del \"X:\\Daedabyte\\boilerplate\\src\\data\\content\\homepage.ts\")",
+      "Bash(del \"X:\\Daedabyte\\boilerplate\\src\\data\\content\\about.ts\")"
     ]
   }
 }

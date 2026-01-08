@@ -30,25 +30,25 @@ const {
   fullWidth = false,
   iconBefore,
   iconAfter,
-  class: className,
   classList,
   ...attrs
 } = Astro.props;
 
 const Tag = href ? 'a' : 'button';
 const tagProps = href ? { href } : { type, disabled };
-
-const classes = [
-  'btn',
-  `btn--${variant}${outline ? '-outline' : ''}${weight ? `-${weight}` : ''}`,
-  `btn--${size}`,
-  fullWidth && 'btn--full-width',
-  className,
-  classList,
-].filter(Boolean).join(' ');
 ---
 
-<Tag class={classes} {...tagProps} {...attrs}>
+<Tag
+  class:list={[
+    'btn',
+    `btn--${variant}${outline ? '-outline' : ''}${weight ? `-${weight}` : ''}`,
+    `btn--${size}`,
+    fullWidth && 'btn--full-width',
+    classList
+  ]}
+  {...tagProps}
+  {...attrs}
+>
   {iconBefore && <i class={iconBefore}></i>}
   <slot />
   {iconAfter && <i class={iconAfter}></i>}

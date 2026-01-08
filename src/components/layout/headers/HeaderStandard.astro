@@ -1,0 +1,152 @@
+---
+/**
+ * HeaderStandard
+ *
+ * Logo positioned left, navigation right.
+ * Standard header layout suitable for most websites.
+ *
+ * @variant standard
+ * @since 1.0.0
+ *
+ * Best for: Corporate sites, blogs, general purpose
+ * Avoid when: Brand-focused sites that need centered logo
+ *
+ * @example
+ * <HeaderStandard
+ *   logo={{ src: logoImg, alt: 'Company' }}
+ *   navigation={navItems}
+ *   cta={{ label: 'Get Started', href: '/contact' }}
+ * />
+ */
+
+import type { HeaderBaseProps } from './types';
+import type { SocialLink } from '@types';
+import type { CTAAction } from '@components/ui/buttons/types';
+import Container from '@components/layout/Container.astro';
+import NavLinks from './_NavLinks.astro';
+import MobileNav from './_MobileNav.astro';
+import { Image } from 'astro:assets';
+import { navigation } from '@data/site/navigation';
+import logoIcon from '@assets/images/logo_icon.png';
+
+/**
+ * Standard header variant props
+ */
+interface Props extends HeaderBaseProps {
+  /** Call-to-action button in header */
+  cta?: CTAAction;
+  /** Utility links (social, cart, search) */
+  utilities?: {
+    social?: SocialLink[];
+    cart?: boolean;
+    search?: boolean;
+  };
+}
+
+const {
+  logo,
+  navigation: navItems = navigation,
+  transparent = true,
+  sticky = true,
+  cta,
+  container,
+  classList,
+  ...attrs
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+---
+
+<header
+  class:list={['header', 'header--standard', transparent && 'header--transparent', classList]}
+  role="banner"
+  data-transparent={transparent}
+  data-sticky={sticky}
+  {...attrs}
+>
+  <Container {...container}>
+    <div class="header__inner">
+      <a href={logo?.href ?? '/'} class="header__logo" aria-label="Home">
+        {logo?.src && typeof logo.src !== 'string' ? (
+          <Image
+            src={logo.src}
+            alt={logo.alt}
+            width={logo.width ?? 40}
+            height={logo.height ?? 40}
+            loading="eager"
+          />
+        ) : logo?.src && typeof logo.src === 'string' ? (
+          <img
+            src={logo.src}
+            alt={logo.alt}
+            width={logo.width ?? 40}
+            height={logo.height ?? 40}
+            loading="eager"
+          />
+        ) : (
+          <Image
+            src={logoIcon}
+            alt="Site Logo"
+            width={40}
+            height={40}
+            loading="eager"
+          />
+        )}
+      </a>
+
+      <nav class="nav header__nav" aria-label="Primary navigation">
+        <NavLinks items={navItems} currentPath={currentPath} />
+      </nav>
+
+      {cta && (
+        <a href={cta.href} class="header__cta btn btn--primary">
+          {cta.label}
+        </a>
+      )}
+
+      <MobileNav items={navItems} currentPath={currentPath} />
+    </div>
+  </Container>
+</header>
+
+<style lang="scss" is:global>
+  @use './headers.scss';
+</style>
+
+<style lang="scss">
+  // Variant: Standard (logo left, nav right)
+  .header--standard {
+    .header__inner {
+      justify-content: space-between;
+    }
+
+    .header__nav {
+      margin-left: auto;
+    }
+  }
+</style>
+
+<script>
+  function initHeaderScroll() {
+    const header = document.querySelector('.header[data-transparent="true"]');
+
+    if (header) {
+      const handleScroll = () => {
+        // Don't change transparency while scroll is locked (modal open)
+        if (document.body.classList.contains('scroll-locked')) return;
+
+        if (window.scrollY > 50) {
+          header.classList.remove('header--transparent');
+        } else {
+          header.classList.add('header--transparent');
+        }
+      };
+
+      handleScroll();
+      window.addEventListener('scroll', handleScroll);
+    }
+  }
+
+  initHeaderScroll();
+  document.addEventListener('astro:page-load', initHeaderScroll);
+</script>

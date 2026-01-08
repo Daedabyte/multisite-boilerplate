@@ -21,10 +21,16 @@
  * />
  */
 
-import type { FeaturesListProps } from './types';
-import Container from '@components/ui/Container.astro';
+import type { FeaturesBaseProps } from './types';
+import Container from '@components/layout/Container.astro';
 
-interface Props extends FeaturesListProps {}
+/**
+ * List features variant props
+ */
+interface Props extends FeaturesBaseProps {
+  /** Show dividers between items */
+  dividers?: boolean;
+}
 
 const {
   heading,
@@ -33,25 +39,21 @@ const {
   dividers = true,
   background,
   container,
-  class: className,
   classList,
   id = 'features',
   ...attrs
 } = Astro.props;
-
-const sectionClasses = [
-  'features',
-  'features--list',
-  dividers && 'features--dividers',
-  background?.variant === 'alt' && 'features--alt',
-  className,
-  classList,
-].filter(Boolean).join(' ');
 ---
 
 <section
   id={id}
-  class={sectionClasses}
+  class:list={[
+    'features',
+    'features--list',
+    dividers && 'features--dividers',
+    background?.variant === 'alt' && 'features--alt',
+    classList
+  ]}
   {...attrs}
 >
   <Container size="large" {...container}>
@@ -87,6 +89,50 @@ const sectionClasses = [
   </Container>
 </section>
 
-<style lang="scss">
+<style lang="scss" is:global>
   @use './features.scss';
+</style>
+
+<style lang="scss">
+  // Variant: List
+  .features--list {
+    .features__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .features__list-item {
+      display: flex;
+      gap: var(--space-4);
+      padding-block: var(--space-6);
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+
+    .features__icon {
+      flex-shrink: 0;
+      margin-bottom: 0;
+    }
+
+    .features__list-content {
+      flex: 1;
+    }
+
+    &.features--dividers {
+      .features__list-item {
+        border-bottom: 1px solid var(--color-neutral-200);
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
 </style>

@@ -1,11 +1,16 @@
 /**
  * Content Data Barrel Export
- * Re-exports all content types and page content files
+ *
+ * Re-exports reusable content types for use throughout the site.
+ * Page-specific content lives within each page file.
+ *
+ * @see .ai/guidelines/data.md
  */
 
-// Content types
+// Reusable content item types
 export * from './types';
 
-// Page content (to be added as pages are created)
-export * from './homepage';
-export * from './about';
+// Reusable content collections would be exported here
+// Example: export { teamMembers } from './team';
+// Example: export { services } from './services';
+// Example: export { products } from './products';

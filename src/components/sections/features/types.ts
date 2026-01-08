@@ -1,6 +1,7 @@
 /**
  * Features Section Component Types
- * Shared interfaces for all features variants
+ * Base/shared interfaces for all features variants
+ * Variant-specific props are defined in each variant's .astro file
  */
 
 import type {
@@ -32,15 +33,6 @@ export interface FeatureItem {
   };
 }
 
-// ===================================
-// Features Variants
-// ===================================
-
-/**
- * Available features layout variants
- */
-export type FeaturesVariant = 'grid' | 'list' | 'cards' | 'alternating';
-
 /**
  * Grid column options
  */
@@ -59,7 +51,7 @@ export interface FeaturesBackground {
 }
 
 // ===================================
-// Features Props
+// Features Base Props
 // ===================================
 
 /**
@@ -79,50 +71,3 @@ export interface FeaturesBaseProps extends BaseProps {
   /** Background configuration */
   background?: FeaturesBackground;
 }
-
-/**
- * Grid layout features
- */
-export interface FeaturesGridProps extends FeaturesBaseProps {
-  variant?: 'grid';
-  /** Number of columns */
-  columns?: FeaturesColumns;
-}
-
-/**
- * Vertical list layout
- */
-export interface FeaturesListProps extends FeaturesBaseProps {
-  variant?: 'list';
-  /** Show dividers between items */
-  dividers?: boolean;
-}
-
-/**
- * Card-style features
- */
-export interface FeaturesCardsProps extends FeaturesBaseProps {
-  variant?: 'cards';
-  /** Number of columns */
-  columns?: FeaturesColumns;
-  /** Enable hover effect */
-  hoverEffect?: boolean;
-}
-
-/**
- * Alternating left/right layout
- */
-export interface FeaturesAlternatingProps extends FeaturesBaseProps {
-  variant?: 'alternating';
-  /** Features must include images for this variant */
-  features: Array<FeatureItem & { image: ImageProps }>;
-}
-
-/**
- * Union type for all features variants
- */
-export type FeaturesProps =
-  | FeaturesGridProps
-  | FeaturesListProps
-  | FeaturesCardsProps
-  | FeaturesAlternatingProps;

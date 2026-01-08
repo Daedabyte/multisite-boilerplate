@@ -11,9 +11,38 @@
  * Avoid when: Simple text lists (use BulletList instead)
  */
 
-import type { IconListProps } from '@types';
+import type { BaseProps } from '@types';
 
-interface Props extends IconListProps {}
+// ===================================
+// IconList Types
+// ===================================
+
+/** Individual item for IconList */
+export interface IconListItem {
+  /** Item text content */
+  text: string;
+  /** Icon identifier (FontAwesome class) */
+  icon?: string;
+  /** Optional description below the text */
+  description?: string;
+}
+
+/** Icon color options */
+export type IconListColor = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'neutral';
+
+/** Props for IconList component */
+interface Props extends BaseProps {
+  /** List items */
+  items: IconListItem[];
+  /** Default icon for items without a specific icon */
+  defaultIcon?: string;
+  /** Icon color variant */
+  iconColor?: IconListColor;
+  /** Icon size */
+  iconSize?: 'small' | 'medium' | 'large';
+  /** Space between items */
+  spacing?: 'compact' | 'normal' | 'relaxed';
+}
 
 const {
   items,
@@ -21,23 +50,24 @@ const {
   iconColor = 'primary',
   iconSize = 'medium',
   spacing = 'normal',
-  class: className,
   classList,
   id,
   ...attrs
 } = Astro.props;
-
-const classes = [
-  'icon-list',
-  `icon-list--color-${iconColor}`,
-  `icon-list--size-${iconSize}`,
-  `icon-list--spacing-${spacing}`,
-  className,
-  classList,
-].filter(Boolean).join(' ');
 ---
 
-<ul id={id} class={classes} role="list" {...attrs}>
+<ul
+  id={id}
+  class:list={[
+    'icon-list',
+    `icon-list--color-${iconColor}`,
+    `icon-list--size-${iconSize}`,
+    `icon-list--spacing-${spacing}`,
+    classList
+  ]}
+  role="list"
+  {...attrs}
+>
   {items.map((item) => (
     <li class="icon-list__item">
       <span class="icon-list__icon" aria-hidden="true">

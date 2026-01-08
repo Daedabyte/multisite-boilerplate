@@ -10,9 +10,37 @@
  * Best for: Blog posts, articles, product cards, team members
  */
 
-import type { MediaCardProps } from '@types';
+import type { CardBaseProps } from './types';
 
-interface Props extends MediaCardProps {}
+// ===================================
+// MediaCard Types
+// ===================================
+
+/** Image layout position options */
+export type MediaCardLayout = 'top' | 'left' | 'right';
+
+/** Aspect ratio options */
+export type MediaCardAspectRatio = 'square' | 'video' | 'portrait' | 'auto';
+
+/** Props for MediaCard component */
+interface Props extends CardBaseProps {
+  /** Card title */
+  title: string;
+  /** Card description */
+  description?: string;
+  /** Image URL */
+  image: string;
+  /** Image alt text */
+  imageAlt?: string;
+  /** Image position relative to content */
+  layout?: MediaCardLayout;
+  /** Image aspect ratio */
+  aspectRatio?: MediaCardAspectRatio;
+  /** Meta text (category, date, etc.) */
+  meta?: string;
+  /** Call-to-action link text */
+  ctaText?: string;
+}
 
 const {
   title,
@@ -29,7 +57,6 @@ const {
   external,
   shadow = false,
   bordered = true,
-  class: className,
   classList,
   id,
   ...attrs
@@ -41,22 +68,24 @@ const linkProps = href ? {
   target: external ? '_blank' : undefined,
   rel: external ? 'noopener noreferrer' : undefined,
 } : {};
-
-const classes = [
-  'media-card',
-  `media-card--layout-${layout}`,
-  `media-card--aspect-${aspectRatio}`,
-  `media-card--radius-${radius}`,
-  `media-card--hover-${hover}`,
-  shadow && 'media-card--shadow',
-  bordered && 'media-card--bordered',
-  href && 'media-card--clickable',
-  className,
-  classList,
-].filter(Boolean).join(' ');
 ---
 
-<Tag id={id} class={classes} {...linkProps} {...attrs}>
+<Tag
+  id={id}
+  class:list={[
+    'media-card',
+    `media-card--layout-${layout}`,
+    `media-card--aspect-${aspectRatio}`,
+    `media-card--radius-${radius}`,
+    `media-card--hover-${hover}`,
+    shadow && 'media-card--shadow',
+    bordered && 'media-card--bordered',
+    href && 'media-card--clickable',
+    classList
+  ]}
+  {...linkProps}
+  {...attrs}
+>
   <div class="media-card__image-wrapper">
     <img src={image} alt={imageAlt} class="media-card__image" loading="lazy" />
   </div>
@@ -79,11 +108,11 @@ const classes = [
 
   .media-card {
     @include card-base;
-    @include card-variants;
-    @include card-hover-variants;
-
     display: flex;
     overflow: hidden;
+
+    @include card-variants;
+    @include card-hover-variants;
 
     // Layout variants
     &--layout-top {

@@ -1,0 +1,111 @@
+---
+/**
+ * HeroStandard
+ *
+ * Full-width hero with background image and overlay.
+ * Classic hero layout suitable for most landing pages.
+ *
+ * @variant standard
+ * @since 1.0.0
+ *
+ * Best for: Landing pages, home pages, marketing sites
+ * Avoid when: Need to showcase product images prominently
+ *
+ * @example
+ * <HeroStandard
+ *   title="Welcome to Our Site"
+ *   subtitle="We help you achieve your goals"
+ *   backgroundImage="/images/hero.jpg"
+ *   actions={[{ label: 'Get Started', href: '/contact' }]}
+ * />
+ */
+
+import type { HeroBaseProps } from './types';
+import Container from '@components/layout/Container.astro';
+import Button from '@components/ui/Button.astro';
+
+/**
+ * Standard hero variant props
+ */
+interface Props extends HeroBaseProps {
+  /** Background image URL (shorthand for background.image) */
+  backgroundImage?: string;
+}
+
+const {
+  title,
+  subtitle,
+  actions = [],
+  size = 'partial',
+  alignment = 'center',
+  backgroundImage,
+  background,
+  container,
+  classList,
+  id = 'hero',
+  ...attrs
+} = Astro.props;
+
+const bgImage = backgroundImage ?? background?.image;
+---
+
+<section
+  id={id}
+  class:list={['hero', 'hero--standard', `hero--${size}`, `hero--${alignment}`, classList]}
+  style={bgImage ? `--hero-bg-image: url(${bgImage})` : undefined}
+  {...attrs}
+>
+  <Container {...container}>
+    <div class="hero__inner">
+      <div class="hero__content">
+        <slot name="badge" />
+
+        <h1 class="hero__title">{title}</h1>
+
+        {subtitle && <p class="hero__subtitle">{subtitle}</p>}
+
+        {actions.length > 0 && (
+          <div class="hero__actions">
+            {actions.map((action, index) => (
+              <Button
+                href={action.href}
+                type={action.type}
+                variant={action.variant ?? (index === 0 ? 'primary' : 'secondary')}
+                outline={action.outline ?? (index > 0 && !action.variant)}
+                size={action.size}
+                {...action.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+              >
+                {action.icon && <i class={action.icon}></i>}
+                {action.label}
+              </Button>
+            ))}
+          </div>
+        )}
+
+        <slot />
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style lang="scss" is:global>
+  @use './heroes.scss';
+</style>
+
+<style lang="scss">
+  @use '../../../styles/abstracts' as *;
+
+  // Variant: Standard (background image)
+  .hero--standard {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                var(--hero-bg-image, transparent) center/cover no-repeat;
+
+    .hero__inner {
+      padding-block: var(--space-16);
+
+      @include media-up('lg') {
+        padding-block: var(--space-20);
+      }
+    }
+  }
+</style>

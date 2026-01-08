@@ -5,7 +5,7 @@
  * Navigation is imported from the unified navigation module.
  */
 
-import type { CTAAction } from '@types';
+import type { CTAAction } from '@components/ui/buttons/types';
 import {
   navigation,
   socialLinks,

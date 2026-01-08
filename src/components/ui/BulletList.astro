@@ -11,9 +11,29 @@
  * Avoid when: Lists need individual icons (use IconList instead)
  */
 
-import type { BulletListProps } from '@types';
+import type { BaseProps } from '@types';
+import type { IconListColor } from './IconList.astro';
 
-interface Props extends BulletListProps {}
+// ===================================
+// BulletList Types
+// ===================================
+
+/** Bullet style options */
+export type BulletStyle = 'disc' | 'circle' | 'square' | 'check' | 'arrow' | 'dash' | 'number';
+
+/** Props for BulletList component */
+interface Props extends BaseProps {
+  /** List items (strings or slot content) */
+  items?: string[];
+  /** Bullet style */
+  bullet?: BulletStyle;
+  /** Bullet color */
+  bulletColor?: IconListColor;
+  /** Space between items */
+  spacing?: 'compact' | 'normal' | 'relaxed';
+  /** Indent nested lists */
+  nested?: boolean;
+}
 
 const {
   items,
@@ -21,7 +41,6 @@ const {
   bulletColor = 'primary',
   spacing = 'normal',
   nested = false,
-  class: className,
   classList,
   id,
   ...attrs
@@ -29,19 +48,21 @@ const {
 
 const isNumbered = bullet === 'number';
 const Tag = isNumbered ? 'ol' : 'ul';
-
-const classes = [
-  'bullet-list',
-  `bullet-list--${bullet}`,
-  `bullet-list--color-${bulletColor}`,
-  `bullet-list--spacing-${spacing}`,
-  nested && 'bullet-list--nested',
-  className,
-  classList,
-].filter(Boolean).join(' ');
 ---
 
-<Tag id={id} class={classes} role="list" {...attrs}>
+<Tag
+  id={id}
+  class:list={[
+    'bullet-list',
+    `bullet-list--${bullet}`,
+    `bullet-list--color-${bulletColor}`,
+    `bullet-list--spacing-${spacing}`,
+    nested && 'bullet-list--nested',
+    classList
+  ]}
+  role="list"
+  {...attrs}
+>
   {items ? (
     items.map((item) => (
       <li class="bullet-list__item">{item}</li>

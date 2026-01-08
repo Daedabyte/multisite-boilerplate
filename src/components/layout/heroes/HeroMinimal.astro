@@ -1,0 +1,137 @@
+---
+/**
+ * HeroMinimal
+ *
+ * Simple text-only hero with optional breadcrumbs.
+ * Perfect for inner pages and content sections.
+ *
+ * @variant minimal
+ * @since 1.0.0
+ *
+ * Best for: Inner pages, blog posts, documentation
+ * Avoid when: Need strong visual impact on landing pages
+ *
+ * @example
+ * <HeroMinimal
+ *   title="About Us"
+ *   subtitle="Learn more about our company"
+ *   breadcrumbs={[
+ *     { href: '/', label: 'Home' },
+ *     { href: '/about', label: 'About' }
+ *   ]}
+ * />
+ */
+
+import type { HeroBaseProps } from './types';
+import Container from '@components/layout/Container.astro';
+
+/**
+ * Minimal hero variant props
+ */
+interface Props extends Omit<HeroBaseProps, 'actions'> {
+  /** Breadcrumbs for navigation */
+  breadcrumbs?: Array<{
+    href: string;
+    label: string;
+  }>;
+}
+
+const {
+  title,
+  subtitle,
+  breadcrumbs = [],
+  alignment = 'center',
+  container,
+  classList,
+  id = 'hero',
+  ...attrs
+} = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={['hero', 'hero--minimal', `hero--${alignment}`, classList]}
+  {...attrs}
+>
+  <Container {...container}>
+    <div class="hero__inner">
+      <div class="hero__content">
+        {breadcrumbs.length > 0 && (
+          <nav class="hero__breadcrumbs" aria-label="Breadcrumb">
+            {breadcrumbs.map((crumb, index) => (
+              <>
+                {index > 0 && <span class="separator">/</span>}
+                {index === breadcrumbs.length - 1 ? (
+                  <span aria-current="page">{crumb.label}</span>
+                ) : (
+                  <a href={crumb.href}>{crumb.label}</a>
+                )}
+              </>
+            ))}
+          </nav>
+        )}
+
+        <h1 class="hero__title">{title}</h1>
+
+        {subtitle && <p class="hero__subtitle">{subtitle}</p>}
+
+        <slot />
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style lang="scss" is:global>
+  @use './heroes.scss';
+</style>
+
+<style lang="scss">
+  @use '../../../styles/abstracts' as *;
+
+  // Variant: Minimal (text only)
+  .hero--minimal {
+    background-color: var(--color-neutral-900);
+    min-height: auto;
+    padding-block: var(--space-12);
+
+    @include media-up('lg') {
+      padding-block: var(--space-16);
+    }
+
+    .hero__title {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-2);
+
+      @include media-up('lg') {
+        font-size: var(--font-size-xxl);
+      }
+    }
+
+    .hero__subtitle {
+      font-size: var(--font-size-base);
+      margin-bottom: 0;
+    }
+
+    .hero__breadcrumbs {
+      display: flex;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-400);
+
+      a {
+        color: var(--color-neutral-400);
+        text-decoration: none;
+        transition: var(--transition-fast);
+
+        &:hover {
+          color: var(--color-white);
+        }
+      }
+
+      .separator {
+        color: var(--color-neutral-600);
+      }
+    }
+  }
+</style>

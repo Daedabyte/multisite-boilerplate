@@ -2,26 +2,13 @@
 /**
  * DefaultLayout
  *
- * Main layout wrapper with config-driven header/footer selection.
- * Uses component variants based on site configuration.
+ * Main layout wrapper with standard header and footer.
+ * Component variants may be defined by site-blueprint.json for specific sites.
  */
 
 import BaseLayout from "./BaseLayout.astro";
-import { config, componentConfig } from "@data/config";
-
-// Header variants (must import directly from .astro files)
-import HeaderStandard from "@components/common/headers/HeaderStandard.astro";
-import HeaderCentered from "@components/common/headers/HeaderCentered.astro";
-import HeaderMinimal from "@components/common/headers/HeaderMinimal.astro";
-
-// Footer variants (must import directly from .astro files)
-import FooterStandard from "@components/common/footers/FooterStandard.astro";
-import FooterSimple from "@components/common/footers/FooterSimple.astro";
-import FooterCentered from "@components/common/footers/FooterCentered.astro";
-
-// Select header component based on config
-const headerVariant = componentConfig.header;
-const footerVariant = componentConfig.footer;
+import HeaderStandard from "@components/layout/headers/HeaderStandard.astro";
+import FooterStandard from "@components/layout/footers/FooterStandard.astro";
 
 export interface Props {
   title?: string;
@@ -39,15 +26,11 @@ const {
 ---
 
 <BaseLayout {title} {description} {image} {noindex}>
-  {headerVariant === 'standard' && <HeaderStandard />}
-  {headerVariant === 'centered' && <HeaderCentered />}
-  {headerVariant === 'minimal' && <HeaderMinimal />}
+  <HeaderStandard />
   <main id="main-content">
     <slot />
   </main>
-  {footerVariant === 'standard' && <FooterStandard />}
-  {footerVariant === 'simple' && <FooterSimple />}
-  {footerVariant === 'centered' && <FooterCentered />}
+  <FooterStandard />
 </BaseLayout>
 
 <script>

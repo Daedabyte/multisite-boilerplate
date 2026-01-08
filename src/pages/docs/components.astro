@@ -9,9 +9,9 @@
 import DefaultLayout from '@layouts/DefaultLayout.astro';
 
 // Hero variants (import directly from .astro files)
-import HeroStandard from '@components/sections/heroes/HeroStandard.astro';
-import HeroSplit from '@components/sections/heroes/HeroSplit.astro';
-import HeroMinimal from '@components/sections/heroes/HeroMinimal.astro';
+import HeroStandard from '@components/layout/heroes/HeroStandard.astro';
+import HeroSplit from '@components/layout/heroes/HeroSplit.astro';
+import HeroMinimal from '@components/layout/heroes/HeroMinimal.astro';
 
 // Features variants (import directly from .astro files)
 import FeaturesGrid from '@components/sections/features/FeaturesGrid.astro';
@@ -24,14 +24,14 @@ import CTABanner from '@components/sections/cta/CTABanner.astro';
 import CTASplit from '@components/sections/cta/CTASplit.astro';
 
 // Gallery variants (import directly from .astro files)
-import GalleryGrid from '@components/sections/galleries/GalleryGrid.astro';
-import GalleryCarousel from '@components/sections/galleries/GalleryCarousel.astro';
+import GalleryGrid from '@components/common/galleries/GalleryGrid.astro';
+import GalleryCarousel from '@components/common/galleries/GalleryCarousel.astro';
 
 // UI components
-import Section from '@components/ui/Section.astro';
-import Container from '@components/ui/Container.astro';
+import Section from '@components/layout/Section.astro';
+import Container from '@components/layout/Container.astro';
 import Button from '@components/ui/Button.astro';
-import SplitContainer from '@components/ui/SplitContainer.astro';
+import SplitContainer from '@components/layout/SplitContainer.astro';
 import Breadcrumb from '@components/ui/Breadcrumb.astro';
 import PageLoader from '@components/ui/PageLoader.astro';
 import IconList from '@components/ui/IconList.astro';
@@ -40,7 +40,7 @@ import SimpleCard from '@components/ui/cards/SimpleCard.astro';
 import SlimCard from '@components/ui/cards/SlimCard.astro';
 import ImageCard from '@components/ui/cards/ImageCard.astro';
 import MediaCard from '@components/ui/cards/MediaCard.astro';
-import SideNav from '@components/ui/SideNav.astro';
+import SideNav from '@components/layout/SideNav.astro';
 
 // Images
 import backgroundImg from '@assets/images/background.png';
@@ -169,17 +169,17 @@ const sideNavItems = [
       <div class="variant-card">
         <h3>HeroStandard</h3>
         <p>Full-width with background image and overlay. Best for landing pages.</p>
-        <code>import HeroStandard from '@components/sections/heroes/HeroStandard.astro';</code>
+        <code>import HeroStandard from '@components/layout/heroes/HeroStandard.astro';</code>
       </div>
       <div class="variant-card">
         <h3>HeroSplit</h3>
         <p>Content and image side by side. Best for product showcases.</p>
-        <code>import HeroSplit from '@components/sections/heroes/HeroSplit.astro';</code>
+        <code>import HeroSplit from '@components/layout/heroes/HeroSplit.astro';</code>
       </div>
       <div class="variant-card">
         <h3>HeroMinimal</h3>
         <p>Text only with optional breadcrumbs. Best for inner pages.</p>
-        <code>import HeroMinimal from '@components/sections/heroes/HeroMinimal.astro';</code>
+        <code>import HeroMinimal from '@components/layout/heroes/HeroMinimal.astro';</code>
       </div>
     </div>
   </Section>
@@ -451,12 +451,12 @@ const sideNavItems = [
       <div class="variant-card">
         <h3>GalleryGrid</h3>
         <p>Responsive grid with optional overlay captions and lightbox. Best for portfolios.</p>
-        <code>import GalleryGrid from '@components/sections/galleries/GalleryGrid.astro';</code>
+        <code>import GalleryGrid from '@components/common/galleries/GalleryGrid.astro';</code>
       </div>
       <div class="variant-card">
         <h3>GalleryCarousel</h3>
         <p>Sliding carousel with autoplay, navigation, and optional lightbox. Great for featured work.</p>
-        <code>import GalleryCarousel from '@components/sections/galleries/GalleryCarousel.astro';</code>
+        <code>import GalleryCarousel from '@components/common/galleries/GalleryCarousel.astro';</code>
       </div>
       <div class="variant-card">
         <h3>Lightbox Feature</h3>
@@ -1283,7 +1283,7 @@ import MediaCard from '@components/ui/cards/MediaCard.astro';
       <div class="code-block">
         <h3>Import from barrel exports</h3>
         <pre><code>{`// Import specific variants
-import { HeroStandard, HeroSplit } from '@components/sections/heroes';
+import { HeroStandard, HeroSplit } from '@components/layout/heroes';
 import { FeaturesGrid } from '@components/sections/features';
 import { CTABanner } from '@components/sections/cta';
 

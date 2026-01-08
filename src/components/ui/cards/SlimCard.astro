@@ -10,9 +10,23 @@
  * Best for: Navigation lists, menu items, compact feature lists
  */
 
-import type { SlimCardProps } from '@types';
+import type { CardBaseProps } from './types';
 
-interface Props extends SlimCardProps {}
+// ===================================
+// SlimCard Types
+// ===================================
+
+/** Props for SlimCard component */
+interface Props extends CardBaseProps {
+  /** Card title */
+  title: string;
+  /** Short description */
+  description?: string;
+  /** Icon class */
+  icon?: string;
+  /** Right-side content (badge, arrow, etc.) */
+  suffix?: string;
+}
 
 const {
   title,
@@ -25,7 +39,6 @@ const {
   external,
   shadow = false,
   bordered = true,
-  class: className,
   classList,
   id,
   ...attrs
@@ -37,20 +50,22 @@ const linkProps = href ? {
   target: external ? '_blank' : undefined,
   rel: external ? 'noopener noreferrer' : undefined,
 } : {};
-
-const classes = [
-  'slim-card',
-  `slim-card--radius-${radius}`,
-  `slim-card--hover-${hover}`,
-  shadow && 'slim-card--shadow',
-  bordered && 'slim-card--bordered',
-  href && 'slim-card--clickable',
-  className,
-  classList,
-].filter(Boolean).join(' ');
 ---
 
-<Tag id={id} class={classes} {...linkProps} {...attrs}>
+<Tag
+  id={id}
+  class:list={[
+    'slim-card',
+    `slim-card--radius-${radius}`,
+    `slim-card--hover-${hover}`,
+    shadow && 'slim-card--shadow',
+    bordered && 'slim-card--bordered',
+    href && 'slim-card--clickable',
+    classList
+  ]}
+  {...linkProps}
+  {...attrs}
+>
   {icon && (
     <span class="slim-card__icon" aria-hidden="true">
       <i class={icon}></i>
@@ -74,13 +89,13 @@ const classes = [
 
   .slim-card {
     @include card-base;
-    @include card-variants;
-    @include card-hover-variants;
-
     display: flex;
     align-items: center;
     gap: var(--space-3);
     padding: var(--space-3) var(--space-4);
+
+    @include card-variants;
+    @include card-hover-variants;
 
     // Icon
     &__icon {

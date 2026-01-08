@@ -1,351 +1,204 @@
 /**
  * Content Data Types
- * Type definitions for page content data structures
+ * Type definitions for reusable content data structures
  *
- * These interfaces ensure content data is properly typed and
- * can be easily populated by AI or content management systems.
+ * These interfaces are for typing reusable content collections
+ * (products, services, team members, etc.) that may be shared
+ * across multiple pages.
+ *
+ * Page-specific content should live within the page itself.
+ * @see .ai/guidelines/data.md
  */
 
-import type { CTAAction, ImageProps, Alignment } from '@types';
-import type { HeroProps, HeroVariant, HeroSize } from '@components/sections/heroes/types';
-import type { FeaturesProps, FeatureItem, FeaturesVariant } from '@components/sections/features/types';
-import type { CTAProps, CTAVariant } from '@components/sections/cta/types';
+import type { ImageProps } from '@types';
 
 // ===================================
-// Section Content Types
+// Reusable Content Item Types
 // ===================================
 
 /**
- * Hero section content
- */
-export interface HeroContent {
-    /** Hero variant to use */
-    variant?: HeroVariant;
-    /** Hero size */
-    size?: HeroSize;
-    /** Main heading */
-    title: string;
-    /** Subtitle or description */
-    subtitle?: string;
-    /** Call-to-action buttons */
-    actions?: CTAAction[];
-    /** Background image URL */
-    backgroundImage?: string;
-    /** Featured image (for split variant) */
-    image?: {
-        src: string;
-        alt: string;
-    };
-    /** Text alignment */
-    alignment?: Alignment;
-    /** Badge text */
-    badge?: string;
-}
-
-/**
- * Features section content
- */
-export interface FeaturesContent {
-    /** Features variant to use */
-    variant?: FeaturesVariant;
-    /** Section heading */
-    heading?: string;
-    /** Section subheading */
-    subheading?: string;
-    /** Feature items */
-    items: FeatureItem[];
-    /** Number of columns (for grid variants) */
-    columns?: 2 | 3 | 4;
-}
-
-/**
- * CTA section content
- */
-export interface CTAContent {
-    /** CTA variant to use */
-    variant?: CTAVariant;
-    /** Main heading */
-    heading: string;
-    /** Supporting description */
-    description?: string;
-    /** Action buttons */
-    actions?: CTAAction[];
-    /** Background image */
-    backgroundImage?: string;
-}
-
-/**
- * Testimonial item
+ * Testimonial item for testimonial collections
  */
 export interface TestimonialItem {
-    /** Testimonial quote */
-    quote: string;
-    /** Author name */
-    author: string;
-    /** Author title/role */
-    title?: string;
-    /** Author company */
-    company?: string;
-    /** Author photo */
-    image?: ImageProps;
-    /** Star rating (1-5) */
-    rating?: number;
+  /** Testimonial quote */
+  quote: string;
+  /** Author name */
+  author: string;
+  /** Author title/role */
+  title?: string;
+  /** Author company */
+  company?: string;
+  /** Author photo */
+  image?: ImageProps;
+  /** Star rating (1-5) */
+  rating?: number;
 }
 
 /**
- * Testimonials section content
- */
-export interface TestimonialsContent {
-    /** Section heading */
-    heading?: string;
-    /** Section subheading */
-    subheading?: string;
-    /** Testimonial items */
-    items: TestimonialItem[];
-}
-
-/**
- * Team member item
+ * Team member item for team collections
  */
 export interface TeamMemberItem {
-    /** Member name */
-    name: string;
-    /** Member role/title */
-    role: string;
-    /** Member bio */
-    bio?: string;
-    /** Member photo */
-    image?: ImageProps;
-    /** Social links */
-    socials?: Array<{
-        platform: string;
-        url: string;
-    }>;
+  /** Member name */
+  name: string;
+  /** Member role/title */
+  role: string;
+  /** Member bio */
+  bio?: string;
+  /** Member photo */
+  image?: ImageProps;
+  /** Social links */
+  socials?: Array<{
+    platform: string;
+    url: string;
+  }>;
 }
 
 /**
- * Team section content
- */
-export interface TeamContent {
-    /** Section heading */
-    heading?: string;
-    /** Section subheading */
-    subheading?: string;
-    /** Team members */
-    members: TeamMemberItem[];
-}
-
-/**
- * FAQ item
+ * FAQ item for FAQ collections
  */
 export interface FAQItem {
-    /** Question */
-    question: string;
-    /** Answer (can include markdown) */
-    answer: string;
+  /** Question */
+  question: string;
+  /** Answer (can include markdown) */
+  answer: string;
 }
 
 /**
- * FAQ section content
- */
-export interface FAQContent {
-    /** Section heading */
-    heading?: string;
-    /** Section subheading */
-    subheading?: string;
-    /** FAQ items */
-    items: FAQItem[];
-}
-
-/**
- * Stats item
+ * Stats item for statistics displays
  */
 export interface StatItem {
-    /** Stat value (e.g., "100+", "5M") */
-    value: string;
-    /** Stat label */
-    label: string;
-    /** Optional description */
-    description?: string;
-    /** Icon identifier */
-    icon?: string;
+  /** Stat value (e.g., "100+", "5M") */
+  value: string;
+  /** Stat label */
+  label: string;
+  /** Optional description */
+  description?: string;
+  /** Icon identifier */
+  icon?: string;
 }
 
 /**
- * Stats section content
- */
-export interface StatsContent {
-    /** Section heading */
-    heading?: string;
-    /** Stat items */
-    items: StatItem[];
-}
-
-/**
- * Gallery item
+ * Gallery item for image galleries
  */
 export interface GalleryItem {
-    /** Image source */
-    src: string;
-    /** Image alt text */
-    alt: string;
-    /** Image caption */
-    caption?: string;
-    /** Category for filtering */
-    category?: string;
+  /** Image source */
+  src: string;
+  /** Image alt text */
+  alt: string;
+  /** Image caption */
+  caption?: string;
+  /** Category for filtering */
+  category?: string;
 }
 
 /**
- * Gallery section content
- */
-export interface GalleryContent {
-    /** Section heading */
-    heading?: string;
-    /** Section subheading */
-    subheading?: string;
-    /** Gallery images */
-    items: GalleryItem[];
-    /** Show category filters */
-    showFilters?: boolean;
-}
-
-/**
- * Service item
+ * Service item for service listings
  */
 export interface ServiceItem {
-    /** Service title */
-    title: string;
-    /** Service description */
-    description: string;
-    /** Service icon */
-    icon?: string;
-    /** Service image */
-    image?: ImageProps;
-    /** Link to service detail page */
-    href?: string;
-    /** Features/benefits list */
-    features?: string[];
-    /** Starting price */
-    price?: string;
+  /** Service title */
+  title: string;
+  /** Service description */
+  description: string;
+  /** Service icon */
+  icon?: string;
+  /** Service image */
+  image?: ImageProps;
+  /** Link to service detail page */
+  href?: string;
+  /** Features/benefits list */
+  features?: string[];
+  /** Starting price */
+  price?: string;
 }
 
 /**
- * Services section content
+ * Product item for product listings
  */
-export interface ServicesContent {
-    /** Section heading */
-    heading?: string;
-    /** Section subheading */
-    subheading?: string;
-    /** Service items */
-    items: ServiceItem[];
+export interface ProductItem {
+  /** Product name */
+  name: string;
+  /** Product description */
+  description: string;
+  /** Product price */
+  price: string;
+  /** Sale price (optional) */
+  salePrice?: string;
+  /** Product image */
+  image?: ImageProps;
+  /** Link to product page */
+  href?: string;
+  /** Product category */
+  category?: string;
+  /** In stock status */
+  inStock?: boolean;
+  /** Product features */
+  features?: string[];
 }
 
 /**
- * Contact section content
+ * Event item for event listings
  */
-export interface ContactContent {
-    /** Section heading */
-    heading?: string;
-    /** Section subheading */
-    subheading?: string;
-    /** Form configuration */
-    form?: {
-        /** Form action URL */
-        action?: string;
-        /** Success message */
-        successMessage?: string;
-        /** Error message */
-        errorMessage?: string;
-    };
-    /** Show contact info */
-    showContactInfo?: boolean;
-    /** Show map */
-    showMap?: boolean;
-    /** Map embed URL */
-    mapUrl?: string;
-}
-
-// ===================================
-// Page Content Types
-// ===================================
-
-/**
- * Homepage content structure
- */
-export interface HomepageContent {
-    hero: HeroContent;
-    features?: FeaturesContent;
-    about?: {
-        heading?: string;
-        content: string;
-        image?: ImageProps;
-        cta?: CTAAction;
-    };
-    services?: ServicesContent;
-    testimonials?: TestimonialsContent;
-    stats?: StatsContent;
-    cta?: CTAContent;
-    faq?: FAQContent;
+export interface EventItem {
+  /** Event title */
+  title: string;
+  /** Event description */
+  description: string;
+  /** Event date */
+  date: string;
+  /** Event time */
+  time?: string;
+  /** Event location */
+  location?: string;
+  /** Event image */
+  image?: ImageProps;
+  /** Link to event page */
+  href?: string;
+  /** Event category/type */
+  category?: string;
 }
 
 /**
- * About page content structure
+ * Blog post item for blog listings
  */
-export interface AboutPageContent {
-    hero: HeroContent;
-    story?: {
-        heading?: string;
-        content: string;
-        image?: ImageProps;
-    };
-    mission?: {
-        heading?: string;
-        content: string;
-    };
-    values?: FeaturesContent;
-    team?: TeamContent;
-    timeline?: Array<{
-        year: string;
-        title: string;
-        description: string;
-    }>;
-    cta?: CTAContent;
+export interface BlogPostItem {
+  /** Post title */
+  title: string;
+  /** Post excerpt/summary */
+  excerpt: string;
+  /** Post date */
+  date: string;
+  /** Post author */
+  author?: string;
+  /** Featured image */
+  image?: ImageProps;
+  /** Link to full post */
+  href: string;
+  /** Post categories/tags */
+  categories?: string[];
+  /** Reading time estimate */
+  readingTime?: string;
 }
 
 /**
- * Contact page content structure
+ * Pricing tier for pricing tables
  */
-export interface ContactPageContent {
-    hero: HeroContent;
-    contact: ContactContent;
-}
-
-/**
- * Services page content structure
- */
-export interface ServicesPageContent {
-    hero: HeroContent;
-    services: ServicesContent;
-    process?: FeaturesContent;
-    cta?: CTAContent;
-    faq?: FAQContent;
-}
-
-/**
- * Generic page content structure
- */
-export interface GenericPageContent {
-    hero: HeroContent;
-    sections?: Array<
-        | { type: 'features'; content: FeaturesContent }
-        | { type: 'testimonials'; content: TestimonialsContent }
-        | { type: 'cta'; content: CTAContent }
-        | { type: 'faq'; content: FAQContent }
-        | { type: 'team'; content: TeamContent }
-        | { type: 'stats'; content: StatsContent }
-        | { type: 'gallery'; content: GalleryContent }
-        | { type: 'services'; content: ServicesContent }
-        | { type: 'contact'; content: ContactContent }
-    >;
+export interface PricingTier {
+  /** Tier name */
+  name: string;
+  /** Tier description */
+  description?: string;
+  /** Price amount */
+  price: string;
+  /** Billing period (e.g., "/month") */
+  period?: string;
+  /** List of included features */
+  features: string[];
+  /** CTA button text */
+  ctaText?: string;
+  /** CTA button link */
+  ctaHref?: string;
+  /** Highlight this tier */
+  highlighted?: boolean;
+  /** Badge text (e.g., "Most Popular") */
+  badge?: string;
 }

@@ -1,0 +1,152 @@
+---
+/**
+ * HeroSplit
+ *
+ * Content on one side, featured image on the other.
+ * Great for showcasing products or team photos.
+ *
+ * @variant split
+ * @since 1.0.0
+ *
+ * Best for: Product showcases, SaaS landing pages, team intros
+ * Avoid when: Need full-width visual impact
+ *
+ * @example
+ * <HeroSplit
+ *   title="Our Product"
+ *   subtitle="The best solution for your needs"
+ *   image={{ src: '/images/product.jpg', alt: 'Product screenshot' }}
+ *   imagePosition="right"
+ *   actions={[{ label: 'Learn More', href: '/product' }]}
+ * />
+ */
+
+import type { HeroBaseProps } from './types';
+import Container from '@components/layout/Container.astro';
+import Button from '@components/ui/Button.astro';
+import { Image } from 'astro:assets';
+
+/**
+ * Split hero variant props
+ */
+interface Props extends HeroBaseProps {
+  /** Featured image */
+  image: {
+    src: string;
+    alt: string;
+  };
+  /** Image position */
+  imagePosition?: 'left' | 'right';
+}
+
+const {
+  title,
+  subtitle,
+  actions = [],
+  image,
+  imagePosition = 'right',
+  size = 'auto',
+  alignment = 'left',
+  container,
+  classList,
+  id = 'hero',
+  ...attrs
+} = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={['hero', 'hero--split', `hero--${size}`, `hero--${alignment}`, imagePosition === 'left' && 'hero--image-left', classList]}
+  {...attrs}
+>
+  <Container padding={false} {...container}>
+    <div class="hero__inner">
+      <div class="hero__content">
+        <slot name="badge" />
+
+        <h1 class="hero__title">{title}</h1>
+
+        {subtitle && <p class="hero__subtitle">{subtitle}</p>}
+
+        {actions.length > 0 && (
+          <div class="hero__actions">
+            {actions.map((action, index) => (
+              <Button
+                href={action.href}
+                type={action.type}
+                variant={action.variant ?? (index === 0 ? 'primary' : 'secondary')}
+                outline={action.outline ?? (index > 0 && !action.variant)}
+                size={action.size}
+                {...action.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+              >
+                {action.icon && <i class={action.icon}></i>}
+                {action.label}
+              </Button>
+            ))}
+          </div>
+        )}
+
+        <slot />
+      </div>
+
+      <div class="hero__image">
+        {typeof image.src === 'string' ? (
+          <img src={image.src} alt={image.alt} loading="eager" />
+        ) : (
+          <Image src={image.src} alt={image.alt} loading="eager" />
+        )}
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style lang="scss" is:global>
+  @use './heroes.scss';
+</style>
+
+<style lang="scss">
+  @use '../../../styles/abstracts' as *;
+
+  // Variant: Split (content + image)
+  .hero--split {
+    background-color: var(--color-neutral-900);
+
+    .hero__inner {
+      display: grid;
+      gap: 0;
+      align-items: center;
+
+      @include media-up('lg') {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    &.hero--image-left {
+      .hero__image {
+        @include media-up('lg') {
+          order: -1;
+        }
+      }
+    }
+
+    .hero__content {
+      max-width: none;
+      padding: var(--space-12) var(--space-6);
+
+      @include media-up('lg') {
+        padding: var(--space-16) var(--space-12);
+      }
+    }
+
+    .hero__image {
+      height: 100%;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0;
+      }
+    }
+  }
+</style>

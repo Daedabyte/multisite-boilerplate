@@ -24,10 +24,17 @@
  * />
  */
 
-import type { FeaturesAlternatingProps } from './types';
-import Container from '@components/ui/Container.astro';
+import type { FeaturesBaseProps, FeatureItem } from './types';
+import type { ImageProps } from '@types';
+import Container from '@components/layout/Container.astro';
 
-interface Props extends FeaturesAlternatingProps {}
+/**
+ * Alternating features variant props
+ */
+interface Props extends Omit<FeaturesBaseProps, 'features'> {
+  /** Features must include images for this variant */
+  features: Array<FeatureItem & { image: ImageProps }>;
+}
 
 const {
   heading,
@@ -35,24 +42,20 @@ const {
   features,
   background,
   container,
-  class: className,
   classList,
   id = 'features',
   ...attrs
 } = Astro.props;
-
-const sectionClasses = [
-  'features',
-  'features--alternating',
-  background?.variant === 'alt' && 'features--alt',
-  className,
-  classList,
-].filter(Boolean).join(' ');
 ---
 
 <section
   id={id}
-  class={sectionClasses}
+  class:list={[
+    'features',
+    'features--alternating',
+    background?.variant === 'alt' && 'features--alt',
+    classList
+  ]}
   {...attrs}
 >
   <Container {...container}>
@@ -91,6 +94,69 @@ const sectionClasses = [
   </Container>
 </section>
 
-<style lang="scss">
+<style lang="scss" is:global>
   @use './features.scss';
+</style>
+
+<style lang="scss">
+  @use '../../../styles/abstracts' as *;
+
+  // Variant: Alternating
+  .features--alternating {
+    .features__rows {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-16);
+    }
+
+    .features__row {
+      display: grid;
+      gap: var(--space-8);
+      align-items: center;
+
+      @include media-up('lg') {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-12);
+      }
+    }
+
+    .features__row--reverse {
+      @include media-up('lg') {
+        .features__row-image {
+          order: 1;
+        }
+      }
+    }
+
+    .features__row-image {
+      border-radius: var(--border-radius-xl);
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+    }
+
+    .features__row-content {
+      .features__title {
+        font-size: var(--font-size-xl);
+
+        @include media-up('lg') {
+          font-size: var(--font-size-xxl);
+        }
+      }
+
+      .features__description {
+        font-size: var(--font-size-lg);
+      }
+    }
+
+    .features__icon {
+      width: 4rem;
+      height: 4rem;
+      font-size: var(--font-size-xxl);
+    }
+  }
 </style>

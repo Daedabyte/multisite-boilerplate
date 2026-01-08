@@ -11,9 +11,34 @@
  * Avoid when: Loading individual components (use inline loaders instead)
  */
 
-import type { PageLoaderProps } from '@types';
+import type { BaseProps } from '@types';
 
-interface Props extends PageLoaderProps {}
+// ===================================
+// PageLoader Types
+// ===================================
+
+/** Spinner animation variants */
+export type LoaderSpinner = 'spinner' | 'dots' | 'bars' | 'pulse';
+
+/** Props for PageLoader component */
+interface Props extends BaseProps {
+  /** Spinner animation type */
+  spinner?: LoaderSpinner;
+  /** Loading text (optional) */
+  text?: string;
+  /** Background color */
+  background?: 'white' | 'dark' | 'primary' | 'transparent';
+  /** Spinner/text color */
+  color?: 'primary' | 'white' | 'dark';
+  /** Spinner size */
+  size?: 'small' | 'medium' | 'large';
+  /** Auto-hide when page loads (default: true) */
+  autoHide?: boolean;
+  /** Minimum display time in ms before hiding */
+  minDisplayTime?: number;
+  /** Fade out duration in ms */
+  fadeOutDuration?: number;
+}
 
 const {
   spinner = 'spinner',
@@ -24,25 +49,21 @@ const {
   autoHide = true,
   minDisplayTime = 0,
   fadeOutDuration = 300,
-  class: className,
   classList,
   id = 'page-loader',
   ...attrs
 } = Astro.props;
-
-const classes = [
-  'page-loader',
-  `page-loader--bg-${background}`,
-  `page-loader--color-${color}`,
-  `page-loader--size-${size}`,
-  className,
-  classList,
-].filter(Boolean).join(' ');
 ---
 
 <div
   id={id}
-  class={classes}
+  class:list={[
+    'page-loader',
+    `page-loader--bg-${background}`,
+    `page-loader--color-${color}`,
+    `page-loader--size-${size}`,
+    classList
+  ]}
   data-page-loader
   data-page-loader-auto-hide={autoHide}
   data-page-loader-min-display={minDisplayTime}
