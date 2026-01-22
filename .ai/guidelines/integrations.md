@@ -74,6 +74,140 @@ Web3Forms is a contact form service for static websites. It receives form submis
 
 ---
 
+## LottieFiles
+
+**Documentation**: https://developers.lottiefiles.com
+
+LottieFiles provides lightweight, scalable animations for web and mobile. Lottie animations are JSON-based vector graphics that render at any resolution without quality loss, making them ideal for canvas images, icons, and interactive UI elements.
+
+### Setup
+
+1. Install the DotLottie React package:
+   ```bash
+   npm install @lottiefiles/dotlottie-react
+   ```
+
+2. Create a hook for caching animations (optional but recommended)
+
+3. Create a loader component for consistent animation rendering
+
+### Basic Implementation
+
+```jsx
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+
+const AnimatedIcon = () => (
+  <DotLottieReact
+    src="https://lottie.host/your-animation-id/animation.lottie"
+    loop
+    autoplay
+  />
+);
+```
+
+### Cached Animation Pattern
+
+For better performance with multiple animations, use a caching hook:
+
+```jsx
+// hooks/useCachedLottie.js
+const lottieCache = new Map();
+
+const lottieAnimations = {
+  about: "https://lottie.host/xxx/animation.lottie",
+  services: "https://lottie.host/yyy/animation.lottie",
+  contact: "https://lottie.host/zzz/animation.lottie",
+};
+
+const useCachedLottie = (animationName) => {
+  const [animationUrl, setAnimationUrl] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (lottieCache.has(animationName)) {
+      setAnimationUrl(lottieCache.get(animationName));
+      setIsLoading(false);
+      return;
+    }
+
+    const url = lottieAnimations[animationName];
+    if (url) {
+      lottieCache.set(animationName, url);
+      setAnimationUrl(url);
+    }
+    setIsLoading(false);
+  }, [animationName]);
+
+  return { animationUrl, isLoading, error };
+};
+```
+
+### LottieLoader Component
+
+```jsx
+// utils/LottieLoader.jsx
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import useCachedLottie from "../hooks/useCachedLottie";
+
+const LottieLoader = ({
+  animationName,
+  loop = true,
+  autoplay = true,
+  className = "",
+  fallbackText = "Animation",
+}) => {
+  const { animationUrl, isLoading, error } = useCachedLottie(animationName);
+
+  if (isLoading) {
+    return <div className={`${className} animate-pulse`} />;
+  }
+
+  if (error || !animationUrl) {
+    return <p className="text-gray-500">{fallbackText}</p>;
+  }
+
+  return (
+    <DotLottieReact
+      src={animationUrl}
+      loop={loop}
+      autoplay={autoplay}
+      className={className}
+    />
+  );
+};
+
+export default LottieLoader;
+```
+
+### Configuration Options
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `src` | string | - | URL to .lottie or .json animation file |
+| `loop` | boolean | false | Loop the animation continuously |
+| `autoplay` | boolean | false | Start playing on mount |
+| `speed` | number | 1 | Playback speed multiplier |
+| `direction` | 1 \| -1 | 1 | Playback direction |
+| `mode` | string | "forward" | Play mode: "forward", "reverse", "bounce", "bounce-reverse" |
+| `segment` | [number, number] | - | Play specific frame range |
+
+### Animation Sources
+
+- **Lottie Host**: Upload and host at https://lottie.host (free tier available)
+- **LottieFiles Library**: Browse free animations at https://lottiefiles.com/free-animations
+- **Self-hosted**: Serve .lottie or .json files from your own `/public` folder
+
+### Best Practices
+
+- Use `.lottie` format over `.json` for smaller file sizes (60-90% reduction)
+- Implement caching for animations used multiple times
+- Add fallback content for error states
+- Consider lazy loading animations below the fold
+- Use error boundaries to gracefully handle rendering failures
+
+---
+
 ## Adding New Integrations
 
 When adding a new external integration to this project:
