@@ -17,7 +17,7 @@ If `site-blueprint.json` exists:
 5. Use `navigation` structure to set up `src/data/site/navigation.ts`
 6. Create pages based on the `pages` array using specified sections and variants
 7. Apply `theme` preferences (style, animations, border radius) throughout
-8. Follow `content.tone` guidelines when writing copy
+8. Follow brand voice guidelines from `branding.md` when writing copy (if exists)
 
 If no blueprint exists, copy `site-blueprint.example.json` to `site-blueprint.json` and ask the user to fill it out, or proceed with manual configuration.
 
@@ -205,6 +205,33 @@ Place files that shouldn't be processed in `public/`:
 - robots.txt
 - Files requiring exact URLs
 
+## Page Management
+
+### Adding Pages
+
+1. Create the page file in `src/pages/` (e.g., `pricing.astro`)
+2. Add navigation entry in `src/data/site/navigation.ts`
+3. Add any related content data in `src/data/content/`
+
+### Removing Pages
+
+When removing a page, follow these steps to ensure no broken links:
+
+1. **Delete the page file** from `src/pages/`
+2. **Remove from navigation** - Delete the entry in `src/data/site/navigation.ts`
+3. **Search for references** - Use grep to find all links to the removed page:
+   ```bash
+   grep -r "/page-url" src/
+   ```
+4. **Update CTAs and links** - Replace or remove any buttons/links pointing to the deleted page
+5. **Check content data** - Remove any related entries in `src/data/content/`
+
+**Common places to check for links:**
+- CTA sections in page files (`cta.actions[].href`)
+- Navigation children in `navigation.ts`
+- Button components throughout pages
+- Footer link groups
+
 ## Development Workflow
 
 1. **Start with content** - Define content structure in `src/data/content/` before building pages
@@ -224,6 +251,6 @@ Place files that shouldn't be processed in `public/`:
 | Page content | `src/data/content/*.ts` |
 | Brand colors | `src/styles/abstracts/_colors.scss` |
 | Typography | `src/styles/abstracts/_typography.scss` |
-| New page | `src/pages/*.astro` |
+| Add/remove page | `src/pages/*.astro` + `navigation.ts` + check CTAs |
 | Images | `src/assets/images/*` |
 | Static files | `public/*` |

@@ -1,0 +1,10 @@
+# Archive Directory
+
+This folder contains completed or deprecated plans and documentation.
+
+Move files here when:
+- A plan has been fully implemented
+- Documentation is no longer relevant but worth preserving
+- Features have been removed but history is useful
+
+Naming convention: Keep original filename, optionally prefix with date (YYYY-MM-DD-).
